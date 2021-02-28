@@ -86,7 +86,7 @@ const SendMail = (props) => {
             "corner": corner,
             "content": content,
         }
-        await (await axios.post(`http://s-ryota.sakura.ne.jp/radioMailAPI/index.php`,data)
+        await (await axios.post(`https://s-ryota.sakura.ne.jp/radioMailAPI/index.php`,data)
         .then((res) => {
             if(res.data.error){
                 alert(' 送信に失敗しました');

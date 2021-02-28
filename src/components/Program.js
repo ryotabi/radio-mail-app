@@ -21,7 +21,7 @@ const Program = () => {
   const [programLists, setRadioProgram] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://s-ryota.sakura.ne.jp/GetRadikoProgramApi/`)
+    axios.get(`https://s-ryota.sakura.ne.jp/GetRadikoProgramApi/`)
     .then((res) => {
       setNowDate((res.data.stations.station[0].progs.date).substr(4,4));
       setRadioStationLists(res.data.stations.station);
