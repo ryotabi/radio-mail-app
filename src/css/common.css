@@ -1,0 +1,32 @@
+.bg_color {
+  background-color: rgba(221, 202, 175, 1);
+  position: fixed;
+  height: 100vh;
+  margin-top: 75px;
+  width: 100%;
+  z-index: -10;
+}
+.position-fixed {
+  position: fixed;
+}
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.d-flex {
+  display: flex;
+}
+.m-0 {
+  margin: 0 !important;
+}
+.pt-85 {
+  padding-top: 85px;
+}
+.pt-100 {
+  padding-top: 100px;
+}

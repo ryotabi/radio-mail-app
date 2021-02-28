@@ -1,0 +1,19 @@
+.header_wrap {
+  background-color: rgba(104, 183, 135, 1);
+  padding: 20px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+.header_title {
+  font-size: 20px;
+  color: #fff;
+}
+.hum_icon {
+  font-size: 20px;
+}
+.close_btn {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+}

@@ -1,0 +1,22 @@
+.setting_wrap {
+  padding-top: 100px;
+}
+.setting_title {
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+.setting_user_btn_wrap {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 8px 8px 8px rgb(155, 155, 155);
+  font-size: 20px;
+  font-weight: bold;
+  padding: 50px;
+  width: 100%;
+}
+.setting_user_btn_wrap:active {
+  box-shadow: none;
+  transform: translateY(8px);
+}

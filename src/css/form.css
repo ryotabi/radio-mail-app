@@ -1,0 +1,30 @@
+.form_wrap {
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 8px 8px 8px rgb(155, 155, 155);
+  padding: 100px 30px 10px 30px;
+}
+.form_title {
+  font-size: 20px;
+}
+.selectbox {
+  width: 80%;
+}
+.textarea {
+  width: 100%;
+}
+.textarea textarea {
+  height: 180px;
+  white-space: pre-wrap;
+}
+.form_btn_wrap {
+  margin: 40px 30px !important;
+}
+.btn {
+  background-color: rgba(104, 183, 135, 1) !important;
+  border-radius: 60px !important;
+  font-size: 15px !important;
+}
+.btn:active {
+  box-shadow: none !important;
+}

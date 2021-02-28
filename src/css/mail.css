@@ -1,0 +1,124 @@
+.sendMail_wrap {
+  padding-top: 100px;
+}
+.return_btn {
+  background-color: rgba(165, 212, 173, 1) !important;
+  border-radius: 60px !important;
+  font-size: 18px !important;
+}
+.send_btn {
+  background-color: rgba(104, 183, 135, 1) !important;
+  border-radius: 60px !important;
+  font-size: 18px !important;
+  padding: 6px 30px !important;
+}
+.postcard_wrap {
+  background-color: #fff;
+  position: relative;
+  min-height: 570px;
+  margin: 40px auto 20px;
+  width: 100%;
+}
+.front_page,
+.back_page {
+  display: block;
+  position: absolute;
+  transition: 1s;
+  width: 90%;
+}
+.front_page {
+  padding: 30px;
+}
+.front_page.hidden,
+.back_page.hidden {
+  opacity: 0;
+  transform: rotateY(180deg);
+  transition: 1s;
+}
+.to_postal_code_wrap {
+  align-items: center;
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
+.to_postal_code {
+  border: 2px solid red;
+  padding: 2px;
+  margin: 0 3px;
+}
+.to_postal_code_border {
+  border: 1px solid red;
+  height: 1px;
+  width: 8px;
+}
+.from_postal_code_wrap {
+  align-items: center;
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+}
+.from_postal_code {
+  border: 2px solid red;
+  font-size: 10px;
+  padding: 1px;
+  margin: 0 2px;
+}
+.from_postal_code_border {
+  border: 1px solid red;
+  height: 1px;
+  width: 8px;
+}
+.to_address {
+  position: absolute;
+  top: 80px;
+  right: 30px;
+}
+.to_address p {
+  font-size: 20px;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+.to_name {
+  position: absolute;
+  top: 100px;
+  right: 0;
+  left: 0;
+}
+.to_name p {
+  font-size: 25px;
+  margin: 0 auto;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+.from_address {
+  position: absolute;
+  bottom: 70px;
+  left: 60px;
+}
+.from_address p {
+  font-size: 15px;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+.from_name {
+  position: absolute;
+  bottom: 70px;
+  left: 25px;
+}
+.from_name p {
+  font-size: 15px;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+.radioName,
+.cornar,
+.content {
+  font-size: 18px;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+.content p {
+  white-space: pre-wrap;
+}

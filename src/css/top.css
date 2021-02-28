@@ -1,0 +1,31 @@
+.top_wrap {
+  padding-top: 100px;
+}
+.top_btn_wrap {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 8px 8px 8px rgb(155, 155, 155);
+  font-size: 20px;
+  font-weight: bold;
+  padding: 50px;
+  width: 100%;
+}
+.top_btn_wrap:active {
+  box-shadow: none;
+  transform: translateY(8px);
+}
+.program_btn_wrap,
+.setting_btn_wrap {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 8px 8px 8px rgb(155, 155, 155);
+  font-size: 18px;
+  font-weight: bold;
+  padding: 50px 30px;
+  width: 45%;
+}
+.program_btn_wrap:active,
+.setting_btn_wrap:active {
+  box-shadow: none;
+  transform: translateY(8px);
+}
