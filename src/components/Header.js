@@ -29,7 +29,7 @@ const Header = () => {
                 <Container maxWidth="sm">
                     <Grid container justify="space-between" alignItems="center">
                         <Grid item xs={6}>
-                            <p className="header_title">はがき職人</p>
+                            <p className="header_title">ラジオメーラー</p>
                         </Grid>
                         <Grid item xs={3} className="text-right">
                             <MenuIcon fontSize="large" onClick={OpenHumMenu}/>
