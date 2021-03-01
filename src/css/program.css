@@ -1,3 +1,14 @@
+.loading_wrap {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  z-index: 20;
+}
+.loading_icon {
+  display: block !important;
+  margin: 100% auto;
+}
 .program_title {
   font-size: 25px;
   font-weight: bold;

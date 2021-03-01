@@ -26,7 +26,7 @@ const Header = () => {
     return (
         <>
             <div className="header_wrap">
-                <Container maxWidth="sm">
+                <Container maxWidth="lg">
                     <Grid container justify="space-between" alignItems="center">
                         <Grid item xs={6}>
                             <Link to="/" className="header_title">ラジオメーラー</Link>
@@ -44,12 +44,12 @@ const Header = () => {
             >
                 <CancelIcon onClick={handleClose} fontSize="large" className="close_btn" />
                 <Box m={2}>
-                    <MenuItem><Link to="/">トップ</Link></MenuItem>
-                    <MenuItem><Link to="/mail">メールを送る</Link></MenuItem>
-                    <MenuItem><Link to="/save">未送信のメール</Link></MenuItem>
-                    <MenuItem><Link to="/list">過去の投稿</Link></MenuItem>
-                    <MenuItem><Link to="/program">番組表</Link></MenuItem>
-                    <MenuItem><Link to="/setting">設定</Link></MenuItem>
+                    <MenuItem><Link className="w-100" to="/">トップ</Link></MenuItem>
+                    <MenuItem><Link className="w-100" to="/mail">メールを送る</Link></MenuItem>
+                    <MenuItem><Link className="w-100" to="/save">未送信のメール</Link></MenuItem>
+                    <MenuItem><Link className="w-100" to="/list">過去の投稿</Link></MenuItem>
+                    <MenuItem><Link className="w-100" to="/program">番組表</Link></MenuItem>
+                    <MenuItem><Link className="w-100" to="/setting">設定</Link></MenuItem>
                 </Box>
             </Menu>
         </>

@@ -74,7 +74,7 @@ const Register = (props) => {
         <> 
             <Header />
             <div className="bg_img">
-                <Container maxWidth="sm">
+                <Container maxWidth="lg">
                     <h1 className="register_title">Sign Up</h1>
                     <form className="register_form">
                         {(

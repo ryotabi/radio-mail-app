@@ -196,6 +196,7 @@ const Form = (props) => {
                                     <TextField
                                         id="name"
                                         label="氏名"
+                                        className="md_w-100"
                                         value={name}
                                         onChange={(e) => {
                                             setName(e.target.value);
@@ -206,6 +207,7 @@ const Form = (props) => {
                                     <TextField
                                         id="portalCode"
                                         label="郵便番号"
+                                        className="md_w-100"
                                         value={portalCode}
                                         onChange={(e) => {
                                             setPortalCode(e.target.value);
@@ -216,6 +218,7 @@ const Form = (props) => {
                                     <TextField
                                         id="address"
                                         label="住所"
+                                        className="md_w-100"
                                         value={address}
                                         onChange={(e) => {
                                             setAddress(e.target.value);
@@ -226,6 +229,7 @@ const Form = (props) => {
                                     <TextField
                                         id="tel"
                                         label="電話番号"
+                                        className="md_w-100"
                                         value={tel}
                                         onChange={(e) => {
                                             setTel(e.target.value);
@@ -251,6 +255,7 @@ const Form = (props) => {
                                         <TextField
                                             id="mail"
                                             label="メールアドレス"
+                                            className="md_w-100"
                                             value={mail}
                                             onChange={(e) => {
                                                 setMail(e.target.value);
@@ -261,6 +266,7 @@ const Form = (props) => {
                                         <TextField
                                             id="radioName"
                                             label="ラジオネーム"
+                                            className="md_w-100"
                                             value={radioName}
                                             onChange={(e) => {
                                                 setRadioName(e.target.value);
@@ -271,6 +277,7 @@ const Form = (props) => {
                                         <TextField
                                             id="age"
                                             label="年齢"
+                                            className="md_w-100"
                                             value={age}
                                             onChange={(e) => {
                                                 setAge(e.target.value);
@@ -282,7 +289,7 @@ const Form = (props) => {
                                         <Select
                                             labelId="program"
                                             id="program"
-                                            className="selectbox"
+                                            className="selectbox md_w-100"
                                             value={program}
                                             onChange={(e) => {
                                                 setProgram(e.target.value);
@@ -321,7 +328,7 @@ const Form = (props) => {
                                         <Select
                                             labelId="corner"
                                             id="corner"
-                                            className="selectbox"
+                                            className="selectbox md_w-100"
                                             value={corner}
                                             onChange={(e) => {
                                                 setCorner(e.target.value);
@@ -336,7 +343,7 @@ const Form = (props) => {
                                     <TextField
                                         id="content"
                                         label="投稿内容"
-                                        className="textarea"
+                                        className="textarea md_w-100"
                                         multiline
                                         rows={4}
                                         value={content}

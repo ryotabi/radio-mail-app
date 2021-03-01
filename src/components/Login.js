@@ -36,7 +36,7 @@ const Login = (props) => {
         <> 
             <Header />
             <div className="bg_img">
-                <Container maxWidth="sm">
+                <Container maxWidth="lg">
                     <h1 className="login_title">Sign In</h1>
                     <form className="login_form">
                         <Box m={4}>

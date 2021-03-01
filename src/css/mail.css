@@ -122,3 +122,16 @@
 .content p {
   white-space: pre-wrap;
 }
+
+/* tab,PC */
+@media (min-width: 415px) {
+  .md_sendMail-btn-wrap {
+    width: 50%;
+    margin: 0 auto !important;
+  }
+  .postcard_wrap {
+    left: 0;
+    right: 0;
+    width: 335px;
+  }
+}

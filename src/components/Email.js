@@ -63,6 +63,7 @@ const Email = (props) => {
                                                 <TextField
                                                     id="oldEmail"
                                                     label="現在のメールアドレス"
+                                                    className="md_w-100"
                                                     value={oldEmail}
                                                     onChange={(e) => {
                                                         setOldEmail(e.target.value);
@@ -73,6 +74,7 @@ const Email = (props) => {
                                                     <TextField
                                                         id="oldPassword"
                                                         label="現在のパスワード"
+                                                        className="md_w-100"
                                                         type="password"
                                                         value={oldPassword}
                                                         onChange={(e) => {
@@ -93,6 +95,7 @@ const Email = (props) => {
                                                     <TextField
                                                         id="newEmail"
                                                         label="新しいメールアドレス"
+                                                        className="md_w-100"
                                                         value={newEmail}
                                                         onChange={(e) => {
                                                             setNewEmail(e.target.value);
@@ -103,6 +106,7 @@ const Email = (props) => {
                                                     <TextField
                                                         id="newPassword"
                                                         label="新しいパスワード"
+                                                        className="md_w-100"
                                                         type="password"
                                                         value={newPassword}
                                                         onChange={(e) => {

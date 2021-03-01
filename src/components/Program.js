@@ -10,6 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import '../css/reset.css';
 import '../css/common.css';
@@ -19,12 +20,14 @@ const Program = () => {
   const [nowDate, setNowDate] = useState('');
   const [radioStationLists, setRadioStationLists] = useState([]);
   const [programLists, setRadioProgram] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios.get(`https://s-ryota.sakura.ne.jp/GetRadikoProgramApi/`)
     .then((res) => {
       setNowDate((res.data.stations.station[0].progs.date).substr(4,4));
       setRadioStationLists(res.data.stations.station);
+      setIsLoading(false);
     })
   },[])
 
@@ -39,6 +42,15 @@ const Program = () => {
 
   return (
     <>
+    {(() => {
+      if(isLoading){
+        return (
+          <div className="loading_wrap">
+            <CircularProgress className="loading_icon" size={60} disableShrink={true} />
+          </div>
+        )
+      }
+    })()}
       <Header />
       <div className="bg_color"></div>
       <div className="program_listnav pt-85">
@@ -49,7 +61,7 @@ const Program = () => {
             })}
           </ul>
       </div>
-      <Container>
+      <Container maxWidth="lg">
         <Box my={2}>
           <h2 className="text-center program_title">{dateToFormat(nowDate, 2, "月", "日")}</h2>
         </Box>
