@@ -18,7 +18,7 @@ const SendMail = (props) => {
         if(!user) {
             props.history.push('/login');
         }
-    })
+    });
     const [program, setProgram] = useState('');
     const [toPortalCode, setToPortalCode] = useState('');
     const [fromPortalCode, setFromPortalCode] = useState('');
@@ -37,6 +37,7 @@ const SendMail = (props) => {
     const splicFromPortalCode = [...fromPortalCode];
     const splicToPortalCode = [...toPortalCode];
     const [isBack, setIsBack] = useState(true);
+    const [stateSubmitButton, setStateSubmitButton] = useState(true);
 
     useEffect(() => {
         if(location.state !== undefined) {
@@ -74,6 +75,13 @@ const SendMail = (props) => {
             setIsBack(true);
         }
     }
+    useEffect(() => {
+        if(toName === "" || toAddress === "" || mail === ""){
+            setStateSubmitButton(true);
+        }else{
+            setStateSubmitButton(false);
+            }
+    },[toAddress, toName, mail]);
 
     const handleSubmit = async () => {
         const data = {
@@ -112,8 +120,8 @@ const SendMail = (props) => {
             <Header />
             <div className="bg_color"></div>
             <div className="sendMail_wrap">
-                <Container>
-                    <Box className="text-center" m={2}>
+                <Container maxWidth="lg">
+                    <Box className="text-center md_sendMail-btn-wrap" m={2}>
                         <Grid container justify="space-between">
                             <Grid item>
                                 <Button variant="contained"className="return_btn" onClick={returnPage}>
@@ -121,7 +129,7 @@ const SendMail = (props) => {
                                 </Button>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained"className="send_btn" onClick={handleSubmit}>
+                                <Button variant="contained"className="send_btn" disabled={stateSubmitButton} onClick={handleSubmit}>
                                     送る
                                 </Button>
                             </Grid>

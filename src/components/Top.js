@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import firebase from 'firebase';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -9,13 +10,18 @@ import '../css/reset.css'
 import '../css/common.css'
 import '../css/top.css'
 
-const Top = () => {
+const Top = (props) => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
     return (
         <>
             <Header />
             <div className="bg_color"></div>
             <div className="top_wrap">
-                <Container maxWidth="sm">
+                <Container maxWidth="lg">
                     <Box p={4}>
                         <Grid container>
                             <Link to="/mail" className="top_btn_wrap">
@@ -29,7 +35,7 @@ const Top = () => {
                         <Grid container>
                             <Link to="/save" className="top_btn_wrap">
                                 <Grid item className="top_btn">
-                                    <p className="top_btn_text text-center">保存したメール</p>
+                                    <p className="top_btn_text text-center">未送信のメール</p>
                                 </Grid>
                             </Link>
                         </Grid>

@@ -30,3 +30,12 @@
 .pt-100 {
   padding-top: 100px;
 }
+.w-100 {
+  width: 100%;
+}
+/* tab,PC */
+@media (min-width: 415px) {
+  .md_w-100 {
+    width: 100%;
+  }
+}
