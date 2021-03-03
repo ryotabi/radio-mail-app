@@ -35,7 +35,7 @@ const Top = (props) => {
                         <Grid container>
                             <Link to="/save" className="top_btn_wrap">
                                 <Grid item className="top_btn">
-                                    <p className="top_btn_text text-center">未送信のメール</p>
+                                    <p className="top_btn_text text-center">保存したメール</p>
                                 </Grid>
                             </Link>
                         </Grid>
