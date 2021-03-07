@@ -33,7 +33,11 @@ const Form = (props) => {
     const [nowPage, setNowPage] = useState(1);
     const [isInput2, setIsInput2] = useState(false);
     const [isInput3, setIsInput3] = useState(false);
-    const [programList, setProgramList] = useState([{id: '',program: '', name: '',}])
+    const [programList, setProgramList] = useState([{id: '',program: '', name: '',}]);
+
+    const [template, setTemplate] = useState('');
+    const [templateFlg, setTemplateFlg] = useState(false);
+    const [templateList, setTemplateList] = useState([{id: '', name: ''}]);
 
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
@@ -176,7 +180,27 @@ const Form = (props) => {
     }
 
     const useContentTemplate = () => {
-        setContent(`○○さん、こんにちは！（こんばんは！）\n\nいつも楽しく拝聴させて頂いてます！\n\n\n\n本文`);
+        setTemplateFlg(true);
+        firebase.auth().onAuthStateChanged((user) => {
+            db.collection(`template/${user.uid}/data`).onSnapshot((snapshot) => {
+                setTemplateList(
+                    snapshot.docs.map((doc) => {
+                        return {id: doc.id, name: doc.data().name}
+                    })
+                )
+            })
+        })
+    }
+
+    const getTemplateContent = (templateName) => {
+        firebase.auth().onAuthStateChanged((user) => {
+            db.collection(`template/${user.uid}/data`).where('name', '==', templateName).get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    setContent(doc.data().content);
+                })
+            })
+        })
     }
 
     return (
@@ -339,6 +363,28 @@ const Form = (props) => {
                                         )}
                                         </Select>
                                     </Box>
+                                    {templateFlg ?
+                                            <Box my={4} mx={2}>
+                                                <InputLabel id="template">テンプレート</InputLabel>
+                                                <Select
+                                                    labelId="template"
+                                                    id="template"
+                                                    className="selectbox md_w-100"
+                                                    value={template}
+                                                    onChange={(e) => {
+                                                        setTemplate(e.target.value);
+                                                        getTemplateContent(e.target.value);
+                                                    }}
+                                                >
+                                                {templateList.map((template) => 
+                                                    <MenuItem key={template.id} value={template.name}>{template.name}</MenuItem>
+                                                )}
+                                                </Select>
+                                            </Box>
+                                        :
+                                        <>
+                                        </>
+                                        }
                                     <Box my={4} mx={2}>
                                     <TextField
                                         id="content"
@@ -361,7 +407,7 @@ const Form = (props) => {
                                                 <Button variant="contained"className="btn save_info_btn" onClick={saveMail}>途中保存</Button>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="contained"className="btn template_info_btn" onClick={useContentTemplate}>本文テンプレ</Button>
+                                                <Button variant="contained"className="btn template_info_btn" onClick={useContentTemplate}>テンプレを使用</Button>
                                             </Grid>
                                         </Grid>
                                     </Box>

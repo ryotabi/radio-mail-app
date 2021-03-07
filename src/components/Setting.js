@@ -44,10 +44,24 @@ const Setting = (props) => {
                         </Grid>
                 </Box>
                 <Box my={6} mx={4}>
+                    <Grid container justify="space-between">
+                        <Link to="/template" xs={6} className="template_btn_wrap">
+                            <Grid item className="template_btn">
+                                <p className="text-center">テンプレ</p>
+                            </Grid>
+                        </Link>
+                        <Link to="/myprogram" xs={6} className="myprogram_btn_wrap">
+                            <Grid item className="myprogram_btn">
+                                <p className="text-center">マイ番組</p>
+                            </Grid>
+                        </Link>
+                    </Grid>
+                </Box>
+                <Box my={6} mx={4}>
                 {/* ログアウト後にリロードしないとログイン出来ない */}
                 <Grid container>
-                            <div className="setting_user_btn_wrap" onClick={handleLogout}>
-                                <Grid item className="setting_user_btn">
+                            <div className="setting_logout_btn_wrap" onClick={handleLogout}>
+                                <Grid item className="setting_logout_btn">
                                     <p className="setting_btn_text text-center">ログアウト</p>
                                 </Grid>
                             </div>
