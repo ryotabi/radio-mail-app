@@ -1,21 +1,18 @@
-.user_info_wrap {
+.template_wrap {
   padding-top: 100px;
 }
-.user_info_form {
+.template_form {
   background-color: #fff;
   border-radius: 30px;
   box-shadow: 8px 8px 8px rgb(155, 155, 155);
   padding: 15px 30px 40px 30px;
   margin-top: 50px;
 }
-.user_info_btn_wrap {
-  margin: 50px 30px !important;
+.template_set_btn_wrap {
+  margin: 40px 30px !important;
 }
-.user_info_btn {
+.template_set_btn {
   background-color: rgba(104, 183, 135, 1) !important;
   border-radius: 60px !important;
   font-size: 15px !important;
-}
-.user_info_btn:active {
-  box-shadow: none !important;
 }

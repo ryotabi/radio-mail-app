@@ -85,7 +85,7 @@ const User = (props) => {
             <div className="bg_color"></div>
             <div className="user_info_wrap">
                 <Container maxWidth="sm">
-                    <h1 className="user_info_title text-center">ユーザー情報</h1>
+                    <h1 className="title text-center">ユーザー情報</h1>
                     <form className="user_info_form">
                         {(
                             () => {
