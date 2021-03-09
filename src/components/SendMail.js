@@ -41,13 +41,25 @@ const SendMail = (props) => {
 
     useEffect(() => {
         if(location.state !== undefined) {
-            db.collection(`programs/${location.state.program}/info`).onSnapshot((snapshot) => {
-                snapshot.docs.map((doc) => {
-                    setToName(doc.data().name);
-                    setToAddress(doc.data().address);
-                    setToPortalCode(doc.data().portalCode);
+            if(location.state.isUsedMyProgram){
+                firebase.auth().onAuthStateChanged((user) => {
+                db.collection(`myProgram/${user.uid}/list`).onSnapshot((snapshot) => {
+                    snapshot.docs.map((doc) => {
+                        setToName(doc.data().name);
+                        setToAddress(doc.data().address);
+                        setToPortalCode(doc.data().portalCode);
+                    })
                 })
-            })
+                })
+            } else {
+                db.collection(`programs/${location.state.program}/info`).onSnapshot((snapshot) => {
+                    snapshot.docs.map((doc) => {
+                        setToName(doc.data().name);
+                        setToAddress(doc.data().address);
+                        setToPortalCode(doc.data().portalCode);
+                    })
+                })
+            }
             setProgram(location.state.program);
             setFromAddress(location.state.address);
             setFromName(location.state.name);

@@ -13,6 +13,7 @@ import Setting from './components/Setting';
 import User from './components/User';
 import Email from './components/Email';
 import Template from './components/Template';
+import MyProgram from './components/MyProgram';
 
 const App =() => {
   return (
@@ -32,6 +33,7 @@ const App =() => {
           <Route path="/user" exact component={User} />
           <Route path="/email" exact component={Email} />
           <Route path="/template" exact component={Template} />
+          <Route path="/myProgram" exact component={MyProgram} />
         </Switch>
       </>
       </BrowserRouter>
