@@ -43,8 +43,9 @@ const SendMail = (props) => {
         if(location.state !== undefined) {
             if(location.state.isUsedMyProgram){
                 firebase.auth().onAuthStateChanged((user) => {
-                db.collection(`myProgram/${user.uid}/list`).onSnapshot((snapshot) => {
-                    snapshot.docs.map((doc) => {
+                db.collection(`myProgram/${user.uid}/list`).where('name', '==', location.state.program).get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
                         setToName(doc.data().name);
                         setToAddress(doc.data().address);
                         setToPortalCode(doc.data().portalCode);
