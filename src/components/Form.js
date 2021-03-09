@@ -35,6 +35,9 @@ const Form = (props) => {
     const [isInput3, setIsInput3] = useState(false);
     const [programList, setProgramList] = useState([{id: '',program: '', name: '',}]);
 
+    const [isUsedMyProgram, setisUsedMyProgram] = useState(false);
+    const [myProgramList, setMyProgramList] = useState([{id: '', program: '', name: ''}])
+
     const [template, setTemplate] = useState('');
     const [templateFlg, setTemplateFlg] = useState(false);
     const [templateList, setTemplateList] = useState([{id: '', name: ''}]);
@@ -139,6 +142,19 @@ const Form = (props) => {
         })
     }
 
+    const setMyProgram = () => {
+        setisUsedMyProgram(true);
+        firebase.auth().onAuthStateChanged((user) => {
+            db.collection(`myProgram/${user.uid}/list`).onSnapshot((snapshot) => {
+                setMyProgramList(
+                    snapshot.docs.map((doc) => {
+                        return {id: doc.id, program: doc.data().name, name: doc.data().name}
+                    })
+                )
+            })
+        })
+    }
+
     const handleSubmit = () => {
         props.history.push(
             {
@@ -154,6 +170,7 @@ const Form = (props) => {
                     program,
                     corner,
                     content,
+                    isUsedMyProgram
                 }
             }
         );
@@ -308,26 +325,56 @@ const Form = (props) => {
                                             }}
                                             />
                                     </Box>
-                                    <Box my={4} mx={2}>
-                                        <InputLabel id="program">番組</InputLabel>
-                                        <Select
-                                            labelId="program"
-                                            id="program"
-                                            className="selectbox md_w-100"
-                                            value={program}
-                                            onChange={(e) => {
-                                                setProgram(e.target.value);
-                                            }}
-                                        >
-                                            {programList.map((program) => {
-                                                return (
-                                                        <MenuItem key={program.id} value={program.program}>{program.name}</MenuItem>
-                                                )
-                                            })}
-                                        </Select>
-                                    </Box>
+                                    {(() => {
+                                        if(isUsedMyProgram) {
+                                            return (
+                                                <Box my={4} mx={2}>
+                                                    <InputLabel id="program">マイ番組</InputLabel>
+                                                    <Select
+                                                        labelId="program"
+                                                        id="program"
+                                                        className="selectbox md_w-100"
+                                                        value={program}
+                                                        onChange={(e) => {
+                                                            setProgram(e.target.value);
+                                                        }}
+                                                    >
+                                                        {myProgramList.map((program) => {
+                                                            return (
+                                                                    <MenuItem key={program.id} value={program.name}>{program.name}</MenuItem>
+                                                            )
+                                                        })}
+                                                    </Select>
+                                                </Box>
+                                            )
+                                        } else {
+                                            return (
+                                                <Box my={4} mx={2}>
+                                                    <InputLabel id="program">番組</InputLabel>
+                                                    <Select
+                                                        labelId="program"
+                                                        id="program"
+                                                        className="selectbox md_w-100"
+                                                        value={program}
+                                                        onChange={(e) => {
+                                                            setProgram(e.target.value);
+                                                        }}
+                                                    >
+                                                        {programList.map((program) => {
+                                                            return (
+                                                                    <MenuItem key={program.id} value={program.program}>{program.name}</MenuItem>
+                                                            )
+                                                        })}
+                                                    </Select>
+                                                </Box>
+                                            )
+                                        }
+                                    })()}
                                     <Box m={6} className="text-center form_btn_wrap">
                                         <Button variant="contained"className="btn set_info_btn" onClick={setRadioInfo}>ユーザー情報をセットする</Button>
+                                    </Box>
+                                    <Box m={6} className="text-center form_btn_wrap">
+                                        <Button variant="contained"className="btn set_info_btn" onClick={setMyProgram}>マイ番組をセットする</Button>
                                     </Box>
                                     <Box m={2} className="text-center form_btn_wrap">
                                         <Grid container justify="space-around">
@@ -347,22 +394,42 @@ const Form = (props) => {
                                     <Box m={2}>
                                         <p className="form_title text-center">投稿内容</p>
                                     </Box>
-                                    <Box my={4} mx={2}>
-                                    <InputLabel id="corner">コーナー</InputLabel>
-                                        <Select
-                                            labelId="corner"
-                                            id="corner"
-                                            className="selectbox md_w-100"
-                                            value={corner}
-                                            onChange={(e) => {
-                                                setCorner(e.target.value);
-                                            }}
-                                        >
-                                        {cornerLists.map((corner) => 
-                                            <MenuItem key={corner.id} value={corner.corner}>{corner.corner}</MenuItem>
-                                        )}
-                                        </Select>
-                                    </Box>
+                                    {(() => {
+                                        if(isUsedMyProgram) {
+                                            return (
+                                                <Box my={4} mx={2}>
+                                                    <TextField
+                                                    id="corner"
+                                                    label="コーナー（件名）"
+                                                    className="md_w-100"
+                                                    value={corner}
+                                                    onChange={(e) => {
+                                                        setCorner(e.target.value);
+                                                    }}
+                                                    />
+                                                </Box>
+                                            )
+                                        } else {
+                                            return (
+                                                <Box my={4} mx={2}>
+                                                    <InputLabel id="corner">コーナー</InputLabel>
+                                                    <Select
+                                                        labelId="corner"
+                                                        id="corner"
+                                                        className="selectbox md_w-100"
+                                                        value={corner}
+                                                        onChange={(e) => {
+                                                            setCorner(e.target.value);
+                                                        }}
+                                                    >
+                                                    {cornerLists.map((corner) => 
+                                                        <MenuItem key={corner.id} value={corner.corner}>{corner.corner}</MenuItem>
+                                                    )}
+                                                    </Select>
+                                                </Box>
+                                            )
+                                        }
+                                    })()}
                                     {templateFlg ?
                                             <Box my={4} mx={2}>
                                                 <InputLabel id="template">テンプレート</InputLabel>
