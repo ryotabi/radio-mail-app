@@ -30,7 +30,7 @@ const Form = (props) => {
     const [cornerLists, setCornerLists] = useState([{id: '', corner: ''}]);
     const [content, setContent] = useState('');
 
-    const [nowPage, setNowPage] = useState(1);
+    const [nowFormInput, setNowFormInput] = useState(1);
     const [isInput2, setIsInput2] = useState(false);
     const [isInput3, setIsInput3] = useState(false);
     const [programList, setProgramList] = useState([{id: '',program: '', name: '',}]);
@@ -39,7 +39,7 @@ const Form = (props) => {
     const [myProgramList, setMyProgramList] = useState([{id: '', program: '', name: ''}])
 
     const [template, setTemplate] = useState('');
-    const [templateFlg, setTemplateFlg] = useState(false);
+    const [isUsedtemplate, setIsUsedTemplate] = useState(false);
     const [templateList, setTemplateList] = useState([{id: '', name: ''}]);
 
     firebase.auth().onAuthStateChanged((user) => {
@@ -70,7 +70,7 @@ const Form = (props) => {
             )
         })
         return () => unSub();
-    },[])
+    },[]);
     useEffect(() => {
         const unSub = firebase.auth().onAuthStateChanged((user) => {
             if(user) {
@@ -90,21 +90,21 @@ const Form = (props) => {
         return unSub();
     },[program])
 
-    const handleNextForm1 = () => {
+    const goToForm2 = () => {
         setIsInput2(true);
-        setNowPage(2);
+        setNowFormInput(2);
     }
-    const handleNextForm2 = () => {
+    const goToForm3 = () => {
         setIsInput3(true);
-        setNowPage(3);
+        setNowFormInput(3);
     }
-    const handleBackForm1 = () => {
+    const goBackForm1 = () => {
         setIsInput2(false);
-        setNowPage(1);
+        setNowFormInput(1);
     }
-    const handleBackForm2 = () => {
+    const goBackForm2 = () => {
         setIsInput3(false);
-        setNowPage(2);
+        setNowFormInput(2);
     }
 
     const setUserInfo = () => {
@@ -155,7 +155,7 @@ const Form = (props) => {
         })
     }
 
-    const handleSubmit = () => {
+    const submitMailInfo = () => {
         props.history.push(
             {
                 pathname: '/mail',
@@ -197,7 +197,7 @@ const Form = (props) => {
     }
 
     const useContentTemplate = () => {
-        setTemplateFlg(true);
+        setIsUsedTemplate(true);
         firebase.auth().onAuthStateChanged((user) => {
             db.collection(`template/${user.uid}/data`).onSnapshot((snapshot) => {
                 setTemplateList(
@@ -227,7 +227,7 @@ const Form = (props) => {
             <Container maxWidth="sm">
                 <form className="form_wrap m-0 pt-100">
                     {(() => {
-                        if(nowPage === 1) {
+                        if(nowFormInput === 1) {
                             return (
                             <div className="user_info">
                                 <Box m={2}>
@@ -281,12 +281,12 @@ const Form = (props) => {
                                     <Button variant="contained"className="btn set_info_btn" onClick={setUserInfo}>ユーザー情報をセットする</Button>
                                 </Box>
                                 <Box m={2} className="text-center form_btn_wrap">
-                                    <Button variant="contained"className="btn next_btn" onClick={handleNextForm1}><ArrowForwardIcon /></Button>
+                                    <Button variant="contained"className="btn next_btn" onClick={goToForm2}><ArrowForwardIcon /></Button>
                                 </Box>
                             </div>
-                            )
+                        )
                         } else {
-                            if(nowPage ===2 ) {
+                            if(nowFormInput ===2 ) {
                                 return (
                                 <div className="radio_info">
                                     <Box m={2}>
@@ -379,10 +379,10 @@ const Form = (props) => {
                                     <Box m={2} className="text-center form_btn_wrap">
                                         <Grid container justify="space-around">
                                             <Grid item xs={3}>
-                                                <Button variant="contained"className="btn" onClick={handleBackForm1}><ArrowBackIcon /></Button>
+                                                <Button variant="contained"className="btn" onClick={goBackForm1}><ArrowBackIcon /></Button>
                                             </Grid>
                                             <Grid item xs={3}>
-                                                <Button variant="contained"className="btn" onClick={handleNextForm2}><ArrowForwardIcon /></Button>
+                                                <Button variant="contained"className="btn" onClick={goToForm3}><ArrowForwardIcon /></Button>
                                             </Grid>
                                         </Grid>
                                     </Box>
@@ -430,28 +430,29 @@ const Form = (props) => {
                                             )
                                         }
                                     })()}
-                                    {templateFlg ?
-                                            <Box my={4} mx={2}>
-                                                <InputLabel id="template">テンプレート</InputLabel>
-                                                <Select
-                                                    labelId="template"
-                                                    id="template"
-                                                    className="selectbox md_w-100"
-                                                    value={template}
-                                                    onChange={(e) => {
-                                                        setTemplate(e.target.value);
-                                                        getTemplateContent(e.target.value);
-                                                    }}
-                                                >
-                                                {templateList.map((template) => 
-                                                    <MenuItem key={template.id} value={template.name}>{template.name}</MenuItem>
-                                                )}
-                                                </Select>
-                                            </Box>
-                                        :
-                                        <>
-                                        </>
+                                    {(() => {
+                                        if(isUsedtemplate) {
+                                            return (
+                                                <Box my={4} mx={2}>
+                                                    <InputLabel id="template">テンプレート</InputLabel>
+                                                    <Select
+                                                        labelId="template"
+                                                        id="template"
+                                                        className="selectbox md_w-100"
+                                                        value={template}
+                                                        onChange={(e) => {
+                                                            setTemplate(e.target.value);
+                                                            getTemplateContent(e.target.value);
+                                                        }}
+                                                    >
+                                                    {templateList.map((template) => 
+                                                        <MenuItem key={template.id} value={template.name}>{template.name}</MenuItem>
+                                                    )}
+                                                    </Select>
+                                                </Box>
+                                            )
                                         }
+                                    })()}
                                     <Box my={4} mx={2}>
                                     <TextField
                                         id="content"
@@ -466,7 +467,7 @@ const Form = (props) => {
                                     />
                                     </Box>
                                     <Box m={6} className="text-center form_btn_wrap">
-                                        <Button variant="contained"className="btn set_info_btn" onClick={handleSubmit}>情報を送信</Button>
+                                        <Button variant="contained"className="btn set_info_btn" onClick={submitMailInfo}>情報を送信</Button>
                                     </Box>
                                     <Box m={2} className="text-center form_btn_wrap">
                                         <Grid container justify="space-between">
@@ -479,7 +480,7 @@ const Form = (props) => {
                                         </Grid>
                                     </Box>
                                     <Box m={2} className="text-center form_btn_wrap">
-                                        <Button variant="contained"className="btn" onClick={handleBackForm2}><ArrowBackIcon /></Button>
+                                        <Button variant="contained"className="btn" onClick={goBackForm2}><ArrowBackIcon /></Button>
                                     </Box>
                                 </div>
                                 )
