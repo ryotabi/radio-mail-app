@@ -46,6 +46,7 @@ const MyProgram = () => {
                                 id="programName"
                                 label="番組名"
                                 value={programName}
+                                className="md_w-100 w_90"
                                 onChange={(e) => {
                                     setProgramName(e.target.value);
                                 }}
@@ -57,6 +58,7 @@ const MyProgram = () => {
                                 id="email"
                                 label="番組メールアドレス"
                                 value={email}
+                                className="md_w-100 w_90"
                                 onChange={(e) => {
                                     setEmail(e.target.value);
                                 }}
@@ -68,6 +70,7 @@ const MyProgram = () => {
                                 id="portalCode"
                                 label="郵便番号"
                                 value={portalCode}
+                                className="md_w-100 w_90"
                                 onChange={(e) => {
                                     setPortalCode(e.target.value);
                                 }}
@@ -79,6 +82,7 @@ const MyProgram = () => {
                                 id="address"
                                 label="住所"
                                 value={address}
+                                className="md_w-100 w_90"
                                 onChange={(e) => {
                                     setAddress(e.target.value);
                                 }}
