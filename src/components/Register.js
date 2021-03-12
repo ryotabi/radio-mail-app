@@ -73,48 +73,97 @@ const Register = (props) => {
     return (
         <> 
             <Header />
-            <div className="bg_img">
-                <Container maxWidth="lg">
-                    <h1 className="register_title">Sign Up</h1>
-                    <form className="register_form">
-                        {(
-                            () => {
-                                if(nowPage === 1) {
+            <div className="bg_img"></div>
+            <Container maxWidth="lg">
+                <h1 className="register_title">Sign Up</h1>
+                <form className="register_form">
+                    {(
+                        () => {
+                            if(nowPage === 1) {
+                                return (
+                                    <div>
+                                        <Box m={4}>
+                                            <TextField
+                                                id="radioName"
+                                                label="ラジオネーム"
+                                                value={radioName}
+                                                onChange={(e) => {
+                                                    setRadioName(e.target.value);
+                                                }}
+                                                />
+                                        </Box>
+                                        <Box m={4}>
+                                            <TextField
+                                                id="email"
+                                                label="メールアドレス"
+                                                value={email}
+                                                onChange={(e) => {
+                                                    setEmail(e.target.value);
+                                                }}
+                                                />
+                                        </Box>
+                                        <Box m={4}>
+                                            <TextField
+                                                id="password"
+                                                label="パスワード"
+                                                type="password"
+                                                value={password}
+                                                onChange={(e) => {
+                                                    setPassword(e.target.value);
+                                                }}
+                                                />
+                                        </Box>
+                                        <Box m={6} className="text-center register_btn_wrap">
+                                            <Button variant="contained"className="register_btn" onClick={handleNextPage1}><ArrowForwardIcon /></Button>
+                                        </Box>
+                                        <Box m={2}>
+                                            <p className="text-center"><Link to="/login">Sign In</Link></p>
+                                        </Box>
+                                    </div>
+                                )
+                            }else{
+                                if(nowPage === 2) {
                                     return (
                                         <div>
                                             <Box m={4}>
                                                 <TextField
-                                                    id="radioName"
-                                                    label="ラジオネーム"
-                                                    value={radioName}
+                                                    id="name"
+                                                    label="本名"
+                                                    value={name}
                                                     onChange={(e) => {
-                                                        setRadioName(e.target.value);
+                                                        setName(e.target.value);
                                                     }}
                                                     />
                                             </Box>
                                             <Box m={4}>
                                                 <TextField
-                                                    id="email"
-                                                    label="メールアドレス"
-                                                    value={email}
+                                                    id="hurigana"
+                                                    label="ふりがな"
+                                                    value={hurigana}
                                                     onChange={(e) => {
-                                                        setEmail(e.target.value);
+                                                        setHurigana(e.target.value);
                                                     }}
                                                     />
                                             </Box>
                                             <Box m={4}>
                                                 <TextField
-                                                    id="password"
-                                                    label="パスワード"
-                                                    type="password"
-                                                    value={password}
+                                                    id="age"
+                                                    label="年齢"
+                                                    value={age}
                                                     onChange={(e) => {
-                                                        setPassword(e.target.value);
+                                                        setAge(e.target.value);
                                                     }}
                                                     />
                                             </Box>
                                             <Box m={6} className="text-center register_btn_wrap">
-                                                <Button variant="contained"className="register_btn" onClick={handleNextPage1}><ArrowForwardIcon /></Button>
+                                                <Grid container justify="space-around">
+                                                    <Grid item xs={3}>
+                                                        <Button variant="contained"className="register_btn" onClick={handleBackPage1}><ArrowBackIcon /></Button>
+                                                    </Grid>
+                                                    <Grid item xs={3}>
+                                                        <Button variant="contained"className="register_btn" onClick={handleNextPage2}><ArrowForwardIcon /></Button>
+                                                    </Grid>
+                                                </Grid>
                                             </Box>
                                             <Box m={2}>
                                                 <p className="text-center"><Link to="/login">Sign In</Link></p>
@@ -122,131 +171,81 @@ const Register = (props) => {
                                         </div>
                                     )
                                 }else{
-                                    if(nowPage === 2) {
-                                        return (
-                                            <div>
-                                                <Box m={4}>
-                                                    <TextField
-                                                        id="name"
-                                                        label="本名"
-                                                        value={name}
-                                                        onChange={(e) => {
-                                                            setName(e.target.value);
-                                                        }}
-                                                        />
-                                                </Box>
-                                                <Box m={4}>
-                                                    <TextField
-                                                        id="hurigana"
-                                                        label="ふりがな"
-                                                        value={hurigana}
-                                                        onChange={(e) => {
-                                                            setHurigana(e.target.value);
-                                                        }}
-                                                        />
-                                                </Box>
-                                                <Box m={4}>
-                                                    <TextField
-                                                        id="age"
-                                                        label="年齢"
-                                                        value={age}
-                                                        onChange={(e) => {
-                                                            setAge(e.target.value);
-                                                        }}
-                                                        />
-                                                </Box>
-                                                <Box m={6} className="text-center register_btn_wrap">
-                                                    <Grid container justify="space-around">
-                                                        <Grid item xs={3}>
-                                                            <Button variant="contained"className="register_btn" onClick={handleBackPage1}><ArrowBackIcon /></Button>
-                                                        </Grid>
-                                                        <Grid item xs={3}>
-                                                            <Button variant="contained"className="register_btn" onClick={handleNextPage2}><ArrowForwardIcon /></Button>
-                                                        </Grid>
+                                    return (
+                                        <div>
+                                            <Box m={4}>
+                                                <TextField
+                                                    id="tel"
+                                                    label="電話番号"
+                                                    type="tel"
+                                                    value={tel}
+                                                    onChange={(e) => {
+                                                        setTel(e.target.value);
+                                                    }}
+                                                    />
+                                            </Box>
+                                            <Box m={4}>
+                                                <TextField
+                                                    id="portalCode"
+                                                    label="郵便番号（ハイフン無し）"
+                                                    value={portalCode}
+                                                    onChange={(e) => {
+                                                        setPortalCode(e.target.value);
+                                                    }}
+                                                    />
+                                            </Box>
+                                            <Box m={4}>
+                                                <TextField
+                                                    id="address"
+                                                    label="住所"
+                                                    value={address}
+                                                    onChange={(e) => {
+                                                        setAddress(e.target.value);
+                                                    }}
+                                                    />
+                                            </Box>
+                                            <Box m={6} className="text-center register_btn_wrap">
+                                                <Grid container justify="space-around" alignItems="center">
+                                                    <Grid item xs={5}>
+                                                        <Button variant="contained"className="register_btn" onClick={handleBackPage2}><ArrowBackIcon fontSize="small"/></Button>
                                                     </Grid>
-                                                </Box>
-                                                <Box m={2}>
-                                                    <p className="text-center"><Link to="/login">Sign In</Link></p>
-                                                </Box>
-                                            </div>
-                                        )
-                                    }else{
-                                        return (
-                                            <div>
-                                                <Box m={4}>
-                                                    <TextField
-                                                        id="tel"
-                                                        label="電話番号"
-                                                        type="tel"
-                                                        value={tel}
-                                                        onChange={(e) => {
-                                                            setTel(e.target.value);
-                                                        }}
-                                                        />
-                                                </Box>
-                                                <Box m={4}>
-                                                    <TextField
-                                                        id="portalCode"
-                                                        label="郵便番号（ハイフン無し）"
-                                                        value={portalCode}
-                                                        onChange={(e) => {
-                                                            setPortalCode(e.target.value);
-                                                        }}
-                                                        />
-                                                </Box>
-                                                <Box m={4}>
-                                                    <TextField
-                                                        id="address"
-                                                        label="住所"
-                                                        value={address}
-                                                        onChange={(e) => {
-                                                            setAddress(e.target.value);
-                                                        }}
-                                                        />
-                                                </Box>
-                                                <Box m={6} className="text-center register_btn_wrap">
-                                                    <Grid container justify="space-around" alignItems="center">
-                                                        <Grid item xs={5}>
-                                                            <Button variant="contained"className="register_btn" onClick={handleBackPage2}><ArrowBackIcon fontSize="small"/></Button>
-                                                        </Grid>
-                                                        <Grid item xs={7}>
-                                                            <Button variant="contained"className="register_btn" onClick={handleRegister}>Sign Up<ArrowForwardIcon fontSize="small"/></Button>
-                                                        </Grid>
+                                                    <Grid item xs={7}>
+                                                        <Button variant="contained"className="register_btn" onClick={handleRegister}>Sign Up<ArrowForwardIcon fontSize="small"/></Button>
                                                     </Grid>
-                                                </Box>
-                                                <Box m={2}>
-                                                    <p className="text-center"><Link to="/login">Sign In</Link></p>
-                                                </Box>
-                                            </div>
-                                        )
-                                    }
+                                                </Grid>
+                                            </Box>
+                                            <Box m={2}>
+                                                <p className="text-center"><Link to="/login">Sign In</Link></p>
+                                            </Box>
+                                        </div>
+                                    )
                                 }
                             }
-                        )()}
-                    </form>
-                    <Box m={5}>
-                        <Grid container justify="space-around">
-                            <Grid item xs={3}>
-                                <div className="circle input"></div>
-                            </Grid>
-                            <Grid item xs={3}>
-                                {isInput2 ? (
-                                    <div className="circle input"></div>
-                                ) : (
-                                    <div className="circle"></div>
-                                )}
-                            </Grid>
-                            <Grid item xs={3}>
-                                {isInput3 ? (
-                                    <div className="circle input"></div>
-                                ) : (
-                                    <div className="circle"></div>
-                                )}
-                            </Grid>
+                        }
+                    )()}
+                </form>
+                <Box m={5}>
+                    <Grid container justify="space-around">
+                        <Grid item xs={3}>
+                            <div className="circle input"></div>
                         </Grid>
-                    </Box>
-                </Container>
-            </div>
+                        <Grid item xs={3}>
+                            {isInput2 ? (
+                                <div className="circle input"></div>
+                            ) : (
+                                <div className="circle"></div>
+                            )}
+                        </Grid>
+                        <Grid item xs={3}>
+                            {isInput3 ? (
+                                <div className="circle input"></div>
+                            ) : (
+                                <div className="circle"></div>
+                            )}
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
         </>
     )
 }
