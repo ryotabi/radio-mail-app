@@ -70,8 +70,8 @@ const Program = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>時間</TableCell>
-                  <TableCell>番組</TableCell>
+                  <TableCell className="programTable_date">時間</TableCell>
+                  <TableCell className="programTable_title">番組</TableCell>
                   <TableCell className="programTable_url">公式ＨＰ</TableCell>
                 </TableRow>
               </TableHead>
@@ -79,8 +79,8 @@ const Program = () => {
                 {programLists.map((program) => {
                   return (
                     <TableRow key={program["@attributes"].id}>
-                      <TableCell>{dateToFormat(program["@attributes"].ftl, 2, ":")}～{dateToFormat(program["@attributes"].tol, 2, ":")}</TableCell>
-                      <TableCell>{program.title}</TableCell>
+                      <TableCell className="programTable_date">{dateToFormat(program["@attributes"].ftl, 2, ":")}～{dateToFormat(program["@attributes"].tol, 2, ":")}</TableCell>
+                      <TableCell className="programTable_title">{program.title}</TableCell>
                       <TableCell><a href={program.url} target="_blank">公式ＨＰへ</a></TableCell>
                     </TableRow>
                   )

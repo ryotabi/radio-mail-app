@@ -35,40 +35,39 @@ const Login = (props) => {
     return (
         <> 
             <Header />
-            <div className="bg_img">
-                <Container maxWidth="lg">
-                    <h1 className="login_title">Sign In</h1>
-                    <form className="login_form">
-                        <Box m={4}>
-                            <TextField 
-                                id="email"
-                                label="メールアドレス"
-                                value={email}
-                                onChange={(e) => {
-                                    setEmail(e.target.value);
-                                }}
-                                />
-                        </Box>
-                        <Box m={4}>
-                            <TextField
-                                id="password"
-                                label="パスワード"
-                                type="password"
-                                value={password}
-                                onChange={(e) => {
-                                    setPassword(e.target.value);
-                                }}
-                                />
-                        </Box>
-                        <Box m={6} className="text-center login_btn_wrap">
-                            <Button variant="contained"className="login_btn" onClick={handleLogin}>Sign in<ArrowForwardIcon /></Button>
-                        </Box>
-                        <Box m={2}>
-                            <p className="text-center"><Link to="/register">Sign Up</Link></p>
-                        </Box>
-                    </form>
-                </Container>
-            </div>
+            <div className="bg_img"></div>
+            <Container maxWidth="lg">
+                <h1 className="login_title">Sign In</h1>
+                <form className="login_form">
+                    <Box m={4}>
+                        <TextField 
+                            id="email"
+                            label="メールアドレス"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }}
+                            />
+                    </Box>
+                    <Box m={4}>
+                        <TextField
+                            id="password"
+                            label="パスワード"
+                            type="password"
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                            />
+                    </Box>
+                    <Box m={6} className="text-center login_btn_wrap">
+                        <Button variant="contained"className="login_btn" onClick={handleLogin}>Sign in<ArrowForwardIcon /></Button>
+                    </Box>
+                    <Box m={2}>
+                        <p className="text-center"><Link to="/register">Sign Up</Link></p>
+                    </Box>
+                </form>
+            </Container>
         </>
     )
 }

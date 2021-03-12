@@ -75,7 +75,8 @@ const User = (props) => {
             portalCode,
             radioName,
             tel
-        })
+        });
+        alert('ユーザー情報を変更しました');
         props.history.push('/');
         }
 
@@ -96,7 +97,7 @@ const User = (props) => {
                                                 <TextField
                                                     id="radioName"
                                                     label="ラジオネーム"
-                                                    className="md_w-100"
+                                                    className="md_w-100 w_90"
                                                     value={radioName}
                                                     onChange={(e) => {
                                                         setRadioName(e.target.value);
@@ -107,7 +108,7 @@ const User = (props) => {
                                                     <TextField
                                                         id="age"
                                                         label="年齢"
-                                                        className="md_w-100"
+                                                        className="md_w-100 w_90"
                                                         value={age}
                                                         onChange={(e) => {
                                                             setAge(e.target.value);
@@ -127,7 +128,7 @@ const User = (props) => {
                                                     <TextField
                                                         id="name"
                                                         label="本名"
-                                                        className="md_w-100"
+                                                        className="md_w-100 w_90"
                                                         value={name}
                                                         onChange={(e) => {
                                                             setName(e.target.value);
@@ -138,7 +139,7 @@ const User = (props) => {
                                                     <TextField
                                                         id="hurigana"
                                                         label="ふりがな"
-                                                        className="md_w-100"
+                                                        className="md_w-100 w_90"
                                                         value={hurigana}
                                                         onChange={(e) => {
                                                             setHurigana(e.target.value);
@@ -164,7 +165,7 @@ const User = (props) => {
                                                     <TextField
                                                         id="tel"
                                                         label="電話番号"
-                                                        className="md_w-100"
+                                                        className="md_w-100 w_90"
                                                         type="tel"
                                                         value={tel}
                                                         onChange={(e) => {
@@ -176,7 +177,7 @@ const User = (props) => {
                                                     <TextField
                                                         id="portalCode"
                                                         label="郵便番号（ハイフン無し）"
-                                                        className="md_w-100"
+                                                        className="md_w-100 w_90"
                                                         value={portalCode}
                                                         onChange={(e) => {
                                                             setPortalCode(e.target.value);
@@ -187,7 +188,7 @@ const User = (props) => {
                                                     <TextField
                                                         id="address"
                                                         label="住所"
-                                                        className="md_w-100"
+                                                        className="md_w-100 w_90"
                                                         value={address}
                                                         onChange={(e) => {
                                                             setAddress(e.target.value);

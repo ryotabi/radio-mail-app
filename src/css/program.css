@@ -13,6 +13,9 @@
   font-size: 25px;
   font-weight: bold;
 }
+.MuiTableCell-root {
+  padding: 16px 8px !important;
+}
 .programTable_url {
-  width: 110px;
+  width: 90px;
 }
