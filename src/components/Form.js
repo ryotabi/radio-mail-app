@@ -237,7 +237,7 @@ const Form = (props) => {
                                     <TextField
                                         id="name"
                                         label="氏名"
-                                        className="md_w-100"
+                                        className="md_w-100 w_90"
                                         value={name}
                                         onChange={(e) => {
                                             setName(e.target.value);
@@ -248,7 +248,7 @@ const Form = (props) => {
                                     <TextField
                                         id="portalCode"
                                         label="郵便番号"
-                                        className="md_w-100"
+                                        className="md_w-100 w_90"
                                         value={portalCode}
                                         onChange={(e) => {
                                             setPortalCode(e.target.value);
@@ -259,7 +259,7 @@ const Form = (props) => {
                                     <TextField
                                         id="address"
                                         label="住所"
-                                        className="md_w-100"
+                                        className="md_w-100 w_90"
                                         value={address}
                                         onChange={(e) => {
                                             setAddress(e.target.value);
@@ -270,7 +270,7 @@ const Form = (props) => {
                                     <TextField
                                         id="tel"
                                         label="電話番号"
-                                        className="md_w-100"
+                                        className="md_w-100 w_90"
                                         value={tel}
                                         onChange={(e) => {
                                             setTel(e.target.value);
@@ -296,7 +296,7 @@ const Form = (props) => {
                                         <TextField
                                             id="mail"
                                             label="メールアドレス"
-                                            className="md_w-100"
+                                            className="md_w-100 w_90"
                                             value={mail}
                                             onChange={(e) => {
                                                 setMail(e.target.value);
@@ -307,7 +307,7 @@ const Form = (props) => {
                                         <TextField
                                             id="radioName"
                                             label="ラジオネーム"
-                                            className="md_w-100"
+                                            className="md_w-100 w_90"
                                             value={radioName}
                                             onChange={(e) => {
                                                 setRadioName(e.target.value);
@@ -318,7 +318,7 @@ const Form = (props) => {
                                         <TextField
                                             id="age"
                                             label="年齢"
-                                            className="md_w-100"
+                                            className="md_w-100 w_90"
                                             value={age}
                                             onChange={(e) => {
                                                 setAge(e.target.value);
@@ -333,7 +333,7 @@ const Form = (props) => {
                                                     <Select
                                                         labelId="program"
                                                         id="program"
-                                                        className="selectbox md_w-100"
+                                                        className="selectbox md_w-100 w_90"
                                                         value={program}
                                                         onChange={(e) => {
                                                             setProgram(e.target.value);
@@ -354,7 +354,7 @@ const Form = (props) => {
                                                     <Select
                                                         labelId="program"
                                                         id="program"
-                                                        className="selectbox md_w-100"
+                                                        className="selectbox md_w-100 w_90"
                                                         value={program}
                                                         onChange={(e) => {
                                                             setProgram(e.target.value);
@@ -401,7 +401,7 @@ const Form = (props) => {
                                                     <TextField
                                                     id="corner"
                                                     label="コーナー（件名）"
-                                                    className="md_w-100"
+                                                    className="md_w-100 w_90"
                                                     value={corner}
                                                     onChange={(e) => {
                                                         setCorner(e.target.value);
@@ -416,7 +416,7 @@ const Form = (props) => {
                                                     <Select
                                                         labelId="corner"
                                                         id="corner"
-                                                        className="selectbox md_w-100"
+                                                        className="selectbox md_w-100 w_90"
                                                         value={corner}
                                                         onChange={(e) => {
                                                             setCorner(e.target.value);
@@ -438,7 +438,7 @@ const Form = (props) => {
                                                     <Select
                                                         labelId="template"
                                                         id="template"
-                                                        className="selectbox md_w-100"
+                                                        className="selectbox md_w-100 w_90"
                                                         value={template}
                                                         onChange={(e) => {
                                                             setTemplate(e.target.value);
@@ -457,7 +457,7 @@ const Form = (props) => {
                                     <TextField
                                         id="content"
                                         label="投稿内容"
-                                        className="textarea md_w-100"
+                                        className="textarea md_w-100 w_90"
                                         multiline
                                         rows={4}
                                         value={content}
