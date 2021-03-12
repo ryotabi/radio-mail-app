@@ -87,6 +87,7 @@ const Register = (props) => {
                                                 id="radioName"
                                                 label="ラジオネーム"
                                                 value={radioName}
+                                                className="md_w-100 w_90"
                                                 onChange={(e) => {
                                                     setRadioName(e.target.value);
                                                 }}
@@ -97,6 +98,7 @@ const Register = (props) => {
                                                 id="email"
                                                 label="メールアドレス"
                                                 value={email}
+                                                className="md_w-100 w_90"
                                                 onChange={(e) => {
                                                     setEmail(e.target.value);
                                                 }}
@@ -108,6 +110,7 @@ const Register = (props) => {
                                                 label="パスワード"
                                                 type="password"
                                                 value={password}
+                                                className="md_w-100 w_90"
                                                 onChange={(e) => {
                                                     setPassword(e.target.value);
                                                 }}
@@ -130,6 +133,7 @@ const Register = (props) => {
                                                     id="name"
                                                     label="本名"
                                                     value={name}
+                                                    className="md_w-100 w_90"
                                                     onChange={(e) => {
                                                         setName(e.target.value);
                                                     }}
@@ -140,6 +144,7 @@ const Register = (props) => {
                                                     id="hurigana"
                                                     label="ふりがな"
                                                     value={hurigana}
+                                                    className="md_w-100 w_90"
                                                     onChange={(e) => {
                                                         setHurigana(e.target.value);
                                                     }}
@@ -150,6 +155,7 @@ const Register = (props) => {
                                                     id="age"
                                                     label="年齢"
                                                     value={age}
+                                                    className="md_w-100 w_90"
                                                     onChange={(e) => {
                                                         setAge(e.target.value);
                                                     }}
@@ -179,6 +185,7 @@ const Register = (props) => {
                                                     label="電話番号"
                                                     type="tel"
                                                     value={tel}
+                                                    className="md_w-100 w_90"
                                                     onChange={(e) => {
                                                         setTel(e.target.value);
                                                     }}
@@ -189,6 +196,7 @@ const Register = (props) => {
                                                     id="portalCode"
                                                     label="郵便番号（ハイフン無し）"
                                                     value={portalCode}
+                                                    className="md_w-100 w_90"
                                                     onChange={(e) => {
                                                         setPortalCode(e.target.value);
                                                     }}
@@ -199,6 +207,7 @@ const Register = (props) => {
                                                     id="address"
                                                     label="住所"
                                                     value={address}
+                                                    className="md_w-100 w_90"
                                                     onChange={(e) => {
                                                         setAddress(e.target.value);
                                                     }}

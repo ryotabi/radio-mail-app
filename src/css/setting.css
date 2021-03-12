@@ -3,6 +3,8 @@
 }
 .setting_title {
   align-items: center;
+  display: flex;
+  justify-content: center;
   font-size: 25px;
   font-weight: bold;
   text-align: center;

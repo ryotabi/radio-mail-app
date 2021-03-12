@@ -42,6 +42,7 @@ const Template = () => {
                                 id="templateName"
                                 label="テンプレート名"
                                 value={templateName}
+                                className="md_w-100 w_90"
                                 onChange={(e) => {
                                     setTemplateName(e.target.value);
                                 }}

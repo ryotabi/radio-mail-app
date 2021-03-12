@@ -16,6 +16,7 @@ import Header from './Header';
 import '../css/reset.css';
 import '../css/common.css';
 import '../css/form.css';
+import { CodeOutlined } from '@material-ui/icons';
 
 const Form = (props) => {
     const [name, setName] = useState('');
@@ -190,6 +191,7 @@ const Form = (props) => {
                     program,
                     corner,
                     content,
+                    date: new Date()
                 }));
                 props.history.push('/');
             }
@@ -374,7 +376,17 @@ const Form = (props) => {
                                         <Button variant="contained"className="btn set_info_btn" onClick={setRadioInfo}>ユーザー情報をセットする</Button>
                                     </Box>
                                     <Box m={6} className="text-center form_btn_wrap">
-                                        <Button variant="contained"className="btn set_info_btn" onClick={setMyProgram}>マイ番組をセットする</Button>
+                                        {(() => {
+                                            if(isUsedMyProgram) {
+                                                return (
+                                                    <Button variant="contained"className="btn set_info_btn" onClick={() => {setisUsedMyProgram(false)}}>標準番組に切り替える</Button>
+                                                )
+                                            } else {
+                                                return (
+                                                    <Button variant="contained"className="btn set_info_btn" onClick={setMyProgram}>マイ番組に切り替える</Button>
+                                                )
+                                            }
+                                        })()}
                                     </Box>
                                     <Box m={2} className="text-center form_btn_wrap">
                                         <Grid container justify="space-around">

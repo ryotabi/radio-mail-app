@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase';
 import { db } from '../firebase';
+import { dateToString } from '../helpers/DateToString';
 import Header from './Header';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import EditIcon from '@material-ui/icons/Edit';
@@ -25,6 +26,7 @@ const SaveMail = () => {
         program: '',
         corner: '',
         content: '',
+        date: ''
     }]);
 
     useEffect(() => {
@@ -47,6 +49,7 @@ const SaveMail = () => {
                             program: doc.data().program,
                             corner: doc.data().corner,
                             content: doc.data().content,
+                            date: doc.data().date.toDate(),
                         }
                     })
                 )
@@ -71,12 +74,14 @@ const SaveMail = () => {
                 <ul>
                     {lists.map((list) => {
                         if(list.name !== ''){
+                            console.log(list.date);
                             return (
                                 <>
                                     <li key={list.id}>
                                         <div className="save_listitem">
                                             <BookmarkBorderIcon fontSize="large" />
                                             <div>
+                                                <p className="save_listdate">{dateToString(list.date)}</p>
                                                 <p className="save_listprogram">{list.program}</p> 
                                                 <p className="save_listcorner">{list.corner}</p> 
                                             </div>
