@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import Header from './Header';
+import GetValidationMessage from '../helpers/ValidationMessage';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -15,6 +16,8 @@ import '../css/login.css'
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [validationType, setValidationType] = useState('');
+    const [validationMessage, setValidationMessage] = useState('');
 
     useEffect(() => {
         const unSub = auth.onAuthStateChanged((user) => {
@@ -28,7 +31,9 @@ const Login = (props) => {
             await auth.signInWithEmailAndPassword(email,password)
             props.history.push('/');
         }catch(error){
-            alert(error.message);
+            const validationInfo = GetValidationMessage(error.code);
+            setValidationType(validationInfo.type);
+            setValidationMessage(validationInfo.message);
         }
     }
 
@@ -42,12 +47,20 @@ const Login = (props) => {
                     <Box m={4}>
                         <TextField 
                             id="email"
+                            type={email}
                             label="メールアドレス"
                             value={email}
                             onChange={(e) => {
                                 setEmail(e.target.value);
                             }}
                             />
+                            {(() => {
+                                if(validationType === 'email') {
+                                    return (
+                                        <p className="error">{validationMessage}</p>
+                                    )
+                                }
+                            })()}
                     </Box>
                     <Box m={4}>
                         <TextField
@@ -59,9 +72,23 @@ const Login = (props) => {
                                 setPassword(e.target.value);
                             }}
                             />
+                            {(() => {
+                                if(validationType === 'password') {
+                                    return (
+                                        <p className="error">{validationMessage}</p>
+                                    )
+                                }
+                            })()}
                     </Box>
                     <Box m={6} className="text-center login_btn_wrap">
                         <Button variant="contained"className="login_btn" onClick={handleLogin}>Sign in<ArrowForwardIcon /></Button>
+                        {(() => {
+                                if(validationType === 'default') {
+                                    return (
+                                        <p className="error">{validationMessage}</p>
+                                    )
+                                }
+                            })()}
                     </Box>
                     <Box m={2}>
                         <p className="text-center"><Link to="/register">Sign Up</Link></p>

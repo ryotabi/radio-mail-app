@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header';
 import { db } from '../firebase';
+import GetValidationMessage from '../helpers/ValidationMessage';
 import firebase from 'firebase';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -11,11 +12,25 @@ import '../css/reset.css';
 import '../css/common.css';
 import '../css/template.css';
 
-const Template = () => {
+const Template = (props) => {
     const [templateName, setTemplateName] = useState('');
     const [template, setTemplate] = useState('');
+    const [validationType, setValidationType] = useState('');
+    const [validationMessage, setValidationMessage] = useState('');
 
     const storeTemplate = () => {
+        if(templateName === '') {
+            const validationInfo = GetValidationMessage('template/invalid-templateName');
+            setValidationType(validationInfo.type);
+            setValidationMessage(validationInfo.message);
+            return;
+        }
+        if(template === '') {
+            const validationInfo = GetValidationMessage('template/invalid-template');
+            setValidationType(validationInfo.type);
+            setValidationMessage(validationInfo.message);
+            return;
+        }
         firebase.auth().onAuthStateChanged((user) => {
             db.collection(`template/${user.uid}/data`).add(
                 {
@@ -25,10 +40,13 @@ const Template = () => {
             ).then(() => {
                 setTemplateName('');
                 setTemplate('');
+                setValidationType('');
+                setValidationMessage('');
                 alert('テンプレートを保存しました');
             })
         })
     }
+    console.log(validationType);
     return (
         <>
             <Header />
@@ -46,8 +64,12 @@ const Template = () => {
                                 onChange={(e) => {
                                     setTemplateName(e.target.value);
                                 }}
-                            >
-                            </TextField>
+                            />
+                            {(() => {
+                                if(validationType === 'templateName') {
+                                    return <p className="error">{validationMessage}</p>
+                                }
+                            })()}
                         </Box>
                         <Box my={4} mx={2}>
                             <TextField
@@ -61,6 +83,11 @@ const Template = () => {
                                     setTemplate(e.target.value);
                                 }}
                             />
+                            {(() => {
+                                if(validationType === 'template') {
+                                    return <p className="error">{validationMessage}</p>
+                                }
+                            })()}
                         </Box>
                         <Box m={6} className="text-center template_set_btn_wrap">
                             <Button variant="contained" className="btn template_set_btn" onClick={storeTemplate}>保存する</Button>

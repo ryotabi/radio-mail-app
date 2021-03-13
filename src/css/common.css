@@ -10,6 +10,12 @@
   font-size: 25px;
   font-weight: bold;
 }
+.error {
+  color: red;
+  text-align: left;
+  font-size: 15px;
+  margin-top: 5px;
+}
 .position-fixed {
   position: fixed;
 }
