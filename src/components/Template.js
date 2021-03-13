@@ -8,8 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/template.css';
 
 const Template = (props) => {
@@ -17,6 +15,12 @@ const Template = (props) => {
     const [template, setTemplate] = useState('');
     const [validationType, setValidationType] = useState('');
     const [validationMessage, setValidationMessage] = useState('');
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
 
     const storeTemplate = () => {
         if(templateName === '') {

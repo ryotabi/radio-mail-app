@@ -1,16 +1,21 @@
 import React from 'react';
 import Header from './Header';
+import firebase from 'firebase';
 import { dateToString } from '../helpers/DateToString';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/single.css';
 
 const Single = (props) => {
     const { list } = props.location.state;
     const date = dateToString(list.date);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
 
     const pageBack = () => {
         props.history.goBack();

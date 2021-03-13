@@ -8,17 +8,22 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/myProgram.css';
 
-const MyProgram = () => {
+const MyProgram = (props) => {
     const [programName, setProgramName] = useState('');
     const [email, setEmail] = useState('');
     const [portalCode, setPortalCode] = useState('');
     const [address, setAddress] = useState('');
     const [validationType, setValidationType] = useState('');
     const [validationMessage, setValidationMessage] = useState('');
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
+
     const storeMyProgram = () =>{
         if(programName === '') {
             const validationInfo = GetValidationMessage('program/invalid-myProgram');

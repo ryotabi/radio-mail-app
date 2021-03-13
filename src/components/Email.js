@@ -10,9 +10,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Grid from '@material-ui/core/Grid';
 
-import '../css/reset.css'
-import '../css/common.css'
-import '../css/email.css'
+import '../css/email.css';
 
 const Email = (props) => {
     const [oldEmail, setOldEmail] = useState('');
@@ -22,6 +20,12 @@ const Email = (props) => {
 
     const [nowPage, setNowPage] = useState(1);
     const [isInput2, setIsInput2] = useState(false);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
 
     const [validationMessage, setValidationMessage] = useState('');
     const handleNextPage1 = () => {

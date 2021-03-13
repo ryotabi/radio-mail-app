@@ -16,6 +16,9 @@ import Template from './components/Template';
 import MyProgram from './components/MyProgram';
 import ResetPassword from './components/ResetPassword';
 
+import './css/reset.css';
+import './css/common.css';
+
 const App =() => {
   return (
     <BrowserRouter>

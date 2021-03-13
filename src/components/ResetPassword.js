@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
-import '../css/resetPassword.css'
+import '../css/resetPassword.css';
 
 
 const ResetPassword = (props) => {

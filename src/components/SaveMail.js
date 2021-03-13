@@ -8,11 +8,9 @@ import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/save.css';
 
-const SaveMail = () => {
+const SaveMail = (props) => {
     const [hasLists, setHasLists] = useState(false);
     const [lists, setLists] = useState([{
         id: '',
@@ -28,6 +26,12 @@ const SaveMail = () => {
         content: '',
         date: ''
     }]);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {

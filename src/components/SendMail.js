@@ -9,9 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import { db } from '../firebase';
 
-import '../css/reset.css'
-import '../css/common.css'
-import '../css/mail.css'
+import '../css/mail.css';
 
 const SendMail = (props) => {
     firebase.auth().onAuthStateChanged((user) => {

@@ -9,9 +9,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
-import '../css/reset.css'
-import '../css/common.css'
-import '../css/login.css'
+import '../css/login.css';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');

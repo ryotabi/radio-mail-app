@@ -6,9 +6,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 
-import '../css/reset.css'
-import '../css/common.css'
-import '../css/top.css'
+import '../css/top.css';
 
 const Top = (props) => {
     firebase.auth().onAuthStateChanged((user) => {

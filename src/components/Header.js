@@ -8,8 +8,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Box from '@material-ui/core/Box';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/header.css';
 
 const Header = () => {
