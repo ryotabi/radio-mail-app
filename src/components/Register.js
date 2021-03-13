@@ -12,9 +12,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Grid from '@material-ui/core/Grid';
 
-import '../css/reset.css'
-import '../css/common.css'
-import '../css/register.css'
+import '../css/register.css';
 
 const Register = (props) => {
     const [radioName, setRadioName] = useState('');

@@ -7,8 +7,6 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { db } from '../firebase';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/list.css';
 
 const List = (props) => {

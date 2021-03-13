@@ -14,8 +14,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Header from './Header';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/form.css';
 
 const Form = (props) => {
@@ -30,26 +28,22 @@ const Form = (props) => {
     const [corner, setCorner] = useState('');
     const [cornerLists, setCornerLists] = useState([{id: '', corner: ''}]);
     const [content, setContent] = useState('');
-
     const [nowFormInput, setNowFormInput] = useState(1);
     const [isInput2, setIsInput2] = useState(false);
     const [isInput3, setIsInput3] = useState(false);
     const [programList, setProgramList] = useState([{id: '',program: '', name: '',}]);
-
     const [isUsedMyProgram, setisUsedMyProgram] = useState(false);
     const [myProgramList, setMyProgramList] = useState([{id: '', program: '', name: ''}])
-
     const [template, setTemplate] = useState('');
     const [isUsedtemplate, setIsUsedTemplate] = useState(false);
     const [templateList, setTemplateList] = useState([{id: '', name: ''}]);
-
     const [validationMessage, setValidationMessage] = useState('');
 
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');
         }
-    })
+    });
 
     useEffect(() => {
         if(props.location.state){
@@ -158,6 +152,51 @@ const Form = (props) => {
         })
     }
 
+    const useContentTemplate = () => {
+        setIsUsedTemplate(true);
+        firebase.auth().onAuthStateChanged((user) => {
+            db.collection(`template/${user.uid}/data`).onSnapshot((snapshot) => {
+                setTemplateList(
+                    snapshot.docs.map((doc) => {
+                        return {id: doc.id, name: doc.data().name}
+                    })
+                )
+            })
+        })
+    }
+
+    const getTemplateContent = (templateName) => {
+        firebase.auth().onAuthStateChanged((user) => {
+            db.collection(`template/${user.uid}/data`).where('name', '==', templateName).get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    setContent(doc.data().content);
+                })
+            })
+        })
+    }
+
+    const saveMail = () => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if(user){
+                db.collection(`mail/${user.uid}/saveMail`).add(({
+                    name,
+                    portalCode,
+                    address,
+                    tel,
+                    mail,
+                    radioName,
+                    age,
+                    program,
+                    corner,
+                    content,
+                    date: new Date()
+                }));
+                props.history.push('/');
+            }
+        })
+    }
+
     const submitMailInfo = () => {
         const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
         if(mail === '' || regexp.test(mail) === false) {
@@ -193,51 +232,6 @@ const Form = (props) => {
                 }
             }
         );
-    }
-
-    const saveMail = () => {
-        firebase.auth().onAuthStateChanged((user) => {
-            if(user){
-                db.collection(`mail/${user.uid}/saveMail`).add(({
-                    name,
-                    portalCode,
-                    address,
-                    tel,
-                    mail,
-                    radioName,
-                    age,
-                    program,
-                    corner,
-                    content,
-                    date: new Date()
-                }));
-                props.history.push('/');
-            }
-        })
-    }
-
-    const useContentTemplate = () => {
-        setIsUsedTemplate(true);
-        firebase.auth().onAuthStateChanged((user) => {
-            db.collection(`template/${user.uid}/data`).onSnapshot((snapshot) => {
-                setTemplateList(
-                    snapshot.docs.map((doc) => {
-                        return {id: doc.id, name: doc.data().name}
-                    })
-                )
-            })
-        })
-    }
-
-    const getTemplateContent = (templateName) => {
-        firebase.auth().onAuthStateChanged((user) => {
-            db.collection(`template/${user.uid}/data`).where('name', '==', templateName).get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    setContent(doc.data().content);
-                })
-            })
-        })
     }
 
     return (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
+import firebase from 'firebase';
 import axios from 'axios';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -12,15 +13,19 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/program.css';
 
-const Program = () => {
+const Program = (props) => {
   const [nowDate, setNowDate] = useState('');
   const [radioStationLists, setRadioStationLists] = useState([]);
   const [programLists, setRadioProgram] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if(!user) {
+        props.history.push('/login');
+    }
+});
 
   useEffect(() => {
     axios.get(`https://s-ryota.sakura.ne.jp/GetRadikoProgramApi/`)

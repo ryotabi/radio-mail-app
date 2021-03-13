@@ -10,8 +10,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Grid from '@material-ui/core/Grid';
 
-import '../css/reset.css';
-import '../css/common.css';
 import '../css/user.css';
 
 const User = (props) => {
@@ -26,6 +24,13 @@ const User = (props) => {
     const [nowPage, setNowPage] = useState(1);
     const [isInput2, setIsInput2] = useState(false);
     const [isInput3, setIsInput3] = useState(false);
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
+
     const handleNextPage1 = () => {
         setIsInput2(true);
         setNowPage(2);

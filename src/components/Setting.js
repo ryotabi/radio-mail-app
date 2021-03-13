@@ -6,11 +6,15 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
-import '../css/reset.css'
-import '../css/common.css'
-import '../css/setting.css'
+import '../css/setting.css';
 
 const Setting = (props) => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
+
     const handleLogout = () => {
         firebase.auth().onAuthStateChanged((user) => {
                 firebase.auth().signOut().then(() => { 
