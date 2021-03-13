@@ -80,7 +80,7 @@ const Login = (props) => {
                                 }
                             })()}
                     </Box>
-                    <Box m={6} className="text-center login_btn_wrap">
+                    <Box m={4} className="text-center login_btn_wrap">
                         <Button variant="contained"className="login_btn" onClick={handleLogin}>Sign in<ArrowForwardIcon /></Button>
                         {(() => {
                                 if(validationType === 'default') {
@@ -89,6 +89,9 @@ const Login = (props) => {
                                     )
                                 }
                             })()}
+                    </Box>
+                    <Box m={2}>
+                        <p className="text-center"><Link to="/resetPassword">パスワードを忘れた方</Link></p>
                     </Box>
                     <Box m={2}>
                         <p className="text-center"><Link to="/register">Sign Up</Link></p>
