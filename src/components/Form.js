@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import { db } from '../firebase';
+import GetValidationMessage from '../helpers/ValidationMessage';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -16,7 +17,6 @@ import Header from './Header';
 import '../css/reset.css';
 import '../css/common.css';
 import '../css/form.css';
-import { CodeOutlined } from '@material-ui/icons';
 
 const Form = (props) => {
     const [name, setName] = useState('');
@@ -42,6 +42,8 @@ const Form = (props) => {
     const [template, setTemplate] = useState('');
     const [isUsedtemplate, setIsUsedTemplate] = useState(false);
     const [templateList, setTemplateList] = useState([{id: '', name: ''}]);
+
+    const [validationMessage, setValidationMessage] = useState('');
 
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
@@ -157,6 +159,22 @@ const Form = (props) => {
     }
 
     const submitMailInfo = () => {
+        const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+        if(mail === '' || regexp.test(mail) === false) {
+            const validationInfo = GetValidationMessage('mail/invalid-email');
+            setValidationMessage(validationInfo.message);
+            return;
+        }
+        if(program === '') {
+            const validationInfo = GetValidationMessage('mail/invalid-program');
+            setValidationMessage(validationInfo.message);
+            return;
+        }
+        if(content === '') {
+            const validationInfo = GetValidationMessage('mail/invalid-content');
+            setValidationMessage(validationInfo.message);
+            return;
+        }
         props.history.push(
             {
                 pathname: '/mail',
@@ -335,6 +353,7 @@ const Form = (props) => {
                                                     <Select
                                                         labelId="program"
                                                         id="program"
+                                                        required={true}
                                                         className="selectbox md_w-100 w_90"
                                                         value={program}
                                                         onChange={(e) => {
@@ -356,6 +375,7 @@ const Form = (props) => {
                                                     <Select
                                                         labelId="program"
                                                         id="program"
+                                                        required={true}
                                                         className="selectbox md_w-100 w_90"
                                                         value={program}
                                                         onChange={(e) => {
@@ -412,6 +432,7 @@ const Form = (props) => {
                                                 <Box my={4} mx={2}>
                                                     <TextField
                                                     id="corner"
+                                                    required={true}
                                                     label="コーナー（件名）"
                                                     className="md_w-100 w_90"
                                                     value={corner}
@@ -480,6 +501,7 @@ const Form = (props) => {
                                     </Box>
                                     <Box m={6} className="text-center form_btn_wrap">
                                         <Button variant="contained"className="btn set_info_btn" onClick={submitMailInfo}>情報を送信</Button>
+                                        <p className="error">{validationMessage}</p>
                                     </Box>
                                     <Box m={2} className="text-center form_btn_wrap">
                                         <Grid container justify="space-between">

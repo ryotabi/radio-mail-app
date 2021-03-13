@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import firebase from 'firebase';
 import Header from './Header';
 import { db } from '../firebase';
+import GetValidationMessage from '../helpers/ValidationMessage';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -16,7 +17,22 @@ const MyProgram = () => {
     const [email, setEmail] = useState('');
     const [portalCode, setPortalCode] = useState('');
     const [address, setAddress] = useState('');
+    const [validationType, setValidationType] = useState('');
+    const [validationMessage, setValidationMessage] = useState('');
     const storeMyProgram = () =>{
+        if(programName === '') {
+            const validationInfo = GetValidationMessage('program/invalid-myProgram');
+            setValidationType(validationInfo.type);
+            setValidationMessage(validationInfo.message);
+            return;
+        }
+        const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+        if(email === '' || regexp.test(email) === false) {
+            const validationInfo = GetValidationMessage('program/invalid-email');
+            setValidationType(validationInfo.type);
+            setValidationMessage(validationInfo.message);
+            return;
+        }
         firebase.auth().onAuthStateChanged((user) => {
             db.collection(`myProgram/${user.uid}/list`).add(
                 {
@@ -50,8 +66,12 @@ const MyProgram = () => {
                                 onChange={(e) => {
                                     setProgramName(e.target.value);
                                 }}
-                            >
-                            </TextField>
+                            />
+                        {(() => {
+                            if(validationType === 'myProgram') {
+                                return <p className="error">{validationMessage}</p>
+                            }
+                        })()}
                         </Box>
                         <Box my={4} mx={2}>
                             <TextField
@@ -62,8 +82,12 @@ const MyProgram = () => {
                                 onChange={(e) => {
                                     setEmail(e.target.value);
                                 }}
-                            >
-                            </TextField>
+                            />
+                        {(() => {
+                            if(validationType === 'email') {
+                                return <p className="error">{validationMessage}</p>
+                            }
+                        })()}
                         </Box>
                         <Box my={4} mx={2}>
                             <TextField

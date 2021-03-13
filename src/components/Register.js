@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import Header from './Header';
+import GetValidationMessage from '../helpers/ValidationMessage';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -28,6 +29,7 @@ const Register = (props) => {
     const [nowPage, setNowPage] = useState(1);
     const [isInput2, setIsInput2] = useState(false);
     const [isInput3, setIsInput3] = useState(false);
+    const [validationMessage, setValidationMessage] = useState('');
 
     const handleNextPage1 = () => {
         setIsInput2(true);
@@ -49,24 +51,30 @@ const Register = (props) => {
 
     const handleRegister = async() => {
         try{
-            auth.createUserWithEmailAndPassword(email,password);
-            firebase.auth().onAuthStateChanged((user) => {
-                console.log(user.uid);
-                db.collection(`users/${user.uid}/info`).add({
-                    radioName,
-                    email,
-                    name,
-                    hurigana,
-                    age,
-                    tel,
-                    portalCode,
-                    address,
+            auth.createUserWithEmailAndPassword(email,password)
+            .then((user) => {
+                firebase.auth().onAuthStateChanged((user) => {
+                    if(user) {
+                        db.collection(`users/${user.uid}/info`).add({
+                            radioName,
+                            email,
+                            name,
+                            hurigana,
+                            age,
+                            tel,
+                            portalCode,
+                            address,
+                        })
+                        props.history.push('/');
+                    }
                 })
-                props.history.push('/');
+            }).catch((error) => {
+                console.log(error.code)
+                const validationInfo = GetValidationMessage(error.code);
+                setValidationMessage(validationInfo.message);
             })
         }
         catch(error){
-            alert(error.message)
         }
     }
 
@@ -221,6 +229,7 @@ const Register = (props) => {
                                                     <Grid item xs={7}>
                                                         <Button variant="contained"className="register_btn" onClick={handleRegister}>Sign Up<ArrowForwardIcon fontSize="small"/></Button>
                                                     </Grid>
+                                                    <p className="error">{validationMessage}</p>
                                                 </Grid>
                                             </Box>
                                             <Box m={2}>
