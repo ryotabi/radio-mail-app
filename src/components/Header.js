@@ -23,6 +23,9 @@ const Header = () => {
         setAnchorEl(null);
     }
 
+    const pageReload = () => {
+        document.location.reload();
+    }
     return (
         <>
             <div className="header_wrap">
@@ -50,6 +53,7 @@ const Header = () => {
                     <MenuItem><Link className="w-100" to="/list">過去の投稿</Link></MenuItem>
                     <MenuItem><Link className="w-100" to="/program">番組表</Link></MenuItem>
                     <MenuItem><Link className="w-100" to="/setting">設定</Link></MenuItem>
+                    <MenuItem><Link className="w-100" onClick={pageReload}>ページリロード</Link></MenuItem>
                 </Box>
             </Menu>
         </>
