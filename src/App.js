@@ -15,6 +15,7 @@ import Email from './components/Email';
 import Template from './components/Template';
 import MyProgram from './components/MyProgram';
 import ResetPassword from './components/ResetPassword';
+import HowToUse from './components/HowToUse';
 
 import './css/reset.css';
 import './css/common.css';
@@ -39,6 +40,7 @@ const App =() => {
           <Route path="/template" exact component={Template} />
           <Route path="/myProgram" exact component={MyProgram} />
           <Route path="/resetPassword" exact component={ResetPassword} />
+          <Route path="/howToUse" exact component={HowToUse} />
         </Switch>
       </>
       </BrowserRouter>

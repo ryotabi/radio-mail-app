@@ -50,6 +50,7 @@ const Header = () => {
                     <MenuItem><Link className="w-100" to="/save">未送信のメール</Link></MenuItem>
                     <MenuItem><Link className="w-100" to="/list">過去の投稿</Link></MenuItem>
                     <MenuItem><Link className="w-100" to="/program">番組表</Link></MenuItem>
+                    <MenuItem><Link className="w-100" to="/howToUse">使い方</Link></MenuItem>
                     <MenuItem><Link className="w-100" to="/setting">設定</Link></MenuItem>
                     <MenuItem><p className="w-100" onClick={pageReload}>ページリロード</p></MenuItem>
                 </Box>

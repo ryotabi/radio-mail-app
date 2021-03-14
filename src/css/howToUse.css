@@ -1,0 +1,22 @@
+.howToUse_wrap {
+  padding-top: 100px;
+}
+.howToUse_title {
+  font-size: 25px;
+  font-weight: bold;
+}
+.howToUse_item_title {
+  color: rgba(255, 255, 255, 0.755);
+  font-size: 25px;
+}
+.howToUse_item_texts {
+  line-height: 25px;
+  list-style: circle;
+  margin: 15px 0 0 10px;
+}
+.howToUse_item_text {
+  margin-top: 10px;
+}
+.howToUse_link {
+  color: rgba(0, 0, 0, 0.501);
+}
