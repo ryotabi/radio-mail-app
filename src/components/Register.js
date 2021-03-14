@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 import { auth, db } from '../firebase';
@@ -28,28 +28,28 @@ const Register = (props) => {
     const [isInput3, setIsInput3] = useState(false);
     const [validationMessage, setValidationMessage] = useState('');
 
-    const handleNextPage1 = () => {
+    const goToNextPage2 = () => {
         setIsInput2(true);
         setNowPage(2);
     }
-    const handleNextPage2 = () => {
+    const goToNextPage3 = () => {
         setIsInput3(true);
         setNowPage(3);
     }
-    const handleBackPage1 = () => {
+    const goBackPage1 = () => {
         setIsInput2(false);
         setNowPage(1);
     }
-    const handleBackPage2 = () => {
+    const goBackPage2 = () => {
         setIsInput3(false);
         setIsInput2(true)
         setNowPage(2);
     }
 
-    const handleRegister = async() => {
+    const storeRegisterInfo = async() => {
         try{
             auth.createUserWithEmailAndPassword(email,password)
-            .then((user) => {
+            .then(() => {
                 firebase.auth().onAuthStateChanged((user) => {
                     if(user) {
                         db.collection(`users/${user.uid}/info`).add({
@@ -64,9 +64,8 @@ const Register = (props) => {
                         })
                         props.history.push('/');
                     }
-                })
+                });
             }).catch((error) => {
-                console.log(error.code)
                 const validationInfo = GetValidationMessage(error.code);
                 setValidationMessage(validationInfo.message);
             })
@@ -96,7 +95,7 @@ const Register = (props) => {
                                                 onChange={(e) => {
                                                     setRadioName(e.target.value);
                                                 }}
-                                                />
+                                            />
                                         </Box>
                                         <Box m={4}>
                                             <p className="required">必須</p>
@@ -109,7 +108,7 @@ const Register = (props) => {
                                                 onChange={(e) => {
                                                     setEmail(e.target.value);
                                                 }}
-                                                />
+                                            />
                                         </Box>
                                         <Box m={4}>
                                             <p className="required">必須</p>
@@ -123,10 +122,10 @@ const Register = (props) => {
                                                 onChange={(e) => {
                                                     setPassword(e.target.value);
                                                 }}
-                                                />
+                                            />
                                         </Box>
                                         <Box m={6} className="text-center register_btn_wrap">
-                                            <Button variant="contained"className="register_btn" onClick={handleNextPage1}><ArrowForwardIcon /></Button>
+                                            <Button variant="contained"className="register_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
                                         </Box>
                                         <Box m={2}>
                                             <p className="text-center"><Link to="/login">Sign In</Link></p>
@@ -146,7 +145,7 @@ const Register = (props) => {
                                                     onChange={(e) => {
                                                         setName(e.target.value);
                                                     }}
-                                                    />
+                                                />
                                             </Box>
                                             <Box m={4}>
                                                 <TextField
@@ -157,7 +156,7 @@ const Register = (props) => {
                                                     onChange={(e) => {
                                                         setHurigana(e.target.value);
                                                     }}
-                                                    />
+                                                />
                                             </Box>
                                             <Box m={4}>
                                                 <TextField
@@ -168,15 +167,15 @@ const Register = (props) => {
                                                     onChange={(e) => {
                                                         setAge(e.target.value);
                                                     }}
-                                                    />
+                                                />
                                             </Box>
                                             <Box m={6} className="text-center register_btn_wrap">
                                                 <Grid container justify="space-around">
                                                     <Grid item xs={3}>
-                                                        <Button variant="contained"className="register_btn" onClick={handleBackPage1}><ArrowBackIcon /></Button>
+                                                        <Button variant="contained"className="register_btn" onClick={goBackPage1}><ArrowBackIcon /></Button>
                                                     </Grid>
                                                     <Grid item xs={3}>
-                                                        <Button variant="contained"className="register_btn" onClick={handleNextPage2}><ArrowForwardIcon /></Button>
+                                                        <Button variant="contained"className="register_btn" onClick={goToNextPage3}><ArrowForwardIcon /></Button>
                                                     </Grid>
                                                 </Grid>
                                             </Box>
@@ -198,7 +197,7 @@ const Register = (props) => {
                                                     onChange={(e) => {
                                                         setTel(e.target.value);
                                                     }}
-                                                    />
+                                                />
                                             </Box>
                                             <Box m={4}>
                                                 <TextField
@@ -209,7 +208,7 @@ const Register = (props) => {
                                                     onChange={(e) => {
                                                         setPortalCode(e.target.value);
                                                     }}
-                                                    />
+                                                />
                                             </Box>
                                             <Box m={4}>
                                                 <TextField
@@ -220,15 +219,15 @@ const Register = (props) => {
                                                     onChange={(e) => {
                                                         setAddress(e.target.value);
                                                     }}
-                                                    />
+                                                />
                                             </Box>
                                             <Box m={6} className="text-center register_btn_wrap">
                                                 <Grid container justify="space-around" alignItems="center">
                                                     <Grid item xs={5}>
-                                                        <Button variant="contained"className="register_btn" onClick={handleBackPage2}><ArrowBackIcon fontSize="small"/></Button>
+                                                        <Button variant="contained"className="register_btn" onClick={goBackPage2}><ArrowBackIcon fontSize="small"/></Button>
                                                     </Grid>
                                                     <Grid item xs={7}>
-                                                        <Button variant="contained"className="register_btn" onClick={handleRegister}>Sign Up<ArrowForwardIcon fontSize="small"/></Button>
+                                                        <Button variant="contained"className="register_btn" onClick={storeRegisterInfo}>Sign Up<ArrowForwardIcon fontSize="small"/></Button>
                                                     </Grid>
                                                     <p className="error">{validationMessage}</p>
                                                 </Grid>

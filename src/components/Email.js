@@ -17,7 +17,6 @@ const Email = (props) => {
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [nowPage, setNowPage] = useState(1);
-    const [isInput2, setIsInput2] = useState(false);
     const [validationMessage, setValidationMessage] = useState('');
 
     // ログイン状態確認
@@ -27,44 +26,43 @@ const Email = (props) => {
         }
     });
 
-    const handleNextPage1 = () => {
-        setIsInput2(true);
+    const goToNextPage1 = () => {
         setNowPage(2);
     }
-    const handleBackPage1 = () => {
-        setIsInput2(false);
+    const GoBackPage1 = () => {
         setNowPage(1);
     }
 
-    const submitChangedEmailAndPassword = () => {
-        const user = firebase.auth().currentUser;
-        const credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPassword);
-        user.reauthenticateWithCredential(credential).then(() => {
-            const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
-            if(newEmail === '' || regexp.test(newEmail) === false) {
-                const validationInfo = GetValidationMessage('mail/invalid-email');
-                setValidationMessage(validationInfo.message + '(新しいメールアドレス）');
-                return;
-            }
-            if ( newPassword.length < 6 ) {
-                const validationInfo = GetValidationMessage('auth/weak-password');
-                setValidationMessage(validationInfo.message + '(新しいメールアドレス）');
-                return;
-            }
-            user.updateEmail(newEmail).then(() => {
-                user.updatePassword(newPassword).then(() => {
-                    props.history.push('/login');
+    const changeEmailAndPassword = () => {
+        firebase.auth().onAuthStateChanged((user) => {
+            const credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPassword);
+            user.reauthenticateWithCredential(credential).then(() => {
+                const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+                if(newEmail === '' || regexp.test(newEmail) === false) {
+                    const validationInfo = GetValidationMessage('mail/invalid-email');
+                    setValidationMessage(validationInfo.message + '(新しいメールアドレス）');
+                    return;
+                }
+                if ( newPassword.length < 6 ) {
+                    const validationInfo = GetValidationMessage('auth/weak-password');
+                    setValidationMessage(validationInfo.message + '(新しいメールアドレス）');
+                    return;
+                }
+                user.updateEmail(newEmail).then(() => {
+                    user.updatePassword(newPassword).then(() => {
+                        props.history.push('/login');
+                    }).catch((error) => {
+                        const validationInfo = GetValidationMessage(error.code);
+                        setValidationMessage(validationInfo.message + '(新しいパスワード)');
+                    });
                 }).catch((error) => {
                     const validationInfo = GetValidationMessage(error.code);
-                    setValidationMessage(validationInfo.message + '(新しいパスワード)');
+                    setValidationMessage(validationInfo.message + '(新しいメールアドレス）');
                 });
             }).catch((error) => {
                 const validationInfo = GetValidationMessage(error.code);
-                setValidationMessage(validationInfo.message + '(新しいメールアドレス）');
+                setValidationMessage(validationInfo.message + '(現在のメールアドレス・パスワード)');
             });
-        }).catch((error) => {
-            const validationInfo = GetValidationMessage(error.code);
-            setValidationMessage(validationInfo.message + '(現在のメールアドレス・パスワード)');
         });
     }
 
@@ -108,7 +106,7 @@ const Email = (props) => {
                                         />
                                     </Box>
                                     <Box m={6} className="text-center email_btn_wrap">
-                                        <Button variant="contained"className="email_btn" onClick={handleNextPage1}><ArrowForwardIcon /></Button>
+                                        <Button variant="contained"className="email_btn" onClick={goToNextPage1}><ArrowForwardIcon /></Button>
                                     </Box>
                                 </div>
                             )
@@ -145,14 +143,14 @@ const Email = (props) => {
                                     <Box m={6} className="text-center email_btn_wrap">
                                         <Grid container justify="space-around">
                                             <Grid item xs={3}>
-                                                <Button variant="contained"className="email_btn" onClick={handleBackPage1}><ArrowBackIcon /></Button>
+                                                <Button variant="contained"className="email_btn" onClick={GoBackPage1}><ArrowBackIcon /></Button>
                                             </Grid>
                                         </Grid>
                                     </Box>
                                     <Box m={4} className="text-center email_btn_wrap">
                                         <Grid container>
                                             <Grid item xs={12}>
-                                                <Button variant="contained" className="email_btn" onClick={submitChangedEmailAndPassword}>変更</Button>
+                                                <Button variant="contained" className="email_btn" onClick={changeEmailAndPassword}>変更</Button>
                                                 <p className="error">{validationMessage}</p>
                                             </Grid>
                                         </Grid>

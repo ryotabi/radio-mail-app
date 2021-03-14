@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Grid from '@material-ui/core/Grid';
-
 import '../css/user.css';
 
 const User = (props) => {
@@ -25,25 +24,26 @@ const User = (props) => {
     const [isInput2, setIsInput2] = useState(false);
     const [isInput3, setIsInput3] = useState(false);
 
+    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');
         }
     });
 
-    const handleNextPage1 = () => {
+    const goToNextPage2 = () => {
         setIsInput2(true);
         setNowPage(2);
     }
-    const handleNextPage2 = () => {
+    const goToNextPage3 = () => {
         setIsInput3(true);
         setNowPage(3);
     }
-    const handleBackPage1 = () => {
+    const goBackPage1 = () => {
         setIsInput2(false);
         setNowPage(1);
     }
-    const handleBackPage2 = () => {
+    const goBackPage2 = () => {
         setIsInput3(false);
         setIsInput2(true)
         setNowPage(2);
@@ -62,15 +62,15 @@ const User = (props) => {
                         setTel(doc.data().tel);
                         setPortalCode(doc.data().portalCode);
                         setAddress(doc.data().address);
-                    })
-                })
+                    });
+                });
             } else {
                 props.history.push('/login');
             }
-        })
-    },[])
+        });
+    },[]);
 
-    const submitChangedUserInfo = async() => {
+    const changeUserInfo = async() => {
         const user = firebase.auth().currentUser;
         await db.collection(`users/${user.uid}/info`).doc(id).update({
             address,
@@ -107,21 +107,21 @@ const User = (props) => {
                                                     onChange={(e) => {
                                                         setRadioName(e.target.value);
                                                     }}
-                                                    />
+                                                />
                                             </Box>
                                             <Box m={4}>
-                                                    <TextField
-                                                        id="age"
-                                                        label="年齢"
-                                                        className="md_w-100 w_90"
-                                                        value={age}
-                                                        onChange={(e) => {
-                                                            setAge(e.target.value);
-                                                        }}
-                                                        />
-                                                </Box>
+                                                <TextField
+                                                    id="age"
+                                                    label="年齢"
+                                                    className="md_w-100 w_90"
+                                                    value={age}
+                                                    onChange={(e) => {
+                                                        setAge(e.target.value);
+                                                    }}
+                                                />
+                                            </Box>
                                             <Box m={6} className="text-center user_info_btn_wrap">
-                                                <Button variant="contained"className="user_info_btn" onClick={handleNextPage1}><ArrowForwardIcon /></Button>
+                                                <Button variant="contained"className="user_info_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
                                             </Box>
                                         </div>
                                     )
@@ -138,7 +138,7 @@ const User = (props) => {
                                                         onChange={(e) => {
                                                             setName(e.target.value);
                                                         }}
-                                                        />
+                                                    />
                                                 </Box>
                                                 <Box m={4}>
                                                     <TextField
@@ -149,15 +149,15 @@ const User = (props) => {
                                                         onChange={(e) => {
                                                             setHurigana(e.target.value);
                                                         }}
-                                                        />
+                                                    />
                                                 </Box>
                                                 <Box m={6} className="text-center user_info_btn_wrap">
                                                     <Grid container justify="space-around">
                                                         <Grid item xs={3}>
-                                                            <Button variant="contained"className="user_info_btn" onClick={handleBackPage1}><ArrowBackIcon /></Button>
+                                                            <Button variant="contained"className="user_info_btn" onClick={goBackPage1}><ArrowBackIcon /></Button>
                                                         </Grid>
                                                         <Grid item xs={3}>
-                                                            <Button variant="contained"className="user_info_btn" onClick={handleNextPage2}><ArrowForwardIcon /></Button>
+                                                            <Button variant="contained"className="user_info_btn" onClick={goToNextPage3}><ArrowForwardIcon /></Button>
                                                         </Grid>
                                                     </Grid>
                                                 </Box>
@@ -176,7 +176,7 @@ const User = (props) => {
                                                         onChange={(e) => {
                                                             setTel(e.target.value);
                                                         }}
-                                                        />
+                                                    />
                                                 </Box>
                                                 <Box m={4}>
                                                     <TextField
@@ -187,7 +187,7 @@ const User = (props) => {
                                                         onChange={(e) => {
                                                             setPortalCode(e.target.value);
                                                         }}
-                                                        />
+                                                    />
                                                 </Box>
                                                 <Box m={4}>
                                                     <TextField
@@ -198,19 +198,19 @@ const User = (props) => {
                                                         onChange={(e) => {
                                                             setAddress(e.target.value);
                                                         }}
-                                                        />
+                                                    />
                                                 </Box>
                                                 <Box m={6} className="text-center user_info_btn_wrap">
                                                     <Grid container alignItems="center">
                                                         <Grid item xs={12}>
-                                                            <Button variant="contained"className="user_info_btn" onClick={handleBackPage2}><ArrowBackIcon fontSize="small"/></Button>
+                                                            <Button variant="contained"className="user_info_btn" onClick={goBackPage2}><ArrowBackIcon fontSize="small"/></Button>
                                                         </Grid>
                                                     </Grid>
                                                 </Box>
                                                 <Box m={4} className="text-center user_info_btn_wrap">
                                                     <Grid container>
                                                         <Grid item xs={12}>
-                                                            <Button variant="contained" className="user_info_btn" onClick={submitChangedUserInfo}>変更</Button>
+                                                            <Button variant="contained" className="user_info_btn" onClick={changeUserInfo}>変更</Button>
                                                         </Grid>
                                                     </Grid>
                                                 </Box>

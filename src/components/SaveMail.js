@@ -56,10 +56,10 @@ const SaveMail = (props) => {
                             date: doc.data().date.toDate(),
                         }
                     })
-                )
+                );
             })
             return () => unSub();
-        })
+        });
     },[]);
 
     const deleteSaveMail = (id) => {
@@ -67,7 +67,7 @@ const SaveMail = (props) => {
             if(user){
                 db.collection(`mail/${user.uid}/saveMail`).doc(id).delete();
             }
-        })
+        });
     };
 
     return (
@@ -96,7 +96,7 @@ const SaveMail = (props) => {
                                         </div>
                                     </li>
                                 </>
-                            )
+                            );
                         }
                     })}
                     {hasLists ? '' : (<p className="save_nolist">保存しているメールはありません</p>)}

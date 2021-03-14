@@ -48,10 +48,10 @@ const Template = (props) => {
                 setValidationType('');
                 setValidationMessage('');
                 alert('テンプレートを保存しました');
-            })
-        })
+            });
+        });
     }
-    console.log(validationType);
+
     return (
         <>
             <Header />

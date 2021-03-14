@@ -33,10 +33,10 @@ const Program = (props) => {
       setNowDate((res.data.stations.station[0].progs.date).substr(4,4));
       setRadioStationLists(res.data.stations.station);
       setIsLoading(false);
-    })
-  },[])
+    });
+  },[]);
 
-  const handleList = (program) => {
+  const setList = (program) => {
     setRadioProgram(program.progs.prog);
   }
 
@@ -53,7 +53,7 @@ const Program = (props) => {
             <div className="loading_wrap">
               <CircularProgress className="loading_icon" size={60} disableShrink={true} />
             </div>
-          )
+          );
         }
       })()}
       <Header />
@@ -62,7 +62,7 @@ const Program = (props) => {
           <ul className="d-flex">
             {radioStationLists.map((station) => {
               let key = Math.random();
-              return <li key={key} onClick={() => handleList(station)}>{station.name}</li>
+              return <li key={key} onClick={() => setList(station)}>{station.name}</li>
             })}
           </ul>
       </div>

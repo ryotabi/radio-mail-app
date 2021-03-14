@@ -48,17 +48,17 @@ const SendMail = (props) => {
                         setToName(doc.data().name);
                         setToAddress(doc.data().address);
                         setToPortalCode(doc.data().portalCode);
-                    })
-                })
-                })
+                        })
+                    });
+                });
             } else {
                 db.collection(`programs/${location.state.program}/info`).onSnapshot((snapshot) => {
                     snapshot.docs.map((doc) => {
                         setToName(doc.data().name);
                         setToAddress(doc.data().address);
                         setToPortalCode(doc.data().portalCode);
-                    })
-                })
+                    });
+                });
             }
             setProgram(location.state.program);
             setFromAddress(location.state.address);
@@ -104,7 +104,7 @@ const SendMail = (props) => {
             "tel": tel,
             "mail": mail,
             "corner": corner,
-            "content": content,
+            "content": content
         }
         await (await axios.post(`https://s-ryota.sakura.ne.jp/radioMailAPI/index.php`,data)
         .then((res) => {
@@ -118,13 +118,13 @@ const SendMail = (props) => {
                 radioName,
                 corner,
                 content,
-                date: new Date(),
+                date: new Date()
             });
             db.collection(`mail/${currentUser.uid}/programList`).add({
                 program,
             });
             props.history.push('/');
-        }))
+        }));
     }
 
     return (

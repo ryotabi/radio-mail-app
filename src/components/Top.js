@@ -5,17 +5,16 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
-
 import '../css/top.css';
 
 const Top = (props) => {
-
     // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');
         }
     });
+
     return (
         <>
             <Header />
