@@ -12,7 +12,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import '../css/program.css';
 
 const Program = (props) => {
@@ -21,6 +20,7 @@ const Program = (props) => {
   const [programLists, setRadioProgram] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
     if(!user) {
         props.history.push('/login');
@@ -47,15 +47,15 @@ const Program = (props) => {
 
   return (
     <>
-    {(() => {
-      if(isLoading){
-        return (
-          <div className="loading_wrap">
-            <CircularProgress className="loading_icon" size={60} disableShrink={true} />
-          </div>
-        )
-      }
-    })()}
+      {(() => {
+        if(isLoading){
+          return (
+            <div className="loading_wrap">
+              <CircularProgress className="loading_icon" size={60} disableShrink={true} />
+            </div>
+          )
+        }
+      })()}
       <Header />
       <div className="bg_color"></div>
       <div className="program_listnav pt-85">
