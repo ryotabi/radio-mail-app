@@ -7,7 +7,6 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-
 import '../css/myProgram.css';
 
 const MyProgram = (props) => {
@@ -18,6 +17,7 @@ const MyProgram = (props) => {
     const [validationType, setValidationType] = useState('');
     const [validationMessage, setValidationMessage] = useState('');
 
+    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');
@@ -54,6 +54,7 @@ const MyProgram = (props) => {
             alert('保存しました');
         })
     }
+
     return (
         <>
             <Header />
