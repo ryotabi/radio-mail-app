@@ -6,7 +6,7 @@
   font-weight: bold;
 }
 .howToUse_item_title {
-  color: rgba(255, 255, 255, 0.94);
+  color: rgba(255, 255, 255, 0.871);
   font-size: 25px;
 }
 .howToUse_item_texts {
@@ -18,5 +18,5 @@
   margin-top: 10px;
 }
 .howToUse_link {
-  color: rgba(0, 0, 0, 0.501);
+  color: rgba(255, 255, 255, 0.94);
 }
