@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Grid from '@material-ui/core/Grid';
-
 import '../css/email.css';
 
 const Email = (props) => {
@@ -17,17 +16,17 @@ const Email = (props) => {
     const [oldPassword, setOldPassword] = useState('');
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
-
     const [nowPage, setNowPage] = useState(1);
     const [isInput2, setIsInput2] = useState(false);
+    const [validationMessage, setValidationMessage] = useState('');
 
+    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');
         }
     });
 
-    const [validationMessage, setValidationMessage] = useState('');
     const handleNextPage1 = () => {
         setIsInput2(true);
         setNowPage(2);
@@ -114,56 +113,54 @@ const Email = (props) => {
                                 </div>
                             )
                         }else{
-                            if(nowPage === 2) {
-                                return (
-                                    <div>
-                                        <Box m={4}>
-                                            <p className="required">必須</p>
-                                            <TextField
-                                                id="newEmail"
-                                                required={true}
-                                                label="新しいメールアドレス"
-                                                className="md_w-100 w_90"
-                                                value={newEmail}
-                                                onChange={(e) => {
-                                                    setNewEmail(e.target.value);
-                                                }}
-                                            />
-                                        </Box>
-                                        <Box m={4}>
-                                            <p className="required">必須</p>
-                                            <TextField
-                                                id="newPassword"
-                                                required={true}
-                                                label="新しいパスワード"
-                                                className="md_w-100 w_90"
-                                                type="password"
-                                                value={newPassword}
-                                                onChange={(e) => {
-                                                    setNewPassword(e.target.value);
-                                                }}
-                                            />
-                                        </Box>
-                                        <Box m={6} className="text-center email_btn_wrap">
-                                            <Grid container justify="space-around">
-                                                <Grid item xs={3}>
-                                                    <Button variant="contained"className="email_btn" onClick={handleBackPage1}><ArrowBackIcon /></Button>
-                                                </Grid>
+                            return (
+                                <div>
+                                    <Box m={4}>
+                                        <p className="required">必須</p>
+                                        <TextField
+                                            id="newEmail"
+                                            required={true}
+                                            label="新しいメールアドレス"
+                                            className="md_w-100 w_90"
+                                            value={newEmail}
+                                            onChange={(e) => {
+                                                setNewEmail(e.target.value);
+                                            }}
+                                        />
+                                    </Box>
+                                    <Box m={4}>
+                                        <p className="required">必須</p>
+                                        <TextField
+                                            id="newPassword"
+                                            required={true}
+                                            label="新しいパスワード"
+                                            className="md_w-100 w_90"
+                                            type="password"
+                                            value={newPassword}
+                                            onChange={(e) => {
+                                                setNewPassword(e.target.value);
+                                            }}
+                                        />
+                                    </Box>
+                                    <Box m={6} className="text-center email_btn_wrap">
+                                        <Grid container justify="space-around">
+                                            <Grid item xs={3}>
+                                                <Button variant="contained"className="email_btn" onClick={handleBackPage1}><ArrowBackIcon /></Button>
                                             </Grid>
-                                        </Box>
-                                        <Box m={4} className="text-center email_btn_wrap">
-                                            <Grid container>
-                                                <Grid item xs={12}>
-                                                    <Button variant="contained" className="email_btn" onClick={submitChangedEmailAndPassword}>変更</Button>
-                                                    <p className="error">{validationMessage}</p>
-                                                </Grid>
+                                        </Grid>
+                                    </Box>
+                                    <Box m={4} className="text-center email_btn_wrap">
+                                        <Grid container>
+                                            <Grid item xs={12}>
+                                                <Button variant="contained" className="email_btn" onClick={submitChangedEmailAndPassword}>変更</Button>
+                                                <p className="error">{validationMessage}</p>
                                             </Grid>
-                                        </Box>
-                                    </div>
-                                )
-                            }}
+                                        </Grid>
+                                    </Box>
+                                </div>
+                            )
                         }
-                    )()}
+                    })()}
                     </form>
                 </Container>
             </div>
