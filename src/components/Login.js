@@ -43,9 +43,11 @@ const Login = (props) => {
                 <h1 className="login_title">Sign In</h1>
                 <form className="login_form">
                     <Box m={4}>
+                        <p className="required">必須</p>
                         <TextField 
                             id="email"
                             type={email}
+                            required={true}
                             label="メールアドレス"
                             value={email}
                             onChange={(e) => {
@@ -61,8 +63,10 @@ const Login = (props) => {
                             })()}
                     </Box>
                     <Box m={4}>
+                        <p className="required">必須</p>
                         <TextField
                             id="password"
+                            required={true}
                             label="パスワード"
                             type="password"
                             value={password}

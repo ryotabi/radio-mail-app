@@ -100,8 +100,10 @@ const Register = (props) => {
                                                 />
                                         </Box>
                                         <Box m={4}>
+                                            <p className="required">必須</p>
                                             <TextField
                                                 id="email"
+                                                required={true}
                                                 label="メールアドレス"
                                                 value={email}
                                                 className="md_w-100 w_90"
@@ -111,8 +113,10 @@ const Register = (props) => {
                                                 />
                                         </Box>
                                         <Box m={4}>
+                                            <p className="required">必須</p>
                                             <TextField
                                                 id="password"
+                                                required={true}
                                                 label="パスワード"
                                                 type="password"
                                                 value={password}

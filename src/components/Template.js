@@ -60,8 +60,10 @@ const Template = (props) => {
                     <h1 className="title text-center">メール本文テンプレート</h1>
                     <form className="template_form">
                         <Box my={4} mx={2}>
+                            <p className="required">必須</p>
                             <TextField
                                 id="templateName"
+                                required={true}
                                 label="テンプレート名"
                                 value={templateName}
                                 className="md_w-100 w_90"
@@ -76,8 +78,10 @@ const Template = (props) => {
                             })()}
                         </Box>
                         <Box my={4} mx={2}>
+                            <p className="required">必須</p>
                             <TextField
                                 id="template"
+                                required={true}
                                 label="テンプレート内容"
                                 className="textarea md_w-100"
                                 multiline

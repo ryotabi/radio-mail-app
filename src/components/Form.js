@@ -307,8 +307,10 @@ const Form = (props) => {
                                         <p className="form_title text-center">投稿情報</p>
                                     </Box>
                                     <Box my={4} mx={2}>
+                                        <p className="required">必須</p>
                                         <TextField
                                             id="mail"
+                                            required={true}
                                             label="メールアドレス"
                                             className="md_w-100 w_90"
                                             value={mail}
@@ -343,6 +345,7 @@ const Form = (props) => {
                                         if(isUsedMyProgram) {
                                             return (
                                                 <Box my={4} mx={2}>
+                                                    <p className="required">必須</p>
                                                     <InputLabel id="program">マイ番組</InputLabel>
                                                     <Select
                                                         labelId="program"
@@ -365,6 +368,7 @@ const Form = (props) => {
                                         } else {
                                             return (
                                                 <Box my={4} mx={2}>
+                                                    <p className="required">必須</p>
                                                     <InputLabel id="program">番組</InputLabel>
                                                     <Select
                                                         labelId="program"
@@ -424,6 +428,7 @@ const Form = (props) => {
                                         if(isUsedMyProgram) {
                                             return (
                                                 <Box my={4} mx={2}>
+                                                    <p className="required">必須</p>
                                                     <TextField
                                                     id="corner"
                                                     required={true}
@@ -439,10 +444,12 @@ const Form = (props) => {
                                         } else {
                                             return (
                                                 <Box my={4} mx={2}>
+                                                    <p className="required">必須</p>
                                                     <InputLabel id="corner">コーナー</InputLabel>
                                                     <Select
                                                         labelId="corner"
                                                         id="corner"
+                                                        required={true}
                                                         className="selectbox md_w-100 w_90"
                                                         value={corner}
                                                         onChange={(e) => {
