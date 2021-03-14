@@ -4,13 +4,13 @@ import firebase from 'firebase';
 import { dateToString } from '../helpers/DateToString';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+
 import '../css/single.css';
 
 const Single = (props) => {
     const { list } = props.location.state;
     const date = dateToString(list.date);
 
-    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');

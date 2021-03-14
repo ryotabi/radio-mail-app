@@ -7,6 +7,7 @@ import Header from './Header';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
 import '../css/save.css';
 
 const SaveMail = (props) => {
@@ -26,7 +27,6 @@ const SaveMail = (props) => {
         date: ''
     }]);
 
-    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');

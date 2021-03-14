@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Header from './Header';
+
 import '../css/form.css';
 
 const Form = (props) => {
@@ -38,7 +39,6 @@ const Form = (props) => {
     const [templateList, setTemplateList] = useState([{id: '', name: ''}]);
     const [validationMessage, setValidationMessage] = useState('');
 
-    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');
@@ -68,7 +68,6 @@ const Form = (props) => {
         })
         return () => unSub();
     },[]);
-
     useEffect(() => {
         const unSub = firebase.auth().onAuthStateChanged((user) => {
             if(user) {

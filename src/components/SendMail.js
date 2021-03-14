@@ -8,9 +8,15 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import { db } from '../firebase';
+
 import '../css/mail.css';
 
 const SendMail = (props) => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if(!user) {
+            props.history.push('/login');
+        }
+    });
     const [program, setProgram] = useState('');
     const [toPortalCode, setToPortalCode] = useState('');
     const [fromPortalCode, setFromPortalCode] = useState('');
@@ -30,13 +36,6 @@ const SendMail = (props) => {
     const splicToPortalCode = [...toPortalCode];
     const [isBack, setIsBack] = useState(true);
     const [stateSubmitButton, setStateSubmitButton] = useState(true);
-
-    // ログイン状態確認
-    firebase.auth().onAuthStateChanged((user) => {
-        if(!user) {
-            props.history.push('/login');
-        }
-    });
 
     useEffect(() => {
         if(location.state !== undefined) {
@@ -71,15 +70,8 @@ const SendMail = (props) => {
             setCorner(location.state.corner);
             setContent(location.state.content);
         }
-    },[]);
-
-    useEffect(() => {
-        if(toName === "" || toAddress === "" || mail === ""){
-            setStateSubmitButton(true);
-        }else{
-            setStateSubmitButton(false);
-            }
-    },[toAddress, toName, mail]);
+    },[])
+    
 
     const returnPage = () => {
         const FrontPage = document.getElementById('FrontPage');
@@ -94,6 +86,13 @@ const SendMail = (props) => {
             setIsBack(true);
         }
     }
+    useEffect(() => {
+        if(toName === "" || toAddress === "" || mail === ""){
+            setStateSubmitButton(true);
+        }else{
+            setStateSubmitButton(false);
+            }
+    },[toAddress, toName, mail]);
 
     const handleSubmit = async () => {
         const data = {

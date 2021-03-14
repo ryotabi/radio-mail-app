@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import CancelIcon from '@material-ui/icons/Cancel';
 import Box from '@material-ui/core/Box';
+
 import '../css/header.css';
 
 const Header = () => {
