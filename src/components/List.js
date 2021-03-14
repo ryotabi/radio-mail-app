@@ -19,7 +19,6 @@ const List = (props) => {
         radioName: ''
     }]);
     const programnavLists = [];
-    const {currentUser} = firebase.auth();
 
     // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
@@ -30,11 +29,7 @@ const List = (props) => {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
-            if(!user) {
-                props.history.push('/login');
-            }
-            const {currentUser} = firebase.auth();
-            const unSub = db.collection(`mail/${currentUser.uid}/programList`).onSnapshot((snapshot) => {
+            const unSub = db.collection(`mail/${user.uid}/programList`).onSnapshot((snapshot) => {
                 setProgramList(
                     snapshot.docs.map((doc) => {
                         return {id: doc.id, program: doc.data().program } 
@@ -42,7 +37,7 @@ const List = (props) => {
                 )
             })
             return () => unSub();
-        })
+        });
     },[]);
 
     for(let i = 0; i<programList.length; i++){
@@ -51,14 +46,22 @@ const List = (props) => {
         }
     }
 
-    const handleList = async(program) => {
+    const setList = async(program) => {
+        const {currentUser} = firebase.auth();
         await db.collection(`mail/${currentUser.uid}/${program}`).orderBy('date','desc').onSnapshot((snapshot) => {
             setLists(
                 snapshot.docs.map((doc) => {
-                    return {id: doc.id, program:doc.data().program,corner:doc.data().corner, date:doc.data().date.toDate(), content:doc.data().content, radioName: doc.data().radioName}
+                    return {
+                        id: doc.id,
+                        program: doc.data().program,
+                        corner: doc.data().corner,
+                        date: doc.data().date.toDate(),
+                        content: doc.data().content,
+                        radioName: doc.data().radioName
+                    }
                 })
-            )
-        })
+            );
+        });
     }
 
     return (
@@ -67,10 +70,10 @@ const List = (props) => {
             <div className="bg_color"></div>
             <div className="program_listnav pt-85">
                 <ul className="d-flex">
-                        {programnavLists.map((program) => {
-                            let key = Math.random();
-                            return <li key={key} onClick={() => handleList(program)}>{program}</li>
-                        })}
+                    {programnavLists.map((program) => {
+                        let key = Math.random();
+                        return <li key={key} onClick={() => setList(program)}>{program}</li>
+                    })}
                 </ul>
             </div>
             <ul>

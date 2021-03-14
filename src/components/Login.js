@@ -19,13 +19,13 @@ const Login = (props) => {
     useEffect(() => {
         const unSub = auth.onAuthStateChanged((user) => {
             user && props.history.push('/');
-        })
+        });
         return () => unSub();
-    },[])
+    },[]);
 
-    const handleLogin = async() => {
+    const storeLoginInfo = async() => {
         try{
-            await auth.signInWithEmailAndPassword(email,password)
+            await auth.signInWithEmailAndPassword(email,password);
             props.history.push('/');
         }catch(error){
             const validationInfo = GetValidationMessage(error.code);
@@ -52,14 +52,14 @@ const Login = (props) => {
                             onChange={(e) => {
                                 setEmail(e.target.value);
                             }}
-                            />
-                            {(() => {
-                                if(validationType === 'email') {
-                                    return (
-                                        <p className="error">{validationMessage}</p>
-                                    )
-                                }
-                            })()}
+                        />
+                        {(() => {
+                            if(validationType === 'email') {
+                                return (
+                                    <p className="error">{validationMessage}</p>
+                                )
+                            }
+                        })()}
                     </Box>
                     <Box m={4}>
                         <p className="required">必須</p>
@@ -72,24 +72,24 @@ const Login = (props) => {
                             onChange={(e) => {
                                 setPassword(e.target.value);
                             }}
-                            />
-                            {(() => {
-                                if(validationType === 'password') {
-                                    return (
-                                        <p className="error">{validationMessage}</p>
-                                    )
-                                }
-                            })()}
+                        />
+                        {(() => {
+                            if(validationType === 'password') {
+                                return (
+                                    <p className="error">{validationMessage}</p>
+                                )
+                            }
+                        })()}
                     </Box>
                     <Box m={4} className="text-center login_btn_wrap">
-                        <Button variant="contained"className="login_btn" onClick={handleLogin}>Sign in<ArrowForwardIcon /></Button>
+                        <Button variant="contained"className="login_btn" onClick={storeLoginInfo}>Sign in<ArrowForwardIcon /></Button>
                         {(() => {
                                 if(validationType === 'default') {
                                     return (
                                         <p className="error">{validationMessage}</p>
                                     )
                                 }
-                            })()}
+                        })()}
                     </Box>
                     <Box m={2}>
                         <p className="text-center"><Link to="/resetPassword">パスワードを忘れた方</Link></p>

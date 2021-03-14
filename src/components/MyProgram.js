@@ -46,13 +46,13 @@ const MyProgram = (props) => {
                     portalCode: portalCode,
                     email: email
                 }
-            )
+            );
             setProgramName('');
             setEmail('');
             setPortalCode('');
             setAddress('');
             alert('保存しました');
-        })
+        });
     }
 
     return (
@@ -108,8 +108,7 @@ const MyProgram = (props) => {
                                 onChange={(e) => {
                                     setPortalCode(e.target.value);
                                 }}
-                            >
-                            </TextField>
+                            />
                         </Box>
                         <Box my={4} mx={2}>
                             <TextField
@@ -120,8 +119,7 @@ const MyProgram = (props) => {
                                 onChange={(e) => {
                                     setAddress(e.target.value);
                                 }}
-                            >
-                            </TextField>
+                            />
                         </Box>
                         <Box m={6} className="text-center myProgram_set_btn_wrap">
                             <Button variant="contained" className="btn myProgram_set_btn" onClick={storeMyProgram}>保存する</Button>

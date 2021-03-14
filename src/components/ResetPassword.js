@@ -15,7 +15,7 @@ const ResetPassword = (props) => {
             props.history.push('/login');
         }).catch(() => {
             alert('メールが送信できませんでした。')
-        })
+        });
     }
 
     return (
