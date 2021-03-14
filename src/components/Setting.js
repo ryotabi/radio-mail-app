@@ -5,10 +5,10 @@ import Header from './Header';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+
 import '../css/setting.css';
 
 const Setting = (props) => {
-    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');

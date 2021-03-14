@@ -9,8 +9,6 @@ import Header from './Header';
 import '../css/top.css';
 
 const Top = (props) => {
-
-    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');

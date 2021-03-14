@@ -16,7 +16,6 @@ const Template = (props) => {
     const [validationType, setValidationType] = useState('');
     const [validationMessage, setValidationMessage] = useState('');
 
-    // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
         if(!user) {
             props.history.push('/login');
