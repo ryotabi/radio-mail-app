@@ -63,8 +63,10 @@ const MyProgram = (props) => {
                     <h2 className="title text-center">マイ番組</h2>
                     <form className="myProgram_form">
                         <Box my={4} mx={2}>
+                            <p className="required">必須</p>
                             <TextField
                                 id="programName"
+                                required={true}
                                 label="番組名"
                                 value={programName}
                                 className="md_w-100 w_90"
@@ -79,8 +81,10 @@ const MyProgram = (props) => {
                         })()}
                         </Box>
                         <Box my={4} mx={2}>
+                            <p className="required">必須</p>
                             <TextField
                                 id="email"
+                                required={true}
                                 label="番組メールアドレス"
                                 value={email}
                                 className="md_w-100 w_90"

@@ -82,8 +82,10 @@ const Email = (props) => {
                             return (
                                 <div>
                                     <Box m={4}>
+                                        <p className="required">必須</p>
                                         <TextField
                                             id="oldEmail"
+                                            required={true}
                                             label="現在のメールアドレス"
                                             className="md_w-100 w_90"
                                             value={oldEmail}
@@ -93,8 +95,10 @@ const Email = (props) => {
                                         />
                                     </Box>
                                     <Box m={4}>
+                                        <p className="required">必須</p>
                                         <TextField
                                             id="oldPassword"
+                                            required={true}
                                             label="現在のパスワード"
                                             className="md_w-100 w_90"
                                             type="password"
@@ -114,8 +118,10 @@ const Email = (props) => {
                                 return (
                                     <div>
                                         <Box m={4}>
+                                            <p className="required">必須</p>
                                             <TextField
                                                 id="newEmail"
+                                                required={true}
                                                 label="新しいメールアドレス"
                                                 className="md_w-100 w_90"
                                                 value={newEmail}
@@ -125,8 +131,10 @@ const Email = (props) => {
                                             />
                                         </Box>
                                         <Box m={4}>
+                                            <p className="required">必須</p>
                                             <TextField
                                                 id="newPassword"
+                                                required={true}
                                                 label="新しいパスワード"
                                                 className="md_w-100 w_90"
                                                 type="password"
