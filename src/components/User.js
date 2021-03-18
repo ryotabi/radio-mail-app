@@ -21,8 +21,6 @@ const User = (props) => {
     const [portalCode, setPortalCode] = useState('');
     const [address, setAddress] = useState('');
     const [nowPage, setNowPage] = useState(1);
-    const [isInput2, setIsInput2] = useState(false);
-    const [isInput3, setIsInput3] = useState(false);
 
     // ログイン状態確認
     firebase.auth().onAuthStateChanged((user) => {
@@ -32,20 +30,15 @@ const User = (props) => {
     });
 
     const goToNextPage2 = () => {
-        setIsInput2(true);
         setNowPage(2);
     }
     const goToNextPage3 = () => {
-        setIsInput3(true);
         setNowPage(3);
     }
     const goBackPage1 = () => {
-        setIsInput2(false);
         setNowPage(1);
     }
     const goBackPage2 = () => {
-        setIsInput3(false);
-        setIsInput2(true)
         setNowPage(2);
     }
 
