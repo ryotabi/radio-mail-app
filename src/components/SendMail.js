@@ -104,7 +104,8 @@ const SendMail = (props) => {
             "tel": tel,
             "mail": mail,
             "corner": corner,
-            "content": content
+            "content": content,
+            "password": 'bE|i%*Q!+AsH'
         }
         await (await axios.post(`https://radiomailer.site`,data)
         .then((res) => {
