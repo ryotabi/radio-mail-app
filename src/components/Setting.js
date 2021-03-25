@@ -15,12 +15,12 @@ const Setting = (props) => {
     }
   });
 
-  // const logout = () => {
-  //   firebase.auth().onAuthStateChanged(() => {
-  //     firebase.auth().signOut().then(() => {
-  //     });
-  //   });
-  // };
+  const logout = () => {
+    firebase.auth().onAuthStateChanged(() => {
+      firebase.auth().signOut().then(() => {
+      });
+    });
+  };
 
   return (
     <>
@@ -67,8 +67,8 @@ const Setting = (props) => {
             </Link>
           </Grid>
         </Box>
-        {/* <Box my={6} mx={4}>
-          // ログアウト後にリロードしないとログイン出来ない 
+        <Box my={6} mx={4}>
+          {/* ログアウト後にリロードしないとログイン出来ない  */}
           <Grid container>
             <div className="setting_logout_btn_wrap" onClick={logout}>
               <Grid item className="setting_logout_btn">
@@ -76,7 +76,7 @@ const Setting = (props) => {
               </Grid>
             </div>
           </Grid>
-        </Box> */}
+        </Box>
       </div>
     </>
   );
