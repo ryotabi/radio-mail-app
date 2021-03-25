@@ -33,6 +33,7 @@ const Login = (props) => {
       setValidationMessage(validationInfo.message);
     }
   };
+  console.log('test');
 
   return (
     <>

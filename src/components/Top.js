@@ -14,6 +14,7 @@ const Top = (props) => {
       props.history.push('/login');
     }
   });
+  console.log('testhhhhh');
 
   return (
     <>
