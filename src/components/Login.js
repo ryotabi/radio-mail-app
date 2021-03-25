@@ -17,8 +17,10 @@ const Login = (props) => {
   const [validationMessage, setValidationMessage] = useState('');
 
   useEffect(() => {
-    const unSub = auth.onAuthStateChanged(() => {
-      props.history.push('/');
+    const unSub = auth.onAuthStateChanged((user) => {
+      if (user) {
+        props.history.push('/');
+      }
     });
     return () => unSub();
   }, []);
@@ -33,7 +35,6 @@ const Login = (props) => {
       setValidationMessage(validationInfo.message);
     }
   };
-  console.log('test');
 
   return (
     <>
