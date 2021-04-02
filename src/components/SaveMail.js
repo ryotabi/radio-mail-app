@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { db } from '../firebase';
 import dateToString from '../helpers/DateToString';
 import Header from './Header';
@@ -24,6 +25,7 @@ const SaveMail = (props) => {
     corner: '',
     content: '',
     date: '',
+    isSavedMail: true
   }]);
 
   // ログイン状態確認
@@ -54,6 +56,7 @@ const SaveMail = (props) => {
               corner: doc.data().corner,
               content: doc.data().content,
               date: doc.data().date.toDate(),
+              isSavedMail: true
             };
           }),
         );
@@ -91,7 +94,10 @@ const SaveMail = (props) => {
                       <Link to={{ pathname: '/form', state: { saveMailList: list } }}>
                         <EditIcon fontSize="large" className="edit_icon" />
                       </Link>
-                      <DeleteForeverIcon fontSize="large" onClick={() => { deleteSaveMail(list.id); }} />
+                      <DeleteForeverIcon fontSize="large" className="delete_icon" onClick={() => { deleteSaveMail(list.id); }} />
+                      <Link to={{ pathname: `single/${list.id}`, state: { list } }}>
+                        <ArrowForwardIcon fontSize="large" />
+                      </Link>
                     </div>
                   </li>
                 </>

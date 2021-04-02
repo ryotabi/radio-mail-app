@@ -35,7 +35,7 @@ const Single = (props) => {
           <p className="single_content">{ list.corner }</p>
         </div>
         <div className="single_item">
-          <p className="single_title">投稿日</p>
+          <p className="single_title">{ list.isSavedMail ? '保存日' : '投稿日' }</p>
           <p className="single_content">{ date }</p>
         </div>
         <div className="single_item">

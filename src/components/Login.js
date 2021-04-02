@@ -42,7 +42,7 @@ const Login = (props) => {
       <div className="bg_img" />
       <Container maxWidth="lg">
         <h1 className="login_title">Sign In</h1>
-        <form className="login_form">
+        <form className="login_form mb-30">
           <Box m={4}>
             <p className="required">必須</p>
             <TextField
