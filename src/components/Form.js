@@ -28,8 +28,6 @@ const Form = (props) => {
   const [cornerLists, setCornerLists] = useState([{ id: '', corner: '' }]);
   const [content, setContent] = useState('');
   const [nowFormInput, setNowFormInput] = useState(1);
-  const [isInput2, setIsInput2] = useState(false);
-  const [isInput3, setIsInput3] = useState(false);
   const [programLists, setProgramLists] = useState([{ id: '', program: '', name: '' }]);
   const [isUsedMyProgram, setisUsedMyProgram] = useState(false);
   const [myProgramList, setMyProgramList] = useState([{ id: '', program: '', name: '' }]);
@@ -89,19 +87,15 @@ const Form = (props) => {
   }, [program]);
 
   const goToForm2 = () => {
-    setIsInput2(true);
     setNowFormInput(2);
   };
   const goToForm3 = () => {
-    setIsInput3(true);
     setNowFormInput(3);
   };
   const goBackForm1 = () => {
-    setIsInput2(false);
     setNowFormInput(1);
   };
   const goBackForm2 = () => {
-    setIsInput3(false);
     setNowFormInput(2);
   };
 
@@ -242,7 +236,7 @@ const Form = (props) => {
       <Header />
       <div className="bg_color" />
       <Container maxWidth="sm">
-        <form className="form_wrap m-0 pt-100">
+        <form className="form_wrap mb-30 pt-100">
           {(() => {
             if (nowFormInput === 1) {
               return (
@@ -452,7 +446,7 @@ const Form = (props) => {
                   return (
                     <Box my={4} mx={2}>
                       <p className="required">必須</p>
-                      <InputLabel id="corner">コーナー</InputLabel>
+                      <InputLabel id="corner">コーナー（件名）</InputLabel>
                       <Select
                         labelId="corner"
                         id="corner"
@@ -538,27 +532,6 @@ const Form = (props) => {
             );
           })()}
         </form>
-        <Box m={5}>
-          <Grid container justify="space-around">
-            <Grid item xs={3}>
-              <div className="circle input" />
-            </Grid>
-            <Grid item xs={3}>
-              {isInput2 ? (
-                <div className="circle input" />
-              ) : (
-                <div className="circle" />
-              )}
-            </Grid>
-            <Grid item xs={3}>
-              {isInput3 ? (
-                <div className="circle input" />
-              ) : (
-                <div className="circle" />
-              )}
-            </Grid>
-          </Grid>
-        </Box>
       </Container>
     </>
   );

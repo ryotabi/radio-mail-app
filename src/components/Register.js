@@ -24,25 +24,18 @@ const Register = (props) => {
   const [portalCode, setPortalCode] = useState('');
   const [address, setAddress] = useState('');
   const [nowPage, setNowPage] = useState(1);
-  const [isInput2, setIsInput2] = useState(false);
-  const [isInput3, setIsInput3] = useState(false);
   const [validationMessage, setValidationMessage] = useState('');
 
   const goToNextPage2 = () => {
-    setIsInput2(true);
     setNowPage(2);
   };
   const goToNextPage3 = () => {
-    setIsInput3(true);
     setNowPage(3);
   };
   const goBackPage1 = () => {
-    setIsInput2(false);
     setNowPage(1);
   };
   const goBackPage2 = () => {
-    setIsInput3(false);
-    setIsInput2(true);
     setNowPage(2);
   };
 
@@ -81,7 +74,7 @@ const Register = (props) => {
       <div className="bg_img" />
       <Container maxWidth="lg">
         <h1 className="register_title">Sign Up</h1>
-        <form className="register_form">
+        <form className="register_form mb-30">
           {(
             () => {
               if (nowPage === 1) {
@@ -244,27 +237,6 @@ const Register = (props) => {
             }
           )()}
         </form>
-        <Box m={5}>
-          <Grid container justify="space-around">
-            <Grid item xs={3}>
-              <div className="circle input" />
-            </Grid>
-            <Grid item xs={3}>
-              {isInput2 ? (
-                <div className="circle input" />
-              ) : (
-                <div className="circle" />
-              )}
-            </Grid>
-            <Grid item xs={3}>
-              {isInput3 ? (
-                <div className="circle input" />
-              ) : (
-                <div className="circle" />
-              )}
-            </Grid>
-          </Grid>
-        </Box>
       </Container>
     </>
   );

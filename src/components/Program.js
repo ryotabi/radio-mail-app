@@ -16,6 +16,7 @@ import '../css/program.css';
 
 const Program = (props) => {
   const [nowDate, setNowDate] = useState('');
+  const [nowStation, setNowStation] = useState('');
   const [radioStationLists, setRadioStationLists] = useState([]);
   const [programLists, setRadioProgram] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +38,7 @@ const Program = (props) => {
   }, []);
 
   const setList = (program) => {
+    setNowStation(program.name);
     setRadioProgram(program.progs.prog);
   };
 
@@ -70,6 +72,7 @@ const Program = (props) => {
       <Container maxWidth="lg">
         <Box my={2}>
           <h2 className="text-center program_title">{dateToFormat(nowDate, 2, '月', '日')}</h2>
+          <h2 className="text-center program_title">{nowStation}</h2>
         </Box>
         <Box my={4}>
           <TableContainer component={Paper}>

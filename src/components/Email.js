@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -8,10 +8,12 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Grid from '@material-ui/core/Grid';
 import GetValidationMessage from '../helpers/ValidationMessage';
+import { db } from '../firebase';
 import Header from './Header';
 import '../css/email.css';
 
 const Email = (props) => {
+  const [userId, setUserId] = useState('');
   const [oldEmail, setOldEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
@@ -25,6 +27,19 @@ const Email = (props) => {
       props.history.push('/login');
     }
   });
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection(`users/${user.uid}/info`).onSnapshot((snapshot) => {
+          snapshot.docs.map((doc) => {
+            setUserId(doc.id);
+            return '';
+          });
+        });
+      }
+    });
+  }, []);
 
   const goToNextPage1 = () => {
     setNowPage(2);
@@ -49,8 +64,14 @@ const Email = (props) => {
           return;
         }
         user.updateEmail(newEmail).then(() => {
-          user.updatePassword(newPassword).then(() => {
-            props.history.push('/login');
+          user.updatePassword(newPassword).then(async () => {
+            await db.collection(`users/${user.uid}/info`).doc(userId).update({
+              email: newEmail,
+            })
+            firebase.auth().onAuthStateChanged(() => {
+              firebase.auth().signOut().then(() => {
+              });
+            });
           }).catch((error) => {
             const validationInfo = GetValidationMessage(error.code);
             setValidationMessage(`${validationInfo.message}(新しいパスワード)`);

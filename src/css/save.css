@@ -39,6 +39,7 @@
   text-align: center;
   margin-top: 50px;
 }
-.edit_icon {
+.edit_icon,
+.delete_icon {
   margin-right: 20px;
 }
