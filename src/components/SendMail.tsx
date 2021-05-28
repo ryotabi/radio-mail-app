@@ -131,7 +131,6 @@ const SendMail = (props: PropsType) => {
       mail,
       corner,
       content,
-      // APIのパスワード考える
       password: process.env.REACT_APP_RADIOMAILAPI_PASSWORD,
     };
     await axios.post('https://radiomailer.site', data)
