@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
+import * as H from 'history';
 import { Link, useLocation } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -10,26 +11,44 @@ import Header from './Header';
 import { db } from '../firebase';
 import '../css/mail.css';
 
-const SendMail = (props) => {
-  const [program, setProgram] = useState('');
-  const [toPortalCode, setToPortalCode] = useState('');
-  const [fromPortalCode, setFromPortalCode] = useState('');
-  const [toAddress, setToAddress] = useState('');
-  const [toName, setToName] = useState('');
-  const [fromAddress, setFromAddress] = useState('');
-  const [fromName, setFromName] = useState('');
-  const [radioName, setRadioName] = useState('');
-  const [age, setAge] = useState('');
-  const [mail, setMail] = useState('');
-  const [tel, setTel] = useState('');
-  const [corner, setCorner] = useState('');
-  const [content, setContent] = useState('');
-  const location = useLocation();
+type PropsType = {
+  history: H.History
+}
+
+type MailInfoType = {
+    name: string,
+    portalCode: string,
+    address: string,
+    tel: string,
+    radioName: string,
+    age: string,
+    mail: string,
+    program: string,
+    corner: string,
+    content: string,
+    isUsedMyProgram: boolean
+}
+
+const SendMail = (props: PropsType) => {
+  const [program, setProgram] = useState<string>('');
+  const [toPortalCode, setToPortalCode] = useState<string>('');
+  const [fromPortalCode, setFromPortalCode] = useState<string>('');
+  const [toAddress, setToAddress] = useState<string>('');
+  const [toName, setToName] = useState<string>('');
+  const [fromAddress, setFromAddress] = useState<string>('');
+  const [fromName, setFromName] = useState<string>('');
+  const [radioName, setRadioName] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [mail, setMail] = useState<string>('');
+  const [tel, setTel] = useState<string>('');
+  const [corner, setCorner] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const location = useLocation<MailInfoType>();
   const { currentUser } = firebase.auth();
   const splicFromPortalCode = [...fromPortalCode];
   const splicToPortalCode = [...toPortalCode];
-  const [isBack, setIsBack] = useState(true);
-  const [stateSubmitButton, setStateSubmitButton] = useState(true);
+  const [isBack, setIsBack] = useState<boolean>(true);
+  const [stateSubmitButton, setStateSubmitButton] = useState<boolean>(true);
 
   // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
@@ -38,20 +57,25 @@ const SendMail = (props) => {
     }
   });
 
+  // メール情報をセットする
   useEffect(() => {
     if (location.state !== undefined) {
+      // 標準ラジオ番組情報をセットする
       if (location.state.isUsedMyProgram) {
         firebase.auth().onAuthStateChanged((user) => {
-          db.collection(`myProgram/${user.uid}/list`).where('name', '==', location.state.program).get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                setToName(doc.data().name);
-                setToAddress(doc.data().address);
-                setToPortalCode(doc.data().portalCode);
+          if (user) {
+            db.collection(`myProgram/${user.uid}/list`).where('name', '==', location.state.program).get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  setToName(doc.data().name);
+                  setToAddress(doc.data().address);
+                  setToPortalCode(doc.data().portalCode);
+                });
               });
-            });
+          }
         });
       } else {
+        // マイラジオ番組情報をセットする
         db.collection(`programs/${location.state.program}/info`).onSnapshot((snapshot) => {
           snapshot.docs.map((doc) => {
             setToName(doc.data().name);
@@ -74,6 +98,7 @@ const SendMail = (props) => {
     }
   }, []);
 
+  // 番組情報を入れた後に判定する
   useEffect(() => {
     if (toName === '' || toAddress === '' || mail === '') {
       setStateSubmitButton(true);
@@ -83,8 +108,8 @@ const SendMail = (props) => {
   }, [toAddress, toName, mail]);
 
   const returnPage = () => {
-    const FrontPage = document.getElementById('FrontPage');
-    const BackPage = document.getElementById('BackPage');
+    const FrontPage = document.getElementById('FrontPage')!;
+    const BackPage = document.getElementById('BackPage')!;
     if (isBack) {
       FrontPage.classList.remove('hidden');
       BackPage.classList.add('hidden');
@@ -106,27 +131,30 @@ const SendMail = (props) => {
       mail,
       corner,
       content,
+      // APIのパスワード考える
       password: 'bE|i%*Q!+AsH',
     };
-    await (await axios.post('https://radiomailer.site', data)
+    await axios.post('https://radiomailer.site', data)
       .then((res) => {
         if (res.data.error) {
           alert(' 送信に失敗しました');
         } else {
           alert('送信しました');
-        }
-        db.collection(`mail/${currentUser.uid}/${program}`).add({
-          program: toName,
-          radioName,
-          corner,
-          content,
-          date: new Date(),
-        });
-        db.collection(`mail/${currentUser.uid}/programList`).add({
-          program,
-        });
-        props.history.push('/');
-      }));
+        };
+        if (currentUser) {
+          db.collection(`mail/${currentUser.uid}/${program}`).add({
+            program: toName,
+            radioName,
+            corner,
+            content,
+            date: new Date(),
+          });
+          db.collection(`mail/${currentUser.uid}/programList`).add({
+            program,
+          });
+          props.history.push('/');
+        };
+      });
   };
 
   return (
@@ -181,10 +209,7 @@ const SendMail = (props) => {
               <p>{toAddress}</p>
             </div>
             <div className="to_name">
-              <p>
-                {toName}
-                様
-              </p>
+              <p>{toName}様</p>
             </div>
             <div className="from_address">
               <p>{fromAddress}</p>
@@ -195,23 +220,13 @@ const SendMail = (props) => {
           </div>
           <div id="FrontPage" className="postcard_wrap front_page hidden">
             <div className="radioName">
-              <p>
-                ラジオネーム：
-                {radioName}
-              </p>
+              <p>ラジオネーム：{radioName}</p>
             </div>
             <div className="cornar">
-              <p>
-                コーナー：
-                {corner}
-              </p>
+              <p>コーナー：{corner}</p>
             </div>
             <div className="content">
-              <p>
-                内容：
-                <br />
-                {content}
-              </p>
+              <p>内容：<br />{content}</p>
             </div>
           </div>
         </Container>

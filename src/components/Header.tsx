@@ -10,9 +10,10 @@ import Box from '@material-ui/core/Box';
 import '../css/header.css';
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const OpenHumMenu = (event) => {
+  //ここのanyはどうにかする
+  const OpenHumMenu = (event: React.MouseEvent<any>) => {
     setAnchorEl(event.currentTarget);
   };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -9,11 +10,15 @@ import { db } from '../firebase';
 import GetValidationMessage from '../helpers/ValidationMessage';
 import '../css/template.css';
 
-const Template = (props) => {
-  const [templateName, setTemplateName] = useState('');
-  const [template, setTemplate] = useState('');
-  const [validationType, setValidationType] = useState('');
-  const [validationMessage, setValidationMessage] = useState('');
+type PropsType = {
+  history: H.History
+}
+
+const Template = (props: PropsType) => {
+  const [templateName, setTemplateName] = useState<string>('');
+  const [template, setTemplate] = useState<string>('');
+  const [validationType, setValidationType] = useState<string>('');
+  const [validationMessage, setValidationMessage] = useState<string>('');
 
   // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
@@ -22,7 +27,7 @@ const Template = (props) => {
     }
   });
 
-  const storeTemplate = () => {
+  const saveTemplate = () => {
     if (templateName === '') {
       const validationInfo = GetValidationMessage('template/invalid-templateName');
       setValidationType(validationInfo.type);
@@ -36,18 +41,20 @@ const Template = (props) => {
       return;
     }
     firebase.auth().onAuthStateChanged((user) => {
-      db.collection(`template/${user.uid}/data`).add(
-        {
-          name: templateName,
-          content: template,
-        },
-      ).then(() => {
-        setTemplateName('');
-        setTemplate('');
-        setValidationType('');
-        setValidationMessage('');
-        alert('テンプレートを保存しました');
-      });
+      if (user) {
+        db.collection(`template/${user.uid}/data`).add(
+          {
+            name: templateName,
+            content: template,
+          },
+        ).then(() => {
+          setTemplateName('');
+          setTemplate('');
+          setValidationType('');
+          setValidationMessage('');
+          alert('テンプレートを保存しました');
+        });
+      }
     });
   };
 
@@ -100,7 +107,7 @@ const Template = (props) => {
               })()}
             </Box>
             <Box m={6} className="text-center template_set_btn_wrap">
-              <Button variant="contained" className="btn template_set_btn" onClick={storeTemplate}>保存する</Button>
+              <Button variant="contained" className="btn template_set_btn" onClick={saveTemplate}>保存する</Button>
             </Box>
           </form>
         </div>

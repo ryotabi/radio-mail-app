@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
@@ -14,12 +15,35 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Header from './Header';
 import '../css/program.css';
 
-const Program = (props) => {
-  const [nowDate, setNowDate] = useState('');
-  const [nowStation, setNowStation] = useState('');
-  const [radioStationLists, setRadioStationLists] = useState([]);
-  const [programLists, setRadioProgram] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+type PropsType = {
+  history: H.History
+}
+
+type RadioProgramType = {
+  name: string,
+  progs: {
+    date: string,
+    // ここの配列の型どうにかするradikoAPIの型を定義する
+    prog: []
+  }
+}
+
+type RadioProgType = {
+  attributes: {
+    id: string,
+    ftl: string,
+    tol: string
+  },
+  title: string,
+  url: string
+}
+
+const Program = (props: PropsType) => {
+  const [nowDate, setNowDate] = useState<string>('');
+  const [nowStation, setNowStation] = useState<string>('');
+  const [radioStationLists, setRadioStationLists] = useState<RadioProgramType[]>([]);
+  const [programLists, setRadioProgram] = useState<RadioProgramType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
@@ -37,12 +61,12 @@ const Program = (props) => {
       });
   }, []);
 
-  const setList = (program) => {
+  const setList = (program: RadioProgramType) => {
     setNowStation(program.name);
     setRadioProgram(program.progs.prog);
   };
 
-  const dateToFormat = (str, idx, val, val2 = '') => {
+  const dateToFormat = (str: string, idx: number, val: string, val2: string = '') => {
     const date = str.slice(0, idx) + val + str.slice(idx) + val2;
     return date;
   };
@@ -63,7 +87,7 @@ const Program = (props) => {
       <div className="bg_color" />
       <div className="program_listnav pt-85">
         <ul className="d-flex">
-          {radioStationLists.map((station) => {
+          {radioStationLists.map((station: RadioProgramType) => {
             const key = Math.random();
             return <li key={key} onClick={() => setList(station)}>{station.name}</li>;
           })}
@@ -85,7 +109,7 @@ const Program = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {programLists.map((program) => (
+                {programLists.map((program: any) => (
                   <TableRow key={program['@attributes'].id}>
                     <TableCell className="programTable_date">
                       {dateToFormat(program['@attributes'].ftl, 2, ':')}

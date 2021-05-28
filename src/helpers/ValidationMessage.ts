@@ -1,4 +1,4 @@
-export default function GetValidationMessage(error) {
+export default function GetValidationMessage(error: string) {
   const validationInfo = {
     type: '',
     message: '',

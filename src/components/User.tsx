@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -11,23 +12,20 @@ import { db } from '../firebase';
 import Header from './Header';
 import '../css/user.css';
 
-const User = (props) => {
-  const [id, setId] = useState('');
-  const [radioName, setRadioName] = useState('');
-  const [name, setName] = useState('');
-  const [hurigana, setHurigana] = useState('');
-  const [age, setAge] = useState('');
-  const [tel, setTel] = useState('');
-  const [portalCode, setPortalCode] = useState('');
-  const [address, setAddress] = useState('');
-  const [nowPage, setNowPage] = useState(1);
+type PropsType = {
+  history: H.History
+}
 
-  // ログイン状態確認
-  firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-      props.history.push('/login');
-    }
-  });
+const User = (props: PropsType) => {
+  const [id, setId] = useState<string>('');
+  const [radioName, setRadioName] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [hurigana, setHurigana] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [tel, setTel] = useState<string>('');
+  const [portalCode, setPortalCode] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [nowPage, setNowPage] = useState<number>(1);
 
   const goToNextPage2 = () => {
     setNowPage(2);
@@ -41,6 +39,13 @@ const User = (props) => {
   const goBackPage2 = () => {
     setNowPage(2);
   };
+
+  // ログイン状態確認
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      props.history.push('/login');
+    }
+  });
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -64,19 +69,21 @@ const User = (props) => {
     });
   }, []);
 
-  const changeUserInfo = async () => {
+  const changeUserInfo = () => {
     const user = firebase.auth().currentUser;
-    await db.collection(`users/${user.uid}/info`).doc(id).update({
-      address,
-      age,
-      hurigana,
-      name,
-      portalCode,
-      radioName,
-      tel,
-    });
-    alert('ユーザー情報を変更しました');
-    props.history.push('/');
+    if (user) {
+      db.collection(`users/${user.uid}/info`).doc(id).update({
+        address,
+        age,
+        hurigana,
+        name,
+        portalCode,
+        radioName,
+        tel,
+      });
+      alert('ユーザー情報を変更しました');
+      props.history.push('/');
+    }
   };
 
   return (

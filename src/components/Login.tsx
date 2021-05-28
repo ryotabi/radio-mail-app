@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -10,11 +11,15 @@ import GetValidationMessage from '../helpers/ValidationMessage';
 import { auth } from '../firebase';
 import '../css/login.css';
 
-const Login = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [validationType, setValidationType] = useState('');
-  const [validationMessage, setValidationMessage] = useState('');
+type PropsType = {
+  history: H.History
+}
+
+const Login = (props: PropsType) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [validationType, setValidationType] = useState<string>('');
+  const [validationMessage, setValidationMessage] = useState<string>('');
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
@@ -25,9 +30,9 @@ const Login = (props) => {
     return () => unSub();
   }, []);
 
-  const storeLoginInfo = async () => {
+  const storeLoginInfo = () => {
     try {
-      await auth.signInWithEmailAndPassword(email, password);
+      auth.signInWithEmailAndPassword(email, password);
       props.history.push('/');
     } catch (error) {
       const validationInfo = GetValidationMessage(error.code);

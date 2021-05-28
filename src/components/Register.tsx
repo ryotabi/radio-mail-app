@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -13,18 +14,22 @@ import Header from './Header';
 import GetValidationMessage from '../helpers/ValidationMessage';
 import '../css/register.css';
 
-const Register = (props) => {
-  const [radioName, setRadioName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [hurigana, setHurigana] = useState('');
-  const [age, setAge] = useState('');
-  const [tel, setTel] = useState('');
-  const [portalCode, setPortalCode] = useState('');
-  const [address, setAddress] = useState('');
-  const [nowPage, setNowPage] = useState(1);
-  const [validationMessage, setValidationMessage] = useState('');
+type PropsType = {
+  history: H.History
+}
+
+const Register = (props: PropsType) => {
+  const [radioName, setRadioName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [hurigana, setHurigana] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [tel, setTel] = useState<string>('');
+  const [portalCode, setPortalCode] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [nowPage, setNowPage] = useState<number>(1);
+  const [validationMessage, setValidationMessage] = useState<string>('');
 
   const goToNextPage2 = () => {
     setNowPage(2);
@@ -39,7 +44,7 @@ const Register = (props) => {
     setNowPage(2);
   };
 
-  const storeRegisterInfo = async () => {
+  const storeRegisterInfo = () => {
     try {
       auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
