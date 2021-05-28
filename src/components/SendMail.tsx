@@ -136,8 +136,6 @@ const SendMail = (props: PropsType) => {
     };
     await axios.post('https://radiomailer.site', data)
       .then((res) => {
-        console.log(res.data)
-        console.log(res.data.error)
         if (res.data.error) {
           alert(' 送信に失敗しました');
         } else {
