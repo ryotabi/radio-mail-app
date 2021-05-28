@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -9,13 +10,17 @@ import { db } from '../firebase';
 import GetValidationMessage from '../helpers/ValidationMessage';
 import '../css/myProgram.css';
 
-const MyProgram = (props) => {
-  const [programName, setProgramName] = useState('');
-  const [email, setEmail] = useState('');
-  const [portalCode, setPortalCode] = useState('');
-  const [address, setAddress] = useState('');
-  const [validationType, setValidationType] = useState('');
-  const [validationMessage, setValidationMessage] = useState('');
+type PropsType = {
+  history: H.History
+}
+
+const MyProgram = (props: PropsType) => {
+  const [programName, setProgramName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [portalCode, setPortalCode] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [validationType, setValidationType] = useState<string>('');
+  const [validationMessage, setValidationMessage] = useState<string>('');
 
   // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
@@ -39,14 +44,16 @@ const MyProgram = (props) => {
       return;
     }
     firebase.auth().onAuthStateChanged((user) => {
-      db.collection(`myProgram/${user.uid}/list`).add(
-        {
-          address,
-          name: programName,
-          portalCode,
-          email,
-        },
-      );
+      if (user) {
+        db.collection(`myProgram/${user.uid}/list`).add(
+          {
+            address,
+            name: programName,
+            portalCode,
+            email,
+          },
+        );
+      }
       setProgramName('');
       setEmail('');
       setPortalCode('');

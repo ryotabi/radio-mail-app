@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase';
+import * as H from 'history';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import dateToString from '../helpers/DateToString';
@@ -8,13 +9,31 @@ import Header from './Header';
 import { db } from '../firebase';
 import '../css/list.css';
 
-const List = (props) => {
-  const [programList, setProgramList] = useState([{ id: '', program: '' }]);
-  const [lists, setLists] = useState([{
+type PropsType = {
+  history: H.History
+}
+
+type ProgramListType = {
+  id: string,
+  program: string
+}
+
+type ListsType = {
+  id: string,
+  program: string,
+  corner: string,
+  date: Date,
+  content: string,
+  radioName: string
+}
+
+const List = (props: PropsType) => {
+  const [programList, setProgramList] = useState<ProgramListType[]>([{ id: '', program: '' }]);
+  const [lists, setLists] = useState<ListsType[]>([{
     id: '',
     program: '',
     corner: '',
-    date: '',
+    date: new Date(),
     content: '',
     radioName: '',
   }]);
@@ -29,35 +48,40 @@ const List = (props) => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      const unSub = db.collection(`mail/${user.uid}/programList`).onSnapshot((snapshot) => {
-        setProgramList(
-          snapshot.docs.map((doc) => ({ id: doc.id, program: doc.data().program })),
-        );
-      });
-      return () => unSub();
+      if (user) {
+        const unSub = db.collection(`mail/${user.uid}/programList`).onSnapshot((snapshot) => {
+          setProgramList(
+            snapshot.docs.map((doc) => ({ id: doc.id, program: doc.data().program })),
+          );
+        });
+        return () => unSub();
+      }
     });
   }, []);
 
   for (let i = 0; i < programList.length; i++) {
     if (programnavLists.indexOf(programList[i].program) === -1) {
       programnavLists.push(programList[i].program);
-    }
-  }
+    };
+  };
 
-  const setList = async (program) => {
+  const setList = (program: string) => {
     const { currentUser } = firebase.auth();
-    await db.collection(`mail/${currentUser.uid}/${program}`).orderBy('date', 'desc').onSnapshot((snapshot) => {
-      setLists(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          program: doc.data().program,
-          corner: doc.data().corner,
-          date: doc.data().date.toDate(),
-          content: doc.data().content,
-          radioName: doc.data().radioName,
-        })),
-      );
-    });
+    if (currentUser) {
+      const unSub = db.collection(`mail/${currentUser.uid}/${program}`).orderBy('date', 'desc').onSnapshot((snapshot) => {
+        setLists(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            program: doc.data().program,
+            corner: doc.data().corner,
+            date: doc.data().date.toDate(),
+            content: doc.data().content,
+            radioName: doc.data().radioName,
+          })),
+        );
+        unSub();
+      });
+    };
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import firebase from 'firebase';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -7,8 +8,12 @@ import Button from '@material-ui/core/Button';
 import Header from './Header';
 import '../css/resetPassword.css';
 
-const ResetPassword = (props) => {
-  const [email, setEmail] = useState('');
+type PropsType = {
+  history: H.History
+}
+
+const ResetPassword = (props: PropsType) => {
+  const [email, setEmail] = useState<string>('');
   const sendEmail = () => {
     firebase.auth().sendPasswordResetEmail(email).then(() => {
       alert('メールを送信しました。ご確認ください。');

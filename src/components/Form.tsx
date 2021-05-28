@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -15,76 +16,64 @@ import { db } from '../firebase';
 import GetValidationMessage from '../helpers/ValidationMessage';
 import '../css/form.css';
 
-const Form = (props) => {
-  const [name, setName] = useState('');
-  const [portalCode, setPortalCode] = useState('');
-  const [address, setAddress] = useState('');
-  const [tel, setTel] = useState('');
-  const [radioName, setRadioName] = useState('');
-  const [age, setAge] = useState('');
-  const [mail, setMail] = useState('');
-  const [program, setProgram] = useState('');
-  const [corner, setCorner] = useState('');
-  const [cornerLists, setCornerLists] = useState([{ id: '', corner: '' }]);
-  const [content, setContent] = useState('');
-  const [nowFormInput, setNowFormInput] = useState(1);
-  const [programLists, setProgramLists] = useState([{ id: '', program: '', name: '' }]);
-  const [isUsedMyProgram, setisUsedMyProgram] = useState(false);
-  const [myProgramList, setMyProgramList] = useState([{ id: '', program: '', name: '' }]);
-  const [template, setTemplate] = useState('');
-  const [isUsedtemplate, setIsUsedTemplate] = useState(false);
-  const [templateLists, setTemplateLists] = useState([{ id: '', name: '' }]);
-  const [validationMessage, setValidationMessage] = useState('');
+type PropsType = {
+  history: H.History,
+  location: H.Location<SaveMailType>
+}
 
-  // ログイン状態確認
-  firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-      props.history.push('/login');
-    }
-  });
+type SaveMailType = {
+  saveMailList: {
+    id: number,
+    name: string,
+    portalCode: string,
+    address: string,
+    tel: string,
+    mail: string,
+    radioName: string,
+    age: string,
+    program: string,
+    corner: string,
+    content: string,
+    date: string,
+  }
+}
 
-  useEffect(() => {
-    if (props.location.state) {
-      const { saveMailList } = props.location.state;
-      setName(saveMailList.name);
-      setPortalCode(saveMailList.portalCode);
-      setAddress(saveMailList.address);
-      setTel(saveMailList.tel);
-      setMail(saveMailList.mail);
-      setRadioName(saveMailList.radioName);
-      setAge(saveMailList.age);
-      setProgram(saveMailList.program);
-      setCorner(saveMailList.corner);
-      setContent(saveMailList.content);
-    }
-    const unSub = db.collection('programList').onSnapshot((snapshot) => {
-      setProgramLists(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          program: doc.data().program,
-          name: doc.data().name,
-        })),
-      );
-    });
-    return () => unSub();
-  }, []);
+type CornerListsType = {
+  id: string,
+  corner: string
+}
 
-  useEffect(() => {
-    const unSub = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        if (program !== '') {
-          db.collection(`programs/${program}/corner`).onSnapshot((snapshot) => {
-            setCornerLists(
-              snapshot.docs.map((doc) => ({ id: doc.id, corner: doc.data().corner })),
-            );
-          });
-        }
-      } else {
-        props.history.push('/login');
-      }
-    });
-    return unSub();
-  }, [program]);
+type ProgramType = {
+  id: string,
+  program: string,
+  name: string
+}
+
+type TemplateType = {
+  id: string,
+  name: string
+}
+
+const Form = (props: PropsType) => {
+  const [name, setName] = useState<string>('');
+  const [portalCode, setPortalCode] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [tel, setTel] = useState<string>('');
+  const [radioName, setRadioName] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [mail, setMail] = useState<string>('');
+  const [program, setProgram] = useState<string>('');
+  const [corner, setCorner] = useState<string>('');
+  const [cornerLists, setCornerLists] = useState<CornerListsType[]>([{ id: '', corner: '' }]);
+  const [content, setContent] = useState<string>('');
+  const [nowFormInput, setNowFormInput] = useState<number>(1);
+  const [programLists, setProgramLists] = useState<ProgramType[]>([{ id: '', program: '', name: '' }]);
+  const [isUsedMyProgram, setisUsedMyProgram] = useState<boolean>(false);
+  const [myProgramList, setMyProgramList] = useState<ProgramType[]>([{ id: '', program: '', name: '' }]);
+  const [template, setTemplate] = useState<string>('');
+  const [isUsedtemplate, setIsUsedTemplate] = useState<boolean>(false);
+  const [templateLists, setTemplateLists] = useState<TemplateType[]>([{ id: '', name: '' }]);
+  const [validationMessage, setValidationMessage] = useState<string>('');
 
   const goToForm2 = () => {
     setNowFormInput(2);
@@ -99,6 +88,57 @@ const Form = (props) => {
     setNowFormInput(2);
   };
 
+  // ログイン状態確認
+  firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      props.history.push('/login');
+    }
+  });
+
+  useEffect(() => {
+    // 一時保存メール情報を取得
+    if (props.location.state) {
+      const { saveMailList } = props.location.state;
+      setName(saveMailList.name);
+      setPortalCode(saveMailList.portalCode);
+      setAddress(saveMailList.address);
+      setTel(saveMailList.tel);
+      setMail(saveMailList.mail);
+      setRadioName(saveMailList.radioName);
+      setAge(saveMailList.age);
+      setProgram(saveMailList.program);
+      setCorner(saveMailList.corner);
+      setContent(saveMailList.content);
+    }
+    // 標準番組を取得
+    const unSub = db.collection('programList').onSnapshot((snapshot) => {
+      setProgramLists(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          program: doc.data().program,
+          name: doc.data().name,
+        })),
+      );
+    });
+    return () => unSub();
+  }, []);
+
+  // 番組のメールアドレスを取得
+  useEffect(() => {
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (program !== '') {
+          db.collection(`programs/${program}/corner`).onSnapshot((snapshot) => {
+            setCornerLists(
+              snapshot.docs.map((doc) => ({ id: doc.id, corner: doc.data().corner })),
+            );
+          });
+        }
+      }
+    });
+    return unSub();
+  }, [program]);
+
   const setUserInfo = () => {
     const unSub = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -108,73 +148,64 @@ const Form = (props) => {
             setPortalCode(doc.data().portalCode);
             setAddress(doc.data().address);
             setTel(doc.data().tel);
-            return '';
-          });
-        });
-      } else {
-        props.history.push('/login');
-      }
-      unSub();
-    });
-  };
-
-  const setRadioInfo = () => {
-    const unSub = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        db.collection(`users/${user.uid}/info`).onSnapshot((snapshot) => {
-          snapshot.docs.map((doc) => {
             setRadioName(doc.data().radioName);
             setAge(doc.data().age);
             setMail(doc.data().email);
-            return '';
           });
         });
-      } else {
-        props.history.push('/login');
-      }
+      };
       unSub();
     });
   };
 
   const setMyProgram = () => {
     setisUsedMyProgram(true);
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection(`myProgram/${user.uid}/list`).onSnapshot((snapshot) => {
-        setMyProgramList(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            program: doc.data().name,
-            name: doc.data().name,
-          })),
-        );
-      });
-    });
-  };
-
-  const useContentTemplate = () => {
-    setIsUsedTemplate(true);
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection(`template/${user.uid}/data`).onSnapshot((snapshot) => {
-        setTemplateLists(
-          snapshot.docs.map((doc) => ({ id: doc.id, name: doc.data().name })),
-        );
-      });
-    });
-  };
-
-  const getTemplateContent = (templateName) => {
-    firebase.auth().onAuthStateChanged((user) => {
-      db.collection(`template/${user.uid}/data`).where('name', '==', templateName).get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            setContent(doc.data().content);
-          });
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection(`myProgram/${user.uid}/list`).onSnapshot((snapshot) => {
+          setMyProgramList(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              program: doc.data().name,
+              name: doc.data().name,
+            })),
+          );
         });
+      };
+      unSub();
+    });
+  };
+
+  const setContentTemplate = () => {
+    setIsUsedTemplate(true);
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection(`template/${user.uid}/data`).onSnapshot((snapshot) => {
+          setTemplateLists(
+            snapshot.docs.map((doc) => ({ id: doc.id, name: doc.data().name })),
+          );
+        });
+      };
+      unSub();
+    });
+  };
+
+  const setTemplateContent = (templateName: string) => {
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection(`template/${user.uid}/data`).where('name', '==', templateName).get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              setContent(doc.data().content);
+            });
+          });
+      };
+      unSub();
     });
   };
 
   const saveMail = () => {
-    firebase.auth().onAuthStateChanged((user) => {
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         db.collection(`mail/${user.uid}/saveMail`).add(({
           name,
@@ -190,7 +221,8 @@ const Form = (props) => {
           date: new Date(),
         }));
         props.history.push('/');
-      }
+      };
+      unSub();
     });
   };
 
@@ -350,8 +382,8 @@ const Form = (props) => {
                             required
                             className="selectbox md_w-100 w_90"
                             value={program}
-                            onChange={(e) => {
-                              setProgram(e.target.value);
+                            onChange={(e: React.ChangeEvent<{ value: unknown}>) => {
+                              setProgram(e.target.value as string);
                             }}
                           >
                             {myProgramList.map((myprogram) => (
@@ -376,8 +408,8 @@ const Form = (props) => {
                           required
                           className="selectbox md_w-100 w_90"
                           value={program}
-                          onChange={(e) => {
-                            setProgram(e.target.value);
+                          onChange={(e: React.ChangeEvent<{ value: unknown}>) => {
+                            setProgram(e.target.value as string);
                           }}
                         >
                           {programLists.map((programList) => (
@@ -392,9 +424,6 @@ const Form = (props) => {
                       </Box>
                     );
                   })()}
-                  <Box m={6} className="text-center form_btn_wrap">
-                    <Button variant="contained" className="btn set_info_btn" onClick={setRadioInfo}>ユーザー情報をセットする</Button>
-                  </Box>
                   <Box m={6} className="text-center form_btn_wrap">
                     {(() => {
                       if (isUsedMyProgram) {
@@ -453,8 +482,8 @@ const Form = (props) => {
                         required
                         className="selectbox md_w-100 w_90"
                         value={corner}
-                        onChange={(e) => {
-                          setCorner(e.target.value);
+                        onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
+                          setCorner(e.target.value as string);
                         }}
                       >
                         {cornerLists.map((cornerList) => (
@@ -479,9 +508,9 @@ const Form = (props) => {
                           id="template"
                           className="selectbox md_w-100 w_90"
                           value={template}
-                          onChange={(e) => {
-                            setTemplate(e.target.value);
-                            getTemplateContent(e.target.value);
+                          onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
+                            setTemplate(e.target.value as string);
+                            setTemplateContent(e.target.value as string);
                           }}
                         >
                           {templateLists.map((templateList) => (
@@ -521,7 +550,7 @@ const Form = (props) => {
                       <Button variant="contained" className="btn save_info_btn" onClick={saveMail}>途中保存</Button>
                     </Grid>
                     <Grid item>
-                      <Button variant="contained" className="btn template_info_btn" onClick={useContentTemplate}>テンプレを使用</Button>
+                      <Button variant="contained" className="btn template_info_btn" onClick={setContentTemplate}>テンプレを使用</Button>
                     </Grid>
                   </Grid>
                 </Box>

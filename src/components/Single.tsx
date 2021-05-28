@@ -1,12 +1,29 @@
 import React from 'react';
 import firebase from 'firebase';
+import * as H from 'history';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Header from './Header';
 import dateToString from '../helpers/DateToString';
 import '../css/single.css';
 
-const Single = (props) => {
+type PropsType = {
+  history: H.History,
+  location: H.Location<ListType>
+}
+
+type ListType = {
+  list: {
+    date: Date
+    program: string,
+    corner: string,
+    isSavedMail: boolean,
+    radioName: string,
+    content: string
+  }
+}
+
+const Single = (props: PropsType) => {
   const { list } = props.location.state;
   const date = dateToString(list.date);
 

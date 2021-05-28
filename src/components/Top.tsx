@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import '../css/top.css';
 
-const Top = (props) => {
+type PropsType = {
+  history: H.History
+}
+
+const Top = (props: PropsType) => {
   // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
@@ -50,7 +55,7 @@ const Top = (props) => {
           </Box>
           <Box p={4}>
             <Grid container justify="space-between">
-              <Link to="/program" xs={6} className="program_btn_wrap">
+              <Link to="/program" className="program_btn_wrap">
                 <Grid item className="program_btn">
                   <p className="text-center">番組表</p>
                 </Grid>

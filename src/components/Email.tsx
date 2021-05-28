@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
+import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -12,14 +13,25 @@ import { db } from '../firebase';
 import Header from './Header';
 import '../css/email.css';
 
-const Email = (props) => {
-  const [userId, setUserId] = useState('');
-  const [oldEmail, setOldEmail] = useState('');
-  const [oldPassword, setOldPassword] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [nowPage, setNowPage] = useState(1);
-  const [validationMessage, setValidationMessage] = useState('');
+type Props = {
+  history: H.History
+}
+
+const Email = (props: Props) => {
+  const [userId, setUserId] = useState<string>('');
+  const [oldEmail, setOldEmail] = useState<string>('');
+  const [oldPassword, setOldPassword] = useState<string>('');
+  const [newEmail, setNewEmail] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [nowPage, setNowPage] = useState<number>(1);
+  const [validationMessage, setValidationMessage] = useState<string>('');
+
+  const goToNextPage1 = () => {
+    setNowPage(2);
+  };
+  const GoBackPage1 = () => {
+    setNowPage(1);
+  };
 
   // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
@@ -41,49 +53,44 @@ const Email = (props) => {
     });
   }, []);
 
-  const goToNextPage1 = () => {
-    setNowPage(2);
-  };
-  const GoBackPage1 = () => {
-    setNowPage(1);
-  };
-
   const changeEmailAndPassword = () => {
     firebase.auth().onAuthStateChanged((user) => {
       const credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPassword);
-      user.reauthenticateWithCredential(credential).then(() => {
-        const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
-        if (newEmail === '' || regexp.test(newEmail) === false) {
-          const validationInfo = GetValidationMessage('mail/invalid-email');
-          setValidationMessage(`${validationInfo.message}(新しいメールアドレス）`);
-          return;
-        }
-        if (newPassword.length < 6) {
-          const validationInfo = GetValidationMessage('auth/weak-password');
-          setValidationMessage(`${validationInfo.message}(新しいメールアドレス）`);
-          return;
-        }
-        user.updateEmail(newEmail).then(() => {
-          user.updatePassword(newPassword).then(async () => {
-            await db.collection(`users/${user.uid}/info`).doc(userId).update({
-              email: newEmail,
-            })
-            firebase.auth().onAuthStateChanged(() => {
-              firebase.auth().signOut().then(() => {
+      if (user) {
+        user.reauthenticateWithCredential(credential).then(() => {
+          const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+          if (newEmail === '' || regexp.test(newEmail) === false) {
+            const validationInfo = GetValidationMessage('mail/invalid-email');
+            setValidationMessage(`${validationInfo.message}(新しいメールアドレス）`);
+            return;
+          }
+          if (newPassword.length < 6) {
+            const validationInfo = GetValidationMessage('auth/weak-password');
+            setValidationMessage(`${validationInfo.message}(新しいパスワード）`);
+            return;
+          }
+          user.updateEmail(newEmail).then(() => {
+            user.updatePassword(newPassword).then(() => {
+              db.collection(`users/${user.uid}/info`).doc(userId).update({
+                email: newEmail,
+              })
+              firebase.auth().onAuthStateChanged(() => {
+                firebase.auth().signOut().then(() => {
+                });
               });
+            }).catch((error) => {
+              const validationInfo = GetValidationMessage(error.code);
+              setValidationMessage(`${validationInfo.message}(新しいパスワード)`);
             });
           }).catch((error) => {
             const validationInfo = GetValidationMessage(error.code);
-            setValidationMessage(`${validationInfo.message}(新しいパスワード)`);
+            setValidationMessage(`${validationInfo.message}(新しいメールアドレス）`);
           });
         }).catch((error) => {
           const validationInfo = GetValidationMessage(error.code);
-          setValidationMessage(`${validationInfo.message}(新しいメールアドレス）`);
+          setValidationMessage(`${validationInfo.message}(現在のメールアドレス・パスワード)`);
         });
-      }).catch((error) => {
-        const validationInfo = GetValidationMessage(error.code);
-        setValidationMessage(`${validationInfo.message}(現在のメールアドレス・パスワード)`);
-      });
+      }
     });
   };
 
