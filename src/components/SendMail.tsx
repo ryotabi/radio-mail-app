@@ -132,7 +132,7 @@ const SendMail = (props: PropsType) => {
       corner,
       content,
       // APIのパスワード考える
-      password: 'bE|i%*Q!+AsH',
+      password: process.env.REACT_APP_RADIOMAILAPI_PASSWORD,
     };
     await axios.post('https://radiomailer.site', data)
       .then((res) => {
