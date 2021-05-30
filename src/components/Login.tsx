@@ -30,10 +30,18 @@ const Login = (props: PropsType) => {
     return () => unSub();
   }, []);
 
-  const storeLoginInfo = () => {
+  const storeLoginInfo = async () => {
     try {
-      auth.signInWithEmailAndPassword(email, password);
-      props.history.push('/');
+      await auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        // ページリロードしないでもログインできるようにしたい
+        window.location.reload();
+      })
+      .catch((error) => {
+        const validationInfo = GetValidationMessage(error.code);
+        setValidationType(validationInfo.type);
+        setValidationMessage(validationInfo.message);
+      })
     } catch (error) {
       const validationInfo = GetValidationMessage(error.code);
       setValidationType(validationInfo.type);

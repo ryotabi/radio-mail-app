@@ -23,6 +23,7 @@ const Setting = (props: PropsType) => {
   const logout = () => {
     firebase.auth().onAuthStateChanged(() => {
       firebase.auth().signOut().then(() => {
+        props.history.push('/login');
       });
     });
   };

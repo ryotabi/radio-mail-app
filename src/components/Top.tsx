@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase';
 import * as H from 'history';
@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
+import { auth } from '../firebase';
 import '../css/top.css';
 
 type PropsType = {
@@ -14,11 +15,14 @@ type PropsType = {
 
 const Top = (props: PropsType) => {
   // ログイン状態確認
-  firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-      props.history.push('/login');
-    }
-  });
+  useEffect(() => {
+    const unSub = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        props.history.push('/login');
+      }
+    });
+    return () => unSub();
+  }, []);
 
   return (
     <>
