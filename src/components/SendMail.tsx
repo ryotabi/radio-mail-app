@@ -133,7 +133,6 @@ const SendMail = (props: PropsType) => {
       content,
       password: process.env.REACT_APP_RADIOMAILAPI_PASSWORD,
     };
-    console.log(data)
     await axios.post('https://radiomailer.site', data)
       .then((res) => {
         if (res.data.error) {
@@ -156,8 +155,6 @@ const SendMail = (props: PropsType) => {
         };
       });
   };
-
-  console.log(process.env.REACT_APP_RADIOMAILAPI_PASSWORD)
 
   return (
     <>
