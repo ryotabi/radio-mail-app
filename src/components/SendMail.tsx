@@ -156,6 +156,8 @@ const SendMail = (props: PropsType) => {
       });
   };
 
+  console.log(process.env.REACT_APP_RADIOMAILAPI_PASSWORD)
+
   return (
     <>
       <Header />
