@@ -42,6 +42,10 @@ export default function GetValidationMessage(error: string) {
       validationInfo.type = 'program';
       validationInfo.message = '番組を選択してください';
       break;
+    case 'mail/invalid-corner':
+      validationInfo.type = 'corner';
+      validationInfo.message = 'コーナー（件名）を選択してください';
+      break;
     case 'mail/invalid-content':
       validationInfo.type = 'content';
       validationInfo.message = '内容を入力してください';

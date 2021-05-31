@@ -238,6 +238,11 @@ const Form = (props: PropsType) => {
       setValidationMessage(validationInfo.message);
       return;
     }
+    if (corner === '') {
+      const validationInfo = GetValidationMessage('mail/invalid-corner');
+      setValidationMessage(validationInfo.message);
+      return;
+    }
     if (content === '') {
       const validationInfo = GetValidationMessage('mail/invalid-content');
       setValidationMessage(validationInfo.message);
@@ -528,6 +533,7 @@ const Form = (props: PropsType) => {
                   return '';
                 })()}
                 <Box my={4} mx={2}>
+                  <p className="required">必須</p>
                   <TextField
                     id="content"
                     label="投稿内容"
