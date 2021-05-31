@@ -69,6 +69,7 @@ const Form = (props: PropsType) => {
   const [nowFormInput, setNowFormInput] = useState<number>(1);
   const [programLists, setProgramLists] = useState<ProgramType[]>([{ id: '', program: '', name: '' }]);
   const [isUsedMyProgram, setisUsedMyProgram] = useState<boolean>(false);
+  const [isCornerInput, setIsCornerInput] = useState<boolean>(false);
   const [myProgramList, setMyProgramList] = useState<ProgramType[]>([{ id: '', program: '', name: '' }]);
   const [template, setTemplate] = useState<string>('');
   const [isUsedtemplate, setIsUsedTemplate] = useState<boolean>(false);
@@ -175,6 +176,10 @@ const Form = (props: PropsType) => {
       unSub();
     });
   };
+
+  const changeIsCornerInputStatus = () => {
+    setIsCornerInput(!isCornerInput)
+  }
 
   const setContentTemplate = () => {
     setIsUsedTemplate(true);
@@ -460,22 +465,41 @@ const Form = (props: PropsType) => {
                   <p className="form_title text-center">投稿内容</p>
                 </Box>
                 {(() => {
-                  if (isUsedMyProgram) {
-                    return (
-                      <Box my={4} mx={2}>
-                        <p className="required">必須</p>
-                        <TextField
-                          id="corner"
-                          required
-                          label="コーナー（件名）"
-                          className="md_w-100 w_90"
-                          value={corner}
-                          onChange={(e) => {
-                            setCorner(e.target.value);
-                          }}
-                        />
-                      </Box>
-                    );
+                  if (isCornerInput) {
+                    if (isUsedMyProgram) {
+                      return (
+                        <Box my={4} mx={2}>
+                          <p className="required">必須</p>
+                          <TextField
+                            id="corner"
+                            required
+                            label="コーナー（件名）"
+                            className="md_w-100 w_90"
+                            value={corner}
+                            onChange={(e) => {
+                              setCorner(e.target.value);
+                            }}
+                          />
+                        </Box>
+                      );
+                    } else {
+                      return (
+                        <Box my={4} mx={2}>
+                          <p className="required">必須</p>
+                          <TextField
+                            id="corner"
+                            required
+                            label="コーナー（件名）"
+                            className="md_w-100 w_90"
+                            value={corner}
+                            onChange={(e) => {
+                              setCorner(e.target.value);
+                            }}
+                          />
+                          <p className="change_corner_input_btn" onClick={changeIsCornerInputStatus}>入力方法を変更する</p>
+                        </Box>
+                      );
+                    }
                   }
                   return (
                     <Box my={4} mx={2}>
@@ -500,6 +524,7 @@ const Form = (props: PropsType) => {
                           </MenuItem>
                         ))}
                       </Select>
+                      <p className="change_corner_input_btn" onClick={changeIsCornerInputStatus}>入力方法を変更する</p>
                     </Box>
                   );
                 })()}

@@ -28,3 +28,8 @@
 .btn:active {
   box-shadow: none !important;
 }
+.change_corner_input_btn {
+  font-size: 13px !important;
+  cursor: pointer;
+  margin-top: 10px;
+}
