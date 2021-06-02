@@ -124,7 +124,7 @@ const Form = (props: PropsType) => {
     return () => unSub();
   }, []);
 
-  // 番組のメールアドレスを取得
+  // 番組のコーナーを取得
   useEffect(() => {
     const unSub = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
