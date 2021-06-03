@@ -223,6 +223,7 @@ const Form = (props: PropsType) => {
           program,
           corner,
           content,
+          // timestamp型にしたいかも
           date: new Date(),
         }));
         props.history.push('/');

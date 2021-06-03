@@ -146,7 +146,7 @@ const SendMail = (props: PropsType) => {
             radioName,
             corner,
             content,
-            date: new Date(),
+            date: firebase.firestore.FieldValue.serverTimestamp(),
           });
           db.collection(`mail/${currentUser.uid}/programList`).add({
             program,
