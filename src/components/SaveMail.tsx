@@ -59,7 +59,7 @@ const SaveMail = (props: PropsType) => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        const unSub = db.collection(`mail/${user.uid}/saveMail`).onSnapshot((snapshot) => {
+        const unSub = db.collection(`mail/${user.uid}/saveMail`).orderBy('date', 'desc').onSnapshot((snapshot) => {
           setLists(
             snapshot.docs.map((doc) => {
               if (doc.data().name !== '') {
