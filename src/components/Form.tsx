@@ -466,8 +466,7 @@ const Form = (props: PropsType) => {
                   <p className="form_title text-center">投稿内容</p>
                 </Box>
                 {(() => {
-                  if (isCornerInput) {
-                    if (isUsedMyProgram) {
+                  if (isUsedMyProgram) {
                       return (
                         <Box my={4} mx={2}>
                           <p className="required">必須</p>
@@ -483,7 +482,8 @@ const Form = (props: PropsType) => {
                           />
                         </Box>
                       );
-                    } else {
+                  } else {
+                    if (isCornerInput) {
                       return (
                         <Box my={4} mx={2}>
                           <p className="required">必須</p>
@@ -500,34 +500,35 @@ const Form = (props: PropsType) => {
                           <p className="change_corner_input_btn" onClick={changeIsCornerInputStatus}>入力方法を変更する</p>
                         </Box>
                       );
+                    } else {
+                      return (
+                        <Box my={4} mx={2}>
+                          <p className="required">必須</p>
+                          <InputLabel id="corner">コーナー（件名）</InputLabel>
+                          <Select
+                            labelId="corner"
+                            id="corner"
+                            required
+                            className="selectbox md_w-100 w_90"
+                            value={corner}
+                            onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
+                              setCorner(e.target.value as string);
+                            }}
+                          >
+                            {cornerLists.map((cornerList) => (
+                              <MenuItem
+                                key={cornerList.id}
+                                value={cornerList.corner}
+                              >
+                                {cornerList.corner}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                          <p className="change_corner_input_btn" onClick={changeIsCornerInputStatus}>入力方法を変更する</p>
+                        </Box>
+                      );
                     }
                   }
-                  return (
-                    <Box my={4} mx={2}>
-                      <p className="required">必須</p>
-                      <InputLabel id="corner">コーナー（件名）</InputLabel>
-                      <Select
-                        labelId="corner"
-                        id="corner"
-                        required
-                        className="selectbox md_w-100 w_90"
-                        value={corner}
-                        onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
-                          setCorner(e.target.value as string);
-                        }}
-                      >
-                        {cornerLists.map((cornerList) => (
-                          <MenuItem
-                            key={cornerList.id}
-                            value={cornerList.corner}
-                          >
-                            {cornerList.corner}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      <p className="change_corner_input_btn" onClick={changeIsCornerInputStatus}>入力方法を変更する</p>
-                    </Box>
-                  );
                 })()}
                 {(() => {
                   if (isUsedtemplate) {
