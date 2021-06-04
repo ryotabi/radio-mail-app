@@ -52,13 +52,18 @@ const MyProgram = (props: PropsType) => {
             portalCode,
             email,
           },
-        );
+        ).then(() => {
+          setProgramName('');
+          setEmail('');
+          setPortalCode('');
+          setAddress('');
+          alert('保存しました');
+          props.history.push('/login');
+        }).catch(() => {
+          alert('テンプレートの保存に失敗しました。もう一度お試しください');
+        })
       }
-      setProgramName('');
-      setEmail('');
-      setPortalCode('');
-      setAddress('');
-      alert('保存しました');
+
     });
   };
 
