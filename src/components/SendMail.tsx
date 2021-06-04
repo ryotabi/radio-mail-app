@@ -139,19 +139,19 @@ const SendMail = (props: PropsType) => {
           alert(' 送信に失敗しました');
         } else {
           alert('送信しました');
-        };
-        if (currentUser) {
-          db.collection(`mail/${currentUser.uid}/${program}`).add({
-            program: toName,
-            radioName,
-            corner,
-            content,
-            date: firebase.firestore.FieldValue.serverTimestamp(),
-          });
-          db.collection(`mail/${currentUser.uid}/programList`).add({
-            program,
-          });
-          props.history.push('/');
+          if (currentUser) {
+            db.collection(`mail/${currentUser.uid}/${program}`).add({
+              program: toName,
+              radioName,
+              corner,
+              content,
+              date: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+            db.collection(`mail/${currentUser.uid}/programList`).add({
+              program,
+            });
+            props.history.push('/');
+          };
         };
       });
   };

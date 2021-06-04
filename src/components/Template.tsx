@@ -28,6 +28,7 @@ const Template = (props: PropsType) => {
   });
 
   const saveTemplate = () => {
+    // バリデーションを別関数にして、useEffectで監視させる
     if (templateName === '') {
       const validationInfo = GetValidationMessage('template/invalid-templateName');
       setValidationType(validationInfo.type);
@@ -53,6 +54,9 @@ const Template = (props: PropsType) => {
           setValidationType('');
           setValidationMessage('');
           alert('テンプレートを保存しました');
+          props.history.push('/login');
+        }).catch(() => {
+          alert('テンプレートの保存に失敗しました。もう一度お試しください');
         });
       }
     });
