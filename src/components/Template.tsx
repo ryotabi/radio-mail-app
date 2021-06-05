@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import * as H from 'history';
 import Container from '@material-ui/core/Container';
@@ -27,8 +27,13 @@ const Template = (props: PropsType) => {
     }
   });
 
+  useEffect(() => {
+    if (templateName || template) {
+      setValidationType('');
+    };
+  },[templateName, template]);
+
   const saveTemplate = () => {
-    // バリデーションを別関数にして、useEffectで監視させる
     if (templateName === '') {
       const validationInfo = GetValidationMessage('template/invalid-templateName');
       setValidationType(validationInfo.type);
