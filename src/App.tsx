@@ -11,7 +11,7 @@ import SaveMail from './components/SaveMail';
 import Program from './components/Program';
 import Setting from './components/Setting';
 import User from './components/User';
-import Email from './components/Email';
+import Password from './components/Password';
 import Template from './components/Template';
 import MyProgram from './components/MyProgram';
 import ResetPassword from './components/ResetPassword';
@@ -35,7 +35,7 @@ const App = () => (
         <Route path="/program"       exact component={Program} />
         <Route path="/setting"       exact component={Setting} />
         <Route path="/user"          exact component={User} />
-        <Route path="/email"         exact component={Email} />
+        <Route path="/password"      exact component={Password} />
         <Route path="/template"      exact component={Template} />
         <Route path="/myProgram"     exact component={MyProgram} />
         <Route path="/resetPassword" exact component={ResetPassword} />
