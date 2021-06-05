@@ -155,7 +155,9 @@ const SendMail = (props: PropsType) => {
             props.history.push('/');
           };
         };
-      });
+      }).catch(() => {
+        alert(' 送信に失敗しました');
+      })
   };
 
   return (
