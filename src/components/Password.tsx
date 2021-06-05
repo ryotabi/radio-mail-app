@@ -11,17 +11,16 @@ import Grid from '@material-ui/core/Grid';
 import GetValidationMessage from '../helpers/ValidationMessage';
 import { db } from '../firebase';
 import Header from './Header';
-import '../css/email.css';
+import '../css/password.css';
 
 type Props = {
   history: H.History
 }
 
-const Email = (props: Props) => {
+const Password = (props: Props) => {
   const [userId, setUserId] = useState<string>('');
   const [oldEmail, setOldEmail] = useState<string>('');
   const [oldPassword, setOldPassword] = useState<string>('');
-  const [newEmail, setNewEmail] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
   const [nowPage, setNowPage] = useState<number>(1);
   const [validationMessage, setValidationMessage] = useState<string>('');
@@ -58,33 +57,20 @@ const Email = (props: Props) => {
       const credential = firebase.auth.EmailAuthProvider.credential(oldEmail, oldPassword);
       if (user) {
         user.reauthenticateWithCredential(credential).then(() => {
-          const regexp = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
-          if (newEmail === '' || regexp.test(newEmail) === false) {
-            const validationInfo = GetValidationMessage('mail/invalid-email');
-            setValidationMessage(`${validationInfo.message}(新しいメールアドレス）`);
-            return;
-          }
           if (newPassword.length < 6) {
             const validationInfo = GetValidationMessage('auth/weak-password');
             setValidationMessage(`${validationInfo.message}(新しいパスワード）`);
             return;
           }
-          user.updateEmail(newEmail).then(() => {
-            user.updatePassword(newPassword).then(() => {
-              db.collection(`users/${user.uid}/info`).doc(userId).update({
-                email: newEmail,
-              })
+          user.updatePassword(newPassword)
+            .then(() => {
               firebase.auth().onAuthStateChanged(() => {
                 firebase.auth().signOut().then(() => {
                 });
               });
-            }).catch((error) => {
+          }).catch((error) => {
               const validationInfo = GetValidationMessage(error.code);
               setValidationMessage(`${validationInfo.message}(新しいパスワード)`);
-            });
-          }).catch((error) => {
-            const validationInfo = GetValidationMessage(error.code);
-            setValidationMessage(`${validationInfo.message}(新しいメールアドレス）`);
           });
         }).catch((error) => {
           const validationInfo = GetValidationMessage(error.code);
@@ -98,10 +84,10 @@ const Email = (props: Props) => {
     <>
       <Header />
       <div className="bg_color" />
-      <div className="email_wrap">
+      <div className="changePassword_wrap">
         <Container maxWidth="sm">
-          <h1 className="email_title text-center">メールアドレスとパスワード</h1>
-          <form className="email_form">
+          <h1 className="changePassword_title text-center">パスワード変更</h1>
+          <form className="changePassword_form">
             {(() => {
               if (nowPage === 1) {
                 return (
@@ -133,27 +119,14 @@ const Email = (props: Props) => {
                         }}
                       />
                     </Box>
-                    <Box m={6} className="text-center email_btn_wrap">
-                      <Button variant="contained" className="email_btn" onClick={goToNextPage1}><ArrowForwardIcon /></Button>
+                    <Box m={6} className="text-center changePassword_btn_wrap">
+                      <Button variant="contained" className="changePassword_btn" onClick={goToNextPage1}><ArrowForwardIcon /></Button>
                     </Box>
                   </div>
                 );
               }
               return (
                 <div>
-                  <Box m={4}>
-                    <p className="required">必須</p>
-                    <TextField
-                      id="newEmail"
-                      required
-                      label="新しいメールアドレス"
-                      className="md_w-100 w_90"
-                      value={newEmail}
-                      onChange={(e) => {
-                        setNewEmail(e.target.value);
-                      }}
-                    />
-                  </Box>
                   <Box m={4}>
                     <p className="required">必須</p>
                     <TextField
@@ -168,17 +141,17 @@ const Email = (props: Props) => {
                       }}
                     />
                   </Box>
-                  <Box m={6} className="text-center email_btn_wrap">
+                  <Box m={6} className="text-center changePassword_btn_wrap">
                     <Grid container justify="space-around">
                       <Grid item xs={3}>
-                        <Button variant="contained" className="email_btn" onClick={GoBackPage1}><ArrowBackIcon /></Button>
+                        <Button variant="contained" className="changePassword_btn" onClick={GoBackPage1}><ArrowBackIcon /></Button>
                       </Grid>
                     </Grid>
                   </Box>
-                  <Box m={4} className="text-center email_btn_wrap">
+                  <Box m={4} className="text-center changePassword_btn_wrap">
                     <Grid container>
                       <Grid item xs={12}>
-                        <Button variant="contained" className="email_btn" onClick={changeEmailAndPassword}>変更</Button>
+                        <Button variant="contained" className="changePassword_btn" onClick={changeEmailAndPassword}>変更</Button>
                         <p className="error">{validationMessage}</p>
                       </Grid>
                     </Grid>
@@ -193,4 +166,4 @@ const Email = (props: Props) => {
   );
 };
 
-export default Email;
+export default Password;

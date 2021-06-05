@@ -48,13 +48,9 @@ const Setting = (props: PropsType) => {
         </Box>
         <Box my={6} mx={4}>
           <Grid container>
-            <Link to="/email" className="setting_user_btn_wrap">
+            <Link to="/password" className="setting_user_btn_wrap">
               <Grid item className="setting_user_btn">
-                <p className="setting_btn_text text-center">
-                  メールアドレスと
-                  <br />
-                  パスワードを変更
-                </p>
+                <p className="setting_btn_text text-center">パスワードを変更</p>
               </Grid>
             </Link>
           </Grid>
