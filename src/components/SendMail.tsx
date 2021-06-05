@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import { db } from '../firebase';
+import RadioMailAPIURL from '../config/RadioMailApiData';
 import '../css/mail.css';
 
 type PropsType = {
@@ -49,6 +50,7 @@ const SendMail = (props: PropsType) => {
   const splicToPortalCode = [...toPortalCode];
   const [isBack, setIsBack] = useState<boolean>(true);
   const [stateSubmitButton, setStateSubmitButton] = useState<boolean>(true);
+  
 
   // ログイン状態確認
   firebase.auth().onAuthStateChanged((user) => {
@@ -133,7 +135,7 @@ const SendMail = (props: PropsType) => {
       content,
       password: process.env.REACT_APP_RADIOMAILAPI_PASSWORD,
     };
-    await axios.post('https://radiomailer.site', data)
+    await axios.post(RadioMailAPIURL, data)
       .then((res) => {
         if (res.data.error) {
           alert(' 送信に失敗しました');
