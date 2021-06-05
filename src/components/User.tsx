@@ -84,7 +84,7 @@ const User = (props: PropsType) => {
         alert('ユーザー情報を変更しました');
         props.history.push('/');
       }).catch(() => {
-        alert('テンプレートの保存に失敗しました。もう一度お試しください');
+        alert('ユーザー情報の更新に失敗しました。もう一度お試しください');
       });
     };
   };
