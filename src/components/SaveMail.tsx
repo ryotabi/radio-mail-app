@@ -27,6 +27,7 @@ type ListsType = {
   program: string,
   corner: string,
   content: string,
+  isUsedMyProgram: boolean,
   date: Date,
   isSavedMail: boolean
 }
@@ -45,6 +46,7 @@ const SaveMail = (props: PropsType) => {
     program: '',
     corner: '',
     content: '',
+    isUsedMyProgram: true,
     date: new Date(),
     isSavedMail: true
   }]);
@@ -77,6 +79,7 @@ const SaveMail = (props: PropsType) => {
                 program: doc.data().program,
                 corner: doc.data().corner,
                 content: doc.data().content,
+                isUsedMyProgram: doc.data().isUsedMyProgram,
                 date: doc.data().date.toDate(),
                 isSavedMail: true
               };

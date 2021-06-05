@@ -35,6 +35,7 @@ type SaveMailType = {
     corner: string,
     content: string,
     date: string,
+    isUsedMyProgram: boolean
   }
 }
 
@@ -110,6 +111,9 @@ const Form = (props: PropsType) => {
       setProgram(saveMailList.program);
       setCorner(saveMailList.corner);
       setContent(saveMailList.content);
+      if (saveMailList.isUsedMyProgram) {
+        setMyProgramFromSaveMail(saveMailList.program);
+      }
     }
     // 標準番組を取得
     const unSub = db.collection('programList').onSnapshot((snapshot) => {
@@ -177,6 +181,24 @@ const Form = (props: PropsType) => {
     });
   };
 
+  const setMyProgramFromSaveMail = (program: string) => {
+    setisUsedMyProgram(true);
+    const unSub = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection(`myProgram/${user.uid}/list`).where('name', '==', program).onSnapshot((snapshot) => {
+          setMyProgramList(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              program: doc.data().name,
+              name: doc.data().name,
+            })),
+          );
+        });
+      };
+      unSub();
+    });
+  };
+
   const changeIsCornerInputStatus = () => {
     setIsCornerInput(!isCornerInput)
   }
@@ -223,6 +245,7 @@ const Form = (props: PropsType) => {
           program,
           corner,
           content,
+          isUsedMyProgram,
           // timestamp型にしたいかも
           date: new Date(),
         }));
