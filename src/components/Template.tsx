@@ -17,6 +17,7 @@ type PropsType = {
 const Template = (props: PropsType) => {
   const [templateName, setTemplateName] = useState<string>('');
   const [template, setTemplate] = useState<string>('');
+  const [isUsedTemplateName, setIsUsedTemplateName] = useState<boolean>(false);
   const [validationType, setValidationType] = useState<string>('');
   const [validationMessage, setValidationMessage] = useState<string>('');
 
@@ -31,9 +32,30 @@ const Template = (props: PropsType) => {
     if (templateName || template) {
       setValidationType('');
     };
+    checkTemplateName()
   },[templateName, template]);
 
+  const checkTemplateName = () => {
+    setIsUsedTemplateName(false);
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection(`template/${user.uid}/data`).where('name', '==', templateName).get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.exists) {
+              setIsUsedTemplateName(true);
+            }
+          });
+        });
+      };
+    });
+  };
+
   const saveTemplate = () => {
+    if  (isUsedTemplateName) {
+      alert('テンプレート名がすでに使われています');
+      return;
+    }
     if (templateName === '') {
       const validationInfo = GetValidationMessage('template/invalid-templateName');
       setValidationType(validationInfo.type);

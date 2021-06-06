@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 import * as H from 'history';
 import Container from '@material-ui/core/Container';
@@ -19,6 +19,7 @@ const MyProgram = (props: PropsType) => {
   const [email, setEmail] = useState<string>('');
   const [portalCode, setPortalCode] = useState<string>('');
   const [address, setAddress] = useState<string>('');
+  const [isUsedProgramName, setIsUsedProgramName] = useState<boolean>(false);
   const [validationType, setValidationType] = useState<string>('');
   const [validationMessage, setValidationMessage] = useState<string>('');
 
@@ -28,6 +29,26 @@ const MyProgram = (props: PropsType) => {
       props.history.push('/login');
     }
   });
+
+  useEffect(() => {
+    checkProgramName()
+  },[programName])
+
+  const checkProgramName = () => {
+    setIsUsedProgramName(false);
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection(`myProgram/${user.uid}/list`).where('name', '==', programName).get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.exists) {
+              setIsUsedProgramName(true);
+            }
+          });
+        });
+      };
+    });
+  };
 
   const storeMyProgram = () => {
     if (programName === '') {
@@ -41,6 +62,10 @@ const MyProgram = (props: PropsType) => {
       const validationInfo = GetValidationMessage('program/invalid-email');
       setValidationType(validationInfo.type);
       setValidationMessage(validationInfo.message);
+      return;
+    }
+    if (isUsedProgramName) {
+      alert('番組名がすでに使われています');
       return;
     }
     firebase.auth().onAuthStateChanged((user) => {
