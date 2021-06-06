@@ -19,7 +19,7 @@
   margin-top: 50px;
 }
 .login_btn_wrap {
-  margin: 50px !important;
+  margin: 50px 50px 15px 50px !important;
 }
 .login_btn {
   background-color: rgba(104, 183, 135, 1) !important;
@@ -27,6 +27,12 @@
   font-size: 20px !important;
   width: 100%;
 }
+.login_btn_google {
+  background-color: rgba(104, 183, 135, 1) !important;
+  font-size: 16px !important;
+  width: 100% !important;
+}
 .login_btn:active {
   box-shadow: none !important;
 }
+

@@ -22,12 +22,20 @@
   margin-top: 20px;
 }
 .register_btn_wrap {
-  margin: 50px 30px !important;
+  margin: 50px 30px 0 30px !important;
 }
 .register_btn {
   background-color: rgba(104, 183, 135, 1) !important;
   border-radius: 60px !important;
   font-size: 15px !important;
+}
+.register_btn_google_wrap {
+  margin-top: 15px !important;
+}
+.register_btn_google {
+  background-color: rgba(104, 183, 135, 1) !important;
+  font-size: 16px !important;
+  width: 100% !important;
 }
 .register_btn:active {
   box-shadow: none !important;
