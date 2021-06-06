@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import GoogleButton from 'react-google-button';
+import firebase from 'firebase';
 import Header from './Header';
 import GetValidationMessage from '../helpers/ValidationMessage';
 import { auth } from '../firebase';
@@ -20,6 +22,7 @@ const Login = (props: PropsType) => {
   const [password, setPassword] = useState<string>('');
   const [validationType, setValidationType] = useState<string>('');
   const [validationMessage, setValidationMessage] = useState<string>('');
+  const provider = new firebase.auth.GoogleAuthProvider();
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
@@ -48,6 +51,15 @@ const Login = (props: PropsType) => {
       setValidationMessage(validationInfo.message);
     }
   };
+
+  const loginWithGoogle = () => {
+    firebase.auth().signInWithPopup(provider)
+    .then(() => {
+      props.history.push('/');
+    }).catch(() => {
+      alert('ログインに失敗しました');
+    })
+  }
 
   return (
     <>
@@ -111,6 +123,14 @@ const Login = (props: PropsType) => {
               }
               return '';
             })()}
+          </Box>
+          <Box m={4}>
+            <GoogleButton
+              className="login_btn_google"
+              type="light"
+              label="Googleでログインする"
+              onClick={loginWithGoogle}
+            />
           </Box>
           <Box m={2}>
             <p className="text-center"><Link to="/resetPassword">パスワードを忘れた方</Link></p>

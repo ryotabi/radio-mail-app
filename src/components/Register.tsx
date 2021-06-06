@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Grid from '@material-ui/core/Grid';
+import GoogleButton from 'react-google-button';
 import { auth, db } from '../firebase';
 import Header from './Header';
 import GetValidationMessage from '../helpers/ValidationMessage';
@@ -30,6 +31,7 @@ const Register = (props: PropsType) => {
   const [address, setAddress] = useState<string>('');
   const [nowPage, setNowPage] = useState<number>(1);
   const [validationMessage, setValidationMessage] = useState<string>('');
+  const provider = new firebase.auth.GoogleAuthProvider();
 
   const goToNextPage2 = () => {
     setNowPage(2);
@@ -72,6 +74,28 @@ const Register = (props: PropsType) => {
     }
     return '';
   };
+
+  const registerWithGoogle = () => {
+    firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      const user = result.user;
+      if (user) {
+        db.collection(`users/${user.uid}/info`).add({
+          radioName,
+          email: user.email,
+          name,
+          hurigana,
+          age,
+          tel,
+          portalCode,
+          address,
+        });
+        props.history.push('/');
+      }
+    }).catch(() => {
+      alert('ログインに失敗しました');
+    })
+  }
 
   return (
     <>
@@ -126,6 +150,14 @@ const Register = (props: PropsType) => {
                     <Box m={6} className="text-center register_btn_wrap">
                       <Button variant="contained" className="register_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
                     </Box>
+                    <Box m={4} className="register_btn_google_wrap">
+                      <GoogleButton
+                        className="register_btn_google"
+                        type="light"
+                        label="Googleでログインする"
+                        onClick={registerWithGoogle}
+                      />
+                    </Box>
                     <Box m={2}>
                       <p className="text-center"><Link to="/login">Sign In</Link></p>
                     </Box>
@@ -177,6 +209,14 @@ const Register = (props: PropsType) => {
                           <Button variant="contained" className="register_btn" onClick={goToNextPage3}><ArrowForwardIcon /></Button>
                         </Grid>
                       </Grid>
+                    </Box>
+                    <Box m={4} className="register_btn_google_wrap">
+                      <GoogleButton
+                        className="register_btn_google"
+                        type="light"
+                        label="Googleでログインする"
+                        onClick={registerWithGoogle}
+                      />
                     </Box>
                     <Box m={2}>
                       <p className="text-center"><Link to="/login">Sign In</Link></p>
@@ -234,6 +274,14 @@ const Register = (props: PropsType) => {
                       <p className="error">{validationMessage}</p>
                     </Grid>
                   </Box>
+                  <Box m={4} className="register_btn_google_wrap">
+                      <GoogleButton
+                        className="register_btn_google"
+                        type="light"
+                        label="Googleでログインする"
+                        onClick={registerWithGoogle}
+                      />
+                    </Box>
                   <Box m={2}>
                     <p className="text-center"><Link to="/login">Sign In</Link></p>
                   </Box>
