@@ -22,6 +22,7 @@ type MailInfoType = {
     address: string,
     tel: string,
     radioName: string,
+    addressForRadio: string,
     age: string,
     mail: string,
     program: string,
@@ -39,6 +40,7 @@ const SendMail = (props: PropsType) => {
   const [fromAddress, setFromAddress] = useState<string>('');
   const [fromName, setFromName] = useState<string>('');
   const [radioName, setRadioName] = useState<string>('');
+  const [addressForRadio, setAddressForRadio] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [mail, setMail] = useState<string>('');
   const [tel, setTel] = useState<string>('');
@@ -92,6 +94,7 @@ const SendMail = (props: PropsType) => {
       setFromName(location.state.name);
       setFromPortalCode(location.state.portalCode);
       setRadioName(location.state.radioName);
+      setAddressForRadio(location.state.addressForRadio);
       setAge(location.state.age);
       setMail(location.state.mail);
       setTel(location.state.tel);
@@ -128,6 +131,7 @@ const SendMail = (props: PropsType) => {
       fromName,
       fromAddress,
       radioName,
+      addressForRadio,
       age,
       tel,
       mail,

@@ -30,6 +30,7 @@ type SaveMailType = {
     tel: string,
     mail: string,
     radioName: string,
+    addressForRadio: string,
     age: string,
     program: string,
     corner: string,
@@ -61,6 +62,7 @@ const Form = (props: PropsType) => {
   const [address, setAddress] = useState<string>('');
   const [tel, setTel] = useState<string>('');
   const [radioName, setRadioName] = useState<string>('');
+  const [addressForRadio, setAddressForRadio] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [mail, setMail] = useState<string>('');
   const [program, setProgram] = useState<string>('');
@@ -107,6 +109,7 @@ const Form = (props: PropsType) => {
       setTel(saveMailList.tel);
       setMail(saveMailList.mail);
       setRadioName(saveMailList.radioName);
+      setAddressForRadio(saveMailList.addressForRadio);
       setAge(saveMailList.age);
       setProgram(saveMailList.program);
       setCorner(saveMailList.corner);
@@ -154,6 +157,7 @@ const Form = (props: PropsType) => {
             setAddress(doc.data().address);
             setTel(doc.data().tel);
             setRadioName(doc.data().radioName);
+            setAddressForRadio(doc.data().addressForRadio);
             setAge(doc.data().age);
             setMail(doc.data().email);
           });
@@ -241,6 +245,7 @@ const Form = (props: PropsType) => {
           tel,
           mail,
           radioName,
+          addressForRadio,
           age,
           program,
           corner,
@@ -286,6 +291,7 @@ const Form = (props: PropsType) => {
           address,
           tel,
           radioName,
+          addressForRadio,
           age,
           mail,
           program,
@@ -390,6 +396,17 @@ const Form = (props: PropsType) => {
                       value={radioName}
                       onChange={(e) => {
                         setRadioName(e.target.value);
+                      }}
+                    />
+                  </Box>
+                  <Box my={4} mx={2}>
+                    <TextField
+                      id="addressForRadio"
+                      label="住所（読まれる用）"
+                      className="md_w-100 w_90"
+                      value={addressForRadio}
+                      onChange={(e) => {
+                        setAddressForRadio(e.target.value);
                       }}
                     />
                   </Box>
