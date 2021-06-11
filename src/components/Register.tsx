@@ -23,8 +23,8 @@ const Register = (props: PropsType) => {
   const [radioName, setRadioName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [addressForRadio, setAddressForRadio] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [hurigana, setHurigana] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [tel, setTel] = useState<string>('');
   const [portalCode, setPortalCode] = useState<string>('');
@@ -55,8 +55,8 @@ const Register = (props: PropsType) => {
               db.collection(`users/${user.uid}/info`).add({
                 radioName,
                 email,
+                addressForRadio,
                 name,
-                hurigana,
                 age,
                 tel,
                 portalCode,
@@ -83,8 +83,8 @@ const Register = (props: PropsType) => {
         db.collection(`users/${user.uid}/info`).add({
           radioName,
           email: user.email,
+          addressForRadio,
           name,
-          hurigana,
           age,
           tel,
           portalCode,
@@ -168,6 +168,17 @@ const Register = (props: PropsType) => {
                 return (
                   <div>
                     <Box m={4}>
+                    <TextField
+                      id="addressForRadio"
+                      label="住所（読まれる用）"
+                      value={addressForRadio}
+                      className="md_w-100 w_90"
+                      onChange={(e) => {
+                        setAddressForRadio(e.target.value);
+                      }}
+                    />
+                  </Box>
+                    <Box m={4}>
                       <TextField
                         id="name"
                         label="本名"
@@ -175,17 +186,6 @@ const Register = (props: PropsType) => {
                         className="md_w-100 w_90"
                         onChange={(e) => {
                           setName(e.target.value);
-                        }}
-                      />
-                    </Box>
-                    <Box m={4}>
-                      <TextField
-                        id="hurigana"
-                        label="ふりがな"
-                        value={hurigana}
-                        className="md_w-100 w_90"
-                        onChange={(e) => {
-                          setHurigana(e.target.value);
                         }}
                       />
                     </Box>
@@ -252,7 +252,7 @@ const Register = (props: PropsType) => {
                   <Box m={4}>
                     <TextField
                       id="address"
-                      label="住所"
+                      label="住所（本住所）"
                       value={address}
                       className="md_w-100 w_90"
                       onChange={(e) => {

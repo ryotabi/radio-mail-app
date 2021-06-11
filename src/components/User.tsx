@@ -20,7 +20,7 @@ const User = (props: PropsType) => {
   const [id, setId] = useState<string>('');
   const [radioName, setRadioName] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [hurigana, setHurigana] = useState<string>('');
+  const [addressForRadio, setAddressForRadio] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [tel, setTel] = useState<string>('');
   const [portalCode, setPortalCode] = useState<string>('');
@@ -55,7 +55,7 @@ const User = (props: PropsType) => {
             setId(doc.id);
             setRadioName(doc.data().radioName);
             setName(doc.data().name);
-            setHurigana(doc.data().hurigana);
+            setAddressForRadio(doc.data().addressForRadio);
             setAge(doc.data().age);
             setTel(doc.data().tel);
             setPortalCode(doc.data().portalCode);
@@ -75,7 +75,7 @@ const User = (props: PropsType) => {
       db.collection(`users/${user.uid}/info`).doc(id).update({
         address,
         age,
-        hurigana,
+        addressForRadio,
         name,
         portalCode,
         radioName,
@@ -124,6 +124,17 @@ const User = (props: PropsType) => {
                           }}
                         />
                       </Box>
+                      <Box m={4}>
+                        <TextField
+                          id="addressForRadio"
+                          label="住所（読まれる用）"
+                          className="md_w-100 w_90"
+                          value={addressForRadio}
+                          onChange={(e) => {
+                            setAddressForRadio(e.target.value);
+                          }}
+                        />
+                      </Box>
                       <Box m={6} className="text-center user_info_btn_wrap">
                         <Button variant="contained" className="user_info_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
                       </Box>
@@ -146,15 +157,16 @@ const User = (props: PropsType) => {
                       </Box>
                       <Box m={4}>
                         <TextField
-                          id="hurigana"
-                          label="ふりがな"
+                          id="tel"
+                          label="電話番号"
                           className="md_w-100 w_90"
-                          value={hurigana}
+                          type="tel"
+                          value={tel}
                           onChange={(e) => {
-                            setHurigana(e.target.value);
+                            setTel(e.target.value);
                           }}
                         />
-                      </Box>
+                    </Box>
                       <Box m={6} className="text-center user_info_btn_wrap">
                         <Grid container justify="space-around">
                           <Grid item xs={3}>
@@ -172,18 +184,6 @@ const User = (props: PropsType) => {
                   <div>
                     <Box m={4}>
                       <TextField
-                        id="tel"
-                        label="電話番号"
-                        className="md_w-100 w_90"
-                        type="tel"
-                        value={tel}
-                        onChange={(e) => {
-                          setTel(e.target.value);
-                        }}
-                      />
-                    </Box>
-                    <Box m={4}>
-                      <TextField
                         id="portalCode"
                         label="郵便番号（ハイフン無し）"
                         className="md_w-100 w_90"
@@ -196,7 +196,7 @@ const User = (props: PropsType) => {
                     <Box m={4}>
                       <TextField
                         id="address"
-                        label="住所"
+                        label="住所（本住所）"
                         className="md_w-100 w_90"
                         value={address}
                         onChange={(e) => {
