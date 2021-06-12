@@ -16,6 +16,7 @@ import Template from './components/Template';
 import MyProgram from './components/MyProgram';
 import ResetPassword from './components/ResetPassword';
 import HowToUse from './components/HowToUse';
+import RequestForm from './components/RequestForm';
 import Page404 from './components/404';
 
 import './css/reset.css';
@@ -41,6 +42,7 @@ const App = () => (
         <Route path="/myProgram"     exact component={MyProgram} />
         <Route path="/resetPassword" exact component={ResetPassword} />
         <Route path="/howToUse"      exact component={HowToUse} />
+        <Route path="/request"      exact component={RequestForm} />
         <Route component={Page404} />
       </Switch>
     </Switch>

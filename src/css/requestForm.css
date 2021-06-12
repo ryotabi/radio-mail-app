@@ -1,0 +1,21 @@
+.requestForm_wrap {
+    padding-top: 100px;
+}
+.requestForm_subtitle {
+    margin-top: 20px;
+}
+.requestForm_form {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 8px 8px 8px rgb(155, 155, 155);
+    padding: 15px 30px 40px 30px;
+    margin: 50px 0;
+}
+.requestForm_btn_wrap {
+    margin: 40px 30px !important;
+}
+.requestForm_btn {
+    background-color: rgba(104, 183, 135, 1) !important;
+    border-radius: 60px !important;
+    font-size: 15px !important;
+}
