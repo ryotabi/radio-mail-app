@@ -62,6 +62,14 @@ export default function GetValidationMessage(error: string) {
       validationInfo.type = 'myProgram';
       validationInfo.message = '番組名は必須です';
       break;
+    case 'requestForm/invalid-specification':
+      validationInfo.type = 'specification';
+      validationInfo.message = '機能を選択してください';
+      break;
+    case 'requestForm/invalid-content':
+      validationInfo.type = 'content';
+      validationInfo.message = 'お問い合わせ・要望を入力してください';
+      break;
     default:
       validationInfo.type = 'default';
       validationInfo.message = 'エラーが発生しました。もう一度お試しください';

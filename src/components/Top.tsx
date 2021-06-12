@@ -71,6 +71,15 @@ const Top = (props: PropsType) => {
               </Link>
             </Grid>
           </Box>
+          <Box p={4}>
+            <Grid container>
+              <Link to="/request" className="top_btn_wrap">
+                <Grid item className="top_btn">
+                  <p className="top_btn_text text-center">お問い合わせ</p>
+                </Grid>
+              </Link>
+            </Grid>
+          </Box>
         </Container>
       </div>
     </>
