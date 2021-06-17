@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import firebase from 'firebase';
 import * as H from 'history';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
