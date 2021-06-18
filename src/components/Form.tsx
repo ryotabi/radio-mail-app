@@ -490,10 +490,10 @@ const Form = (props: PropsType) => {
                   <Box m={2} className="text-center form_btn_wrap">
                     <Grid container justify="space-around">
                       <Grid item xs={3}>
-                        <Button variant="contained" className="btn" onClick={goBackForm1}><ArrowBackIcon /></Button>
+                        <Button variant="contained" className="btn back_btn" onClick={goBackForm1}><ArrowBackIcon /></Button>
                       </Grid>
                       <Grid item xs={3}>
-                        <Button variant="contained" className="btn" onClick={goToForm3}><ArrowForwardIcon /></Button>
+                        <Button variant="contained" className="btn next_btn" onClick={goToForm3}><ArrowForwardIcon /></Button>
                       </Grid>
                     </Grid>
                   </Box>
@@ -628,7 +628,7 @@ const Form = (props: PropsType) => {
                   </Grid>
                 </Box>
                 <Box m={2} className="text-center form_btn_wrap">
-                  <Button variant="contained" className="btn" onClick={goBackForm2}><ArrowBackIcon /></Button>
+                  <Button variant="contained" className="btn back_btn" onClick={goBackForm2}><ArrowBackIcon /></Button>
                 </Box>
               </div>
             );
