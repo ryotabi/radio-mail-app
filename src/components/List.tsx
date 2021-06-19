@@ -92,7 +92,7 @@ const List = (props: PropsType) => {
         <ul className="d-flex">
           {programnavLists.map((program) => {
             const key = Math.random();
-            return <li key={key} onClick={() => setList(program)}>{program}</li>;
+            return <li key={key} onClick={() => setList(program)} className="program_listnav_item">{program}</li>;
           })}
         </ul>
       </div>
@@ -107,7 +107,7 @@ const List = (props: PropsType) => {
                     <p className="program_listdate">{dateToString(list.date)}</p>
                     <p className="program_listcorner">{list.corner}</p>
                   </div>
-                  <ArrowForwardIcon fontSize="large" />
+                  <ArrowForwardIcon fontSize="large" className="arrow_icon"/>
                 </Link>
               </li>
             );
