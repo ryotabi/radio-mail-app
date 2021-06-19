@@ -122,7 +122,7 @@ const SaveMail = (props: PropsType) => {
                         <EditIcon fontSize="large" className="edit_icon" />
                       </Link>
                       <DeleteForeverIcon fontSize="large" className="delete_icon" onClick={() => { deleteSaveMail(list.id); }} />
-                      <Link to={{ pathname: `single/${list.id}`, state: { list } }}>
+                      <Link to={{ pathname: `single/${list.id}`, state: { list } }} className="arrow_icon">
                         <ArrowForwardIcon fontSize="large" />
                       </Link>
                     </div>
