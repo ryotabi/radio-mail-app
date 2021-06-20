@@ -151,7 +151,7 @@ const Password = (props: Props) => {
                   <Box m={4} className="text-center changePassword_btn_wrap">
                     <Grid container>
                       <Grid item xs={12}>
-                        <Button variant="contained" className="changePassword_btn" onClick={changeEmailAndPassword}>変更</Button>
+                        <Button variant="contained" className="changePassword_btn change_btn" onClick={changeEmailAndPassword}>変更</Button>
                         <p className="error">{validationMessage}</p>
                       </Grid>
                     </Grid>
