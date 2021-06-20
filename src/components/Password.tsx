@@ -120,7 +120,7 @@ const Password = (props: Props) => {
                       />
                     </Box>
                     <Box m={6} className="text-center changePassword_btn_wrap">
-                      <Button variant="contained" className="changePassword_btn" onClick={goToNextPage1}><ArrowForwardIcon /></Button>
+                      <Button variant="contained" className="changePassword_btn next_btn" onClick={goToNextPage1}><ArrowForwardIcon /></Button>
                     </Box>
                   </div>
                 );
@@ -144,7 +144,7 @@ const Password = (props: Props) => {
                   <Box m={6} className="text-center changePassword_btn_wrap">
                     <Grid container justify="space-around">
                       <Grid item xs={3}>
-                        <Button variant="contained" className="changePassword_btn" onClick={GoBackPage1}><ArrowBackIcon /></Button>
+                        <Button variant="contained" className="changePassword_btn back_btn" onClick={GoBackPage1}><ArrowBackIcon /></Button>
                       </Grid>
                     </Grid>
                   </Box>
