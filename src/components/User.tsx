@@ -136,7 +136,7 @@ const User = (props: PropsType) => {
                         />
                       </Box>
                       <Box m={6} className="text-center user_info_btn_wrap">
-                        <Button variant="contained" className="user_info_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
+                        <Button variant="contained" className="user_info_btn next_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
                       </Box>
                     </div>
                   );
@@ -170,10 +170,10 @@ const User = (props: PropsType) => {
                       <Box m={6} className="text-center user_info_btn_wrap">
                         <Grid container justify="space-around">
                           <Grid item xs={3}>
-                            <Button variant="contained" className="user_info_btn" onClick={goBackPage1}><ArrowBackIcon /></Button>
+                            <Button variant="contained" className="user_info_btn back_btn" onClick={goBackPage1}><ArrowBackIcon /></Button>
                           </Grid>
                           <Grid item xs={3}>
-                            <Button variant="contained" className="user_info_btn" onClick={goToNextPage3}><ArrowForwardIcon /></Button>
+                            <Button variant="contained" className="user_info_btn next_btn" onClick={goToNextPage3}><ArrowForwardIcon /></Button>
                           </Grid>
                         </Grid>
                       </Box>
@@ -207,7 +207,7 @@ const User = (props: PropsType) => {
                     <Box m={6} className="text-center user_info_btn_wrap">
                       <Grid container alignItems="center">
                         <Grid item xs={12}>
-                          <Button variant="contained" className="user_info_btn" onClick={goBackPage2}><ArrowBackIcon fontSize="small" /></Button>
+                          <Button variant="contained" className="user_info_btn back_btn" onClick={goBackPage2}><ArrowBackIcon fontSize="small" /></Button>
                         </Grid>
                       </Grid>
                     </Box>
