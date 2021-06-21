@@ -148,7 +148,7 @@ const Register = (props: PropsType) => {
                       />
                     </Box>
                     <Box m={6} className="text-center register_btn_wrap">
-                      <Button variant="contained" className="register_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
+                      <Button variant="contained" className="register_btn next_btn" onClick={goToNextPage2}><ArrowForwardIcon /></Button>
                     </Box>
                     <Box m={4} className="register_btn_google_wrap">
                       <GoogleButton
@@ -203,10 +203,10 @@ const Register = (props: PropsType) => {
                     <Box m={6} className="text-center register_btn_wrap">
                       <Grid container justify="space-around">
                         <Grid item xs={3}>
-                          <Button variant="contained" className="register_btn" onClick={goBackPage1}><ArrowBackIcon /></Button>
+                          <Button variant="contained" className="register_btn back_btn" onClick={goBackPage1}><ArrowBackIcon /></Button>
                         </Grid>
                         <Grid item xs={3}>
-                          <Button variant="contained" className="register_btn" onClick={goToNextPage3}><ArrowForwardIcon /></Button>
+                          <Button variant="contained" className="register_btn next_btn" onClick={goToNextPage3}><ArrowForwardIcon /></Button>
                         </Grid>
                       </Grid>
                     </Box>
@@ -263,7 +263,7 @@ const Register = (props: PropsType) => {
                   <Box m={6} className="text-center register_btn_wrap">
                     <Grid container justify="space-around" alignItems="center">
                       <Grid item xs={5}>
-                        <Button variant="contained" className="register_btn" onClick={goBackPage2}><ArrowBackIcon fontSize="small" /></Button>
+                        <Button variant="contained" className="register_btn back_btn" onClick={goBackPage2}><ArrowBackIcon fontSize="small" /></Button>
                       </Grid>
                       <Grid item xs={7}>
                         <Button variant="contained" className="register_btn" onClick={storeRegisterInfo}>
