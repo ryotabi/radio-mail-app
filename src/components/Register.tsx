@@ -266,7 +266,7 @@ const Register = (props: PropsType) => {
                         <Button variant="contained" className="register_btn back_btn" onClick={goBackPage2}><ArrowBackIcon fontSize="small" /></Button>
                       </Grid>
                       <Grid item xs={7}>
-                        <Button variant="contained" className="register_btn" onClick={storeRegisterInfo}>
+                        <Button variant="contained" className="register_btn submit_btn" onClick={storeRegisterInfo}>
                           Sign Up
                           <ArrowForwardIcon fontSize="small" />
                         </Button>
